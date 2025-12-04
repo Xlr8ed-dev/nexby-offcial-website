@@ -14,66 +14,128 @@ const Footer = () => {
     return (
         <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300 py-12 mt-0">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
 
-                    {/* Column 1: Legal & Policies */}
+                    {/* Column 1: Solutions */}
                     <div>
-                        <h3 className="text-white font-bold text-lg mb-4">Legal</h3>
+                        <h3 className="text-white font-bold text-lg mb-4">Solutions</h3>
                         <ul className="space-y-3">
                             <li>
-                                <a
-                                    href="#"
-                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2 text-left"
+                                <Link
+                                    to="/solutions/sales"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                                 >
-                                    Privacy Policy
-                                </a>
+                                    AI for Sales
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2 text-left"
+                                <Link
+                                    to="/solutions/recruitment"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                                 >
-                                    Cookie & Tracking Policy
-                                </a>
+                                    AI for Recruitment
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2 text-left"
+                                <Link
+                                    to="/solutions/exhibitions"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                                 >
-                                    Terms of Use
-                                </a>
+                                    AI for Exhibitions
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2 text-left"
+                                <Link
+                                    to="/solutions/operations"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                                 >
-                                    Data Processing Addendum
-                                </a>
+                                    AI for Operations
+                                </Link>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Column 2: Company */}
+                    {/* Column 2: Products */}
+                    <div>
+                        <h3 className="text-white font-bold text-lg mb-4">Products</h3>
+                        <ul className="space-y-3">
+                            <li>
+                                <Link
+                                    to="/products/ai-recruiter"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    AI Recruiter
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/products/ai-telecaller"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    AI TeleCaller
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/products/expo-insight"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    Expo Insight
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Column 3: Company */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-4">Company</h3>
-                        <div className="flex items-start gap-2 mb-4">
+                        <ul className="space-y-3">
+                            <li>
+                                <Link
+                                    to="/about"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    About Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/careers"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    Careers
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/contact"
+                                    className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
+                                >
+                                    Contact Us
+                                </Link>
+                            </li>
+                        </ul>
+                        <div className="flex items-start gap-2 mt-6">
                             <div className="bg-indigo-600 text-white p-2 rounded-lg shrink-0">
-                                <Target size={20} />
+                                <Target size={16} />
                             </div>
                             <div>
-                                <p className="text-white font-semibold">Nexby AI Solutions</p>
-                                <p className="text-gray-400 text-sm">Private Limited</p>
+                                <p className="text-white font-semibold text-sm">Nexby AI Solutions</p>
+                                <p className="text-gray-400 text-xs">Private Limited</p>
                             </div>
                         </div>
-                        <ul className="space-y-3">
+                    </div>
+
+                    {/* Column 4: Contact Details */}
+                    <div>
+                        <h3 className="text-white font-bold text-lg mb-4">Contact</h3>
+                        <ul className="space-y-3 text-sm">
                             <li>
                                 <a
                                     href="mailto:hello@nexby.ai"
                                     className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
                                 >
-                                    <Mail size={16} className="shrink-0" />
+                                    <Mail size={14} className="shrink-0" />
                                     hello@nexby.ai
                                 </a>
                             </li>
@@ -82,86 +144,81 @@ const Footer = () => {
                                     href="mailto:support@nexby.ai"
                                     className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-2"
                                 >
-                                    <Mail size={16} className="shrink-0" />
+                                    <Mail size={14} className="shrink-0" />
                                     support@nexby.ai
                                 </a>
                             </li>
-                        </ul>
-                    </div>
-
-                    {/* Column 3: Contact Details */}
-                    <div>
-                        <h3 className="text-white font-bold text-lg mb-4">Contact Us</h3>
-                        <ul className="space-y-3 text-sm">
                             <li className="flex items-start gap-2">
-                                <MapPin size={16} className="shrink-0 mt-1 text-indigo-400" />
+                                <Phone size={14} className="shrink-0 mt-0.5 text-indigo-400" />
+                                <a href="tel:+919892048816" className="text-gray-300 hover:text-indigo-400 transition-colors">
+                                    +91 98920 48816
+                                </a>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <MapPin size={14} className="shrink-0 mt-0.5 text-indigo-400" />
                                 <div>
-                                    <p className="text-gray-300">Office Address:</p>
-                                    <p className="text-gray-400">
+                                    <p className="text-gray-300 text-xs leading-relaxed">
                                         15, Khatau Building<br />
                                         44 Bank Street<br />
-                                        Mumbai - 400001<br />
-                                        India
+                                        Mumbai - 400001, India
                                     </p>
                                 </div>
                             </li>
-                            <li className="flex items-start gap-2">
-                                <Phone size={16} className="shrink-0 mt-1 text-indigo-400" />
-                                <div>
-                                    <p className="text-gray-300">Phone:</p>
-                                    <a href="tel:+919892048816" className="text-gray-400 hover:text-indigo-400 transition-colors">
-                                        +91 98920 48816
-                                    </a>
-                                </div>
-                            </li>
                         </ul>
                     </div>
 
-                    {/* Column 4: Follow Us */}
+                    {/* Column 5: Follow Us */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-4">Follow Us</h3>
-                        <div className="flex gap-4 mb-4">
+                        <div className="flex gap-3 mb-4">
                             <a
                                 href="https://linkedin.com/company/nexby-ai/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gray-700 hover:bg-indigo-600 text-white p-3 rounded-lg transition-all transform hover:scale-110"
+                                className="bg-gray-700 hover:bg-indigo-600 text-white p-2.5 rounded-lg transition-all transform hover:scale-110"
                                 aria-label="LinkedIn"
                             >
-                                <Linkedin size={20} />
+                                <Linkedin size={18} />
                             </a>
                             <a
                                 href="https://www.youtube.com/@NexbyAISolutions"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gray-700 hover:bg-red-600 text-white p-3 rounded-lg transition-all transform hover:scale-110"
+                                className="bg-gray-700 hover:bg-red-600 text-white p-2.5 rounded-lg transition-all transform hover:scale-110"
                                 aria-label="YouTube"
                             >
-                                <Youtube size={20} />
+                                <Youtube size={18} />
                             </a>
                             <a
                                 href="https://www.instagram.com/nexby.ai/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gray-700 hover:bg-pink-600 text-white p-3 rounded-lg transition-all transform hover:scale-110"
+                                className="bg-gray-700 hover:bg-pink-600 text-white p-2.5 rounded-lg transition-all transform hover:scale-110"
                                 aria-label="Instagram"
                             >
-                                <Instagram size={20} />
+                                <Instagram size={18} />
                             </a>
                         </div>
-                        <p className="text-gray-400 text-sm">
-                            Connect with us on social media for updates and insights.
+                        <p className="text-gray-400 text-xs leading-relaxed">
+                            Connect with us on social media for the latest updates on AI automation and enterprise solutions.
                         </p>
                     </div>
                 </div>
 
                 {/* Company Description & Trust Badge */}
-                <div className="pt-8 mt-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
+                <div className="pt-8 mt-8 border-t border-gray-700">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         {/* Company Description */}
                         <div className="text-gray-300 text-sm leading-relaxed">
-                            <p>
-                                <strong className="text-white">Nexby AI Solutions</strong> transforms business efficiency with cutting-edge AI Agents for recruitment, sales, and exhibition management. Our intelligent solutions—including Recruiter, Prospector, and Exhibitor Agents—automate hiring workflows, accelerate lead generation, and maximize trade show ROI. Experience 24/7 productivity and data-driven growth with Nexby's innovative enterprise automation platform.
+                            <h3 className="text-white font-bold text-lg mb-3">About Nexby AI Solutions</h3>
+                            <p className="mb-4">
+                                <strong className="text-white">Nexby AI Solutions</strong> is a leading enterprise AI automation company specializing in <strong className="text-indigo-400">autonomous AI agents</strong> for sales, recruitment, and operations. We deploy production-grade AI systems that deliver measurable ROI across <strong className="text-indigo-400">Real Estate, Manufacturing, Government, Technology, Banking, Pharmaceuticals, and BPO sectors</strong>.
+                            </p>
+                            <p className="mb-4">
+                                Our flagship products—<strong className="text-indigo-400">AI Recruiter</strong>, <strong className="text-indigo-400">AI TeleCaller</strong>, and <strong className="text-indigo-400">Expo Insight</strong>—automate complex workflows with human-level nuance and machine-level speed. From screening thousands of candidates with military-grade proctoring to qualifying leads across voice and text channels, Nexby AI transforms business operations with <strong className="text-indigo-400">90% time reduction</strong> and <strong className="text-indigo-400">40% conversion improvement</strong>.
+                            </p>
+                            <p className="text-gray-400 text-xs">
+                                Trusted by 300+ businesses across India, GCC, and global markets. Average payback period: &lt; 6 months.
                             </p>
                         </div>
 
@@ -173,8 +230,8 @@ const Footer = () => {
                                         <CheckCircle className="text-white" size={32} />
                                     </div>
                                     <div className="text-white">
-                                        <p className="text-3xl font-bold">600+</p>
-                                        <p className="text-sm font-medium">Trusted Clients</p>
+                                        <p className="text-3xl font-bold">300+</p>
+                                        <p className="text-sm font-medium">Businesses Onboarded</p>
                                     </div>
                                 </div>
                             </div>

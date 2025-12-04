@@ -17,7 +17,7 @@ import {
     BrainCircuit,
     TrendingUp,
     Presentation,
-    PhoneForwarded,
+    Phone,
     Headphones,
 } from 'lucide-react';
 
@@ -29,7 +29,7 @@ const SOLUTIONS = {
         { name: 'Exhibitors', icon: Briefcase, path: '/solutions/exhibitions' },
     ],
     industries: [
-        { name: 'Real Estate', icon: Building2, path: '#' },
+        { name: 'Real Estate', icon: Building2, path: '/solutions/industry/real-estate' },
         { name: 'Manufacturing', icon: Factory, path: '#' },
         { name: 'Pharma', icon: FlaskConical, path: '#' },
         { name: 'Tech & SaaS', icon: Lightbulb, path: '#' },
@@ -42,11 +42,11 @@ const SOLUTIONS = {
 };
 
 const PRODUCTS = [
-    { name: 'Automated Talent Intelligence', icon: BrainCircuit, path: '#' },
+    { name: 'AI Recruiter', icon: BrainCircuit, path: '/products/ai-recruiter' },
     { name: 'SalesX', icon: TrendingUp, path: '#' },
-    { name: 'Expo Insight', icon: Presentation, path: '#' },
+    { name: 'Expo Insight', icon: Presentation, path: '/products/expo-insight' },
     { name: 'Call Analyser', icon: BarChart3, path: '#' },
-    { name: 'AI TeleCaller', icon: PhoneForwarded, path: '#' },
+    { name: 'AI TeleCaller', icon: Phone, path: '/products/ai-telecaller' },
     { name: 'SupportAssist', icon: Headphones, path: '#' },
 ];
 
@@ -93,55 +93,57 @@ const Navbar = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[750px] bg-white border border-gray-100 shadow-xl rounded-xl p-6 mt-2 grid grid-cols-3 gap-8"
+                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[750px] pt-2"
                                 >
-                                    <div>
-                                        <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">By Use Case</h4>
-                                        <ul className="space-y-2">
-                                            {SOLUTIONS.useCases.map((item) => (
-                                                <li key={item.name}>
-                                                    <Link
-                                                        to={item.path}
-                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
-                                                        onClick={() => setActiveDropdown(null)}
-                                                    >
-                                                        <item.icon size={16} /> {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">By Industry</h4>
-                                        <ul className="space-y-2">
-                                            {SOLUTIONS.industries.map((item) => (
-                                                <li key={item.name}>
-                                                    <Link
-                                                        to={item.path}
-                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
-                                                        onClick={() => setActiveDropdown(null)}
-                                                    >
-                                                        <item.icon size={16} /> {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">Government</h4>
-                                        <ul className="space-y-2">
-                                            {SOLUTIONS.government.map((item) => (
-                                                <li key={item.name}>
-                                                    <Link
-                                                        to={item.path}
-                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
-                                                        onClick={() => setActiveDropdown(null)}
-                                                    >
-                                                        <item.icon size={16} /> {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                    <div className="bg-white border border-gray-100 shadow-xl rounded-xl p-6 grid grid-cols-3 gap-8">
+                                        <div>
+                                            <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">By Use Case</h4>
+                                            <ul className="space-y-2">
+                                                {SOLUTIONS.useCases.map((item) => (
+                                                    <li key={item.name}>
+                                                        <Link
+                                                            to={item.path}
+                                                            className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
+                                                            onClick={() => setActiveDropdown(null)}
+                                                        >
+                                                            <item.icon size={16} /> {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">By Industry</h4>
+                                            <ul className="space-y-2">
+                                                {SOLUTIONS.industries.map((item) => (
+                                                    <li key={item.name}>
+                                                        <Link
+                                                            to={item.path}
+                                                            className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
+                                                            onClick={() => setActiveDropdown(null)}
+                                                        >
+                                                            <item.icon size={16} /> {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-semibold text-gray-400 uppercase mb-3 tracking-wider">Government</h4>
+                                            <ul className="space-y-2">
+                                                {SOLUTIONS.government.map((item) => (
+                                                    <li key={item.name}>
+                                                        <Link
+                                                            to={item.path}
+                                                            className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
+                                                            onClick={() => setActiveDropdown(null)}
+                                                        >
+                                                            <item.icon size={16} /> {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}
@@ -163,22 +165,23 @@ const Navbar = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white border border-gray-100 shadow-xl rounded-xl p-6 mt-2"
+                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] pt-2"
                                 >
-                                    <ul className="grid grid-cols-2 gap-4">
-                                        {PRODUCTS.map((item) => (
-                                            <li key={item.name}>
-                                                <Link
-                                                    to={item.path}
-                                                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
-                                                    onClick={() => setActiveDropdown(null)}
-                                                >
-                                                    <item.icon size={16} className="shrink-0" />
-                                                    <span className="truncate">{item.name}</span>
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    <div className="bg-white border border-gray-100 shadow-xl rounded-xl p-6">
+                                        <ul className="grid grid-cols-2 gap-4">
+                                            {PRODUCTS.map((item) => (
+                                                <li key={item.name}>
+                                                    <Link
+                                                        to={item.path}
+                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
+                                                        onClick={() => setActiveDropdown(null)}
+                                                    >
+                                                        <item.icon size={16} /> {item.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
