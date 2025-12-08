@@ -8,7 +8,6 @@ import {
     CheckCircle,
     Briefcase,
     Factory,
-    Lightbulb,
     Building2,
     FlaskConical,
     PhoneCall,
@@ -19,6 +18,7 @@ import {
     Presentation,
     Phone,
     Headphones,
+    GraduationCap,
 } from 'lucide-react';
 
 const SOLUTIONS = {
@@ -27,27 +27,27 @@ const SOLUTIONS = {
         { name: 'Recruitment', icon: Users, path: '/solutions/recruitment' },
         { name: 'Operations', icon: CheckCircle, path: '/solutions/operations' },
         { name: 'Exhibitors', icon: Briefcase, path: '/solutions/exhibitions' },
+        { name: 'Examination', icon: GraduationCap, path: '/solutions/university-exam-portal' },
     ],
     industries: [
         { name: 'Real Estate', icon: Building2, path: '/solutions/industry/real-estate' },
-        { name: 'Manufacturing', icon: Factory, path: '#' },
-        { name: 'Pharma', icon: FlaskConical, path: '#' },
-        { name: 'Tech & SaaS', icon: Lightbulb, path: '#' },
+        { name: 'Manufacturing', icon: Factory, path: '/solutions/industry/manufacturing' },
+        { name: 'Pharma', icon: FlaskConical, path: '/solutions/industry/pharma' },
     ],
     government: [
-        { name: 'AI Call Assistant', icon: PhoneCall, path: '#' },
-        { name: 'AI RFP Analyser', icon: FileSearch, path: '#' },
-        { name: 'AI Chatbots', icon: Bot, path: '#' },
+        { name: 'AI Call Assistant', icon: PhoneCall, path: '/solutions/government/ai-call-assistant' },
+        { name: 'Tender Query Automation', icon: FileSearch, path: '/solutions/government/tender-query-automation' },
+        { name: 'Citizen AI Interface', icon: Bot, path: '/solutions/government/citizen-ai-interface' },
     ],
 };
 
 const PRODUCTS = [
     { name: 'AI Recruiter', icon: BrainCircuit, path: '/products/ai-recruiter' },
-    { name: 'SalesX', icon: TrendingUp, path: '#' },
+    { name: 'SalesX', icon: TrendingUp, path: '/products/salesx' },
     { name: 'Expo Insight', icon: Presentation, path: '/products/expo-insight' },
-    { name: 'Call Analyser', icon: BarChart3, path: '#' },
+    { name: 'Call Analyser', icon: BarChart3, path: '/products/call-analyser' },
     { name: 'AI TeleCaller', icon: Phone, path: '/products/ai-telecaller' },
-    { name: 'SupportAssist', icon: Headphones, path: '#' },
+    { name: 'SupportAssist', icon: Headphones, path: '/products/support-assist' },
 ];
 
 const Navbar = () => {
@@ -76,6 +76,44 @@ const Navbar = () => {
                 {/* Menu */}
                 <div className="hidden md:flex items-center gap-8">
                     <Link to="/" className="text-sm font-medium hover:text-blue-600 transition-colors">Home</Link>
+                    <Link to="/about-us" className="text-sm font-medium hover:text-blue-600 transition-colors">About Us</Link>
+
+                    <div
+                        className="relative group h-full flex items-center"
+                        onMouseEnter={() => setActiveDropdown('products')}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                        <button className="flex items-center gap-1 text-sm font-medium hover:text-blue-600 transition-colors">
+                            Products <ChevronDown size={14} />
+                        </button>
+
+                        <AnimatePresence>
+                            {activeDropdown === 'products' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] pt-2"
+                                >
+                                    <div className="bg-white border border-gray-100 shadow-xl rounded-xl p-6">
+                                        <ul className="grid grid-cols-2 gap-4">
+                                            {PRODUCTS.map((item) => (
+                                                <li key={item.name}>
+                                                    <Link
+                                                        to={item.path}
+                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
+                                                        onClick={() => setActiveDropdown(null)}
+                                                    >
+                                                        <item.icon size={16} /> {item.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
 
                     <div
                         className="relative group h-full flex items-center"
@@ -150,57 +188,10 @@ const Navbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    <div
-                        className="relative group h-full flex items-center"
-                        onMouseEnter={() => setActiveDropdown('products')}
-                        onMouseLeave={() => setActiveDropdown(null)}
-                    >
-                        <button className="flex items-center gap-1 text-sm font-medium hover:text-blue-600 transition-colors">
-                            Products <ChevronDown size={14} />
-                        </button>
-
-                        <AnimatePresence>
-                            {activeDropdown === 'products' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] pt-2"
-                                >
-                                    <div className="bg-white border border-gray-100 shadow-xl rounded-xl p-6">
-                                        <ul className="grid grid-cols-2 gap-4">
-                                            {PRODUCTS.map((item) => (
-                                                <li key={item.name}>
-                                                    <Link
-                                                        to={item.path}
-                                                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg transition-all"
-                                                        onClick={() => setActiveDropdown(null)}
-                                                    >
-                                                        <item.icon size={16} /> {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-
-                    <Link to="/about-us" className="text-sm font-medium hover:text-blue-600 transition-colors">About Us</Link>
                     <Link to="/careers" className="text-sm font-medium hover:text-blue-600 transition-colors">Careers</Link>
+                    <Link to="/partnerships" className="text-sm font-medium hover:text-blue-600 transition-colors">Partnerships</Link>
                     <Link to="/contact-us" className="text-sm font-medium hover:text-blue-600 transition-colors">Contact</Link>
                 </div>
-
-                <Link
-                    to="/contact-us"
-                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${isScrolled
-                        ? 'bg-black text-white hover:bg-gray-800'
-                        : 'bg-blue-600 text-white hover:bg-blue-700'
-                        }`}
-                >
-                    Get Started
-                </Link>
             </div>
         </motion.nav>
     );

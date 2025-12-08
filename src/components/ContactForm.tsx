@@ -18,16 +18,13 @@ const ContactForm = ({ showDescription = true, formId }: ContactFormProps) => {
                 {showDescription && (
                     <div className="text-center mb-12">
                         <p className="text-sm font-bold uppercase tracking-widest text-purple-600 mb-4">
-                            Talk to an AI expert
+                            The Qualification Gate
                         </p>
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
                             Answer a few sharp questions.<br />We'll tell you if we're a fit.
                         </h2>
                         <p className="text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
-                            We're not the right partner for every business — and that's by
-                            design. This short form qualifies your stage, intent and
-                            readiness. If we can meaningfully move the needle, we'll get on a
-                            call.
+                            We are selective because we care about results. We don't take on "science experiments." If you are ready to move the needle on revenue or efficiency, let's talk.
                         </p>
                     </div>
                 )}

@@ -9,7 +9,7 @@ import {
     Send,
     Lock
 } from 'lucide-react';
-import ContactForm from '../components/ContactForm';
+
 
 // --- Types ---
 
@@ -63,12 +63,19 @@ const HeroSection = () => {
                 </div>
                 <div className="absolute inset-0 z-10 flex flex-col justify-center px-12 md:px-20">
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                        {/* Updated Text: Simpler, CEO-friendly */}
                         <TypewriterText text="Automate Your Growth. Without the Headcount." />
                     </h1>
-                    <p className="text-gray-300 text-lg md:text-xl max-w-xl mt-4 backdrop-blur-sm p-2 rounded">
-                        Deploy custom AI agents for Sales and Recruitment. Practical, profitable, and live in weeks.
+                    <p className="text-gray-300 text-lg md:text-xl max-w-2xl mt-4 backdrop-blur-sm bg-black/30 p-4 rounded-xl">
+                        We don't build "chatbots." We engineer autonomous AI workforces. Deploy specialized agents for Sales, Recruitment, and Operations that work 24/7, speak 12 languages, and never take a sick day.
                     </p>
+                    <div className="flex flex-wrap gap-4 mt-8">
+                        <a href="#contact" className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl">
+                            Verify Eligibility
+                        </a>
+                        <a href="#transparency" className="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all">
+                            See Transparency Demo
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -94,7 +101,7 @@ const HeroSection = () => {
                             <BarChart3 className="text-white" />
                         </div>
                         <h3 className="text-2xl font-semibold mb-2 text-gray-900">AI for Sales</h3>
-                        <p className="text-gray-600 text-sm font-medium">Your best salesperson, available 24/7 to qualify and close leads.</p>
+                        <p className="text-gray-600 text-sm font-medium">Calls 10,000 leads in 24 hours. Never misses a follow-up.</p>
                     </div>
                 </motion.div>
 
@@ -117,8 +124,8 @@ const HeroSection = () => {
                         <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                             <Users className="text-white" />
                         </div>
-                        <h3 className="text-2xl font-semibold mb-2 text-gray-900">AI for HR</h3>
-                        <p className="text-gray-600 text-sm font-medium">Interview 1,000 candidates in a day. Hire the top 1% faster.</p>
+                        <h3 className="text-2xl font-semibold mb-2 text-gray-900">AI for Recruitment</h3>
+                        <p className="text-gray-600 text-sm font-medium">Screens 5,000 resumes. Conducts proctored interviews 24/7.</p>
                     </div>
                 </motion.div>
             </div>
@@ -158,14 +165,32 @@ const ScrollAnimationSection = () => {
                 {/* The Text that reveals as X shrinks */}
                 <motion.div
                     style={{ opacity }}
-                    className="mt-12 text-center max-w-2xl px-4 z-10"
+                    className="mt-12 text-center max-w-3xl px-4 z-10"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                        The Multiplier Effect
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                        The Multiplier Effect.
                     </h2>
-                    <p className="text-xl text-gray-700 font-medium">
-                        Where human potential meets artificial precision.
+                    <p className="text-lg text-gray-600 mb-8">
+                        Traditional scaling requires linear hiring: More revenue = More people.<br />
+                        <span className="font-bold text-gray-900">Nexby breaks this equation.</span>
                     </p>
+                    <div className="grid md:grid-cols-3 gap-6 text-left">
+                        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-blue-200 shadow-lg">
+                            <p className="text-gray-600 text-sm">1 Recruiter + Nexby =</p>
+                            <p className="text-3xl font-bold text-blue-600">50</p>
+                            <p className="text-gray-700 font-medium">Interviews/Day</p>
+                        </div>
+                        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-purple-200 shadow-lg">
+                            <p className="text-gray-600 text-sm">1 Sales Rep + Nexby =</p>
+                            <p className="text-3xl font-bold text-purple-600">1,000</p>
+                            <p className="text-gray-700 font-medium">Calls/Day</p>
+                        </div>
+                        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-pink-200 shadow-lg">
+                            <p className="text-gray-600 text-sm">1 Support Analyst + Nexby =</p>
+                            <p className="text-3xl font-bold text-pink-600">Zero</p>
+                            <p className="text-gray-700 font-medium">Backlog</p>
+                        </div>
+                    </div>
                 </motion.div>
             </div>
         </div>
@@ -209,10 +234,11 @@ const ChatSection = () => {
         setTimeout(() => {
             let responseText = "";
             const t = text.toLowerCase();
-            if (t.includes("sales") || t.includes("lead")) responseText = "We often see that. Our SalesFlow agent connects to your CRM and engages leads instantly. It usually increases conversion by 40% within the first quarter. How many leads do you process monthly?";
-            else if (t.includes("hir") || t.includes("talent") || t.includes("candid")) responseText = "Recruitment volume is a perfect use case. TalentScout can screen resumes and conduct first-round voice interviews 24/7. Would saving 20 hours/week per recruiter help your team?";
+            if (t.includes("cold") || t.includes("sales") || t.includes("lead")) responseText = "Cold leads need speed and persistence. SalesX connects to your CRM and engages leads within 60 seconds of form submission. It handles objections, books meetings, and follows up automatically. Clients see 40% higher conversion in Q1.";
+            else if (t.includes("java") || t.includes("developer") || t.includes("screen") || t.includes("hir")) responseText = "Absolutely. Our Recruiter Agent runs adaptive technical vivas — it asks follow-up questions based on answers, tests for conceptual depth, and flags plagiarism attempts. We screen 5,000 resumes in hours, not weeks.";
+            else if (t.includes("spanish") || t.includes("language") || t.includes("speak")) responseText = "Yes! We support 12 languages including Spanish, German, Hindi, and Arabic. The voice synthesis is ultra-low latency, so conversations feel natural. Perfect for global sales and multilingual support teams.";
             else if (t.includes("cost") || t.includes("price")) responseText = "We structure pricing based on ROI. Most clients pay for the system out of the efficiency gains in month 3. Are you looking to reduce costs or increase capacity?";
-            else responseText = "That is a specific challenge. Our custom architectures are designed exactly for that kind of operational complexity. Tell me a bit more about your team size?";
+            else responseText = "That is a specific challenge. Our custom agent architectures are designed exactly for that kind of operational complexity. Tell me a bit more about your team size?";
 
             setMessages(prev => [...prev, { role: 'ai', text: responseText }]);
             setIsTyping(false);
@@ -220,11 +246,11 @@ const ChatSection = () => {
     };
 
     return (
-        <section className="py-24 bg-gray-50">
+        <section id="transparency" className="py-24 bg-gray-50">
             <div className="max-w-4xl mx-auto px-6">
                 <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold">See transparency in action</h2>
-                    <p className="text-gray-500">Ask us anything. No forms required to chat.</p>
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Don't Trust the Hype. Trust the Code.</h2>
+                    <p className="text-gray-500">Ask our Agent anything. See how it handles objections, context, and empathy in real-time. No forms required to chat.</p>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 min-h-[500px] flex flex-col relative">
@@ -281,14 +307,14 @@ const ChatSection = () => {
                     {!isGated && (
                         <div className="p-6 border-t border-gray-100 bg-gray-50 absolute bottom-0 w-full z-10">
                             <div className="flex flex-wrap gap-2 mb-4">
-                                <button onClick={() => handleSend("How can you help with Sales?")} className="text-xs md:text-sm bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 px-3 py-1.5 rounded-full hover:from-blue-100 hover:to-blue-200 hover:border-blue-500 hover:text-blue-700 transition-all font-medium">
-                                    📈 Sales followups
+                                <button onClick={() => handleSend("How do you handle cold leads?")} className="text-xs md:text-sm bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 px-3 py-1.5 rounded-full hover:from-blue-100 hover:to-blue-200 hover:border-blue-500 hover:text-blue-700 transition-all font-medium">
+                                    🧊 How do you handle cold leads?
                                 </button>
-                                <button onClick={() => handleSend("How fast can we hire?")} className="text-xs md:text-sm bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-300 px-3 py-1.5 rounded-full hover:from-purple-100 hover:to-purple-200 hover:border-purple-500 hover:text-purple-700 transition-all font-medium">
-                                    👥 Hiring speed
+                                <button onClick={() => handleSend("Can you screen for Java developers?")} className="text-xs md:text-sm bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-300 px-3 py-1.5 rounded-full hover:from-purple-100 hover:to-purple-200 hover:border-purple-500 hover:text-purple-700 transition-all font-medium">
+                                    💻 Can you screen for Java developers?
                                 </button>
-                                <button onClick={() => handleSend("Is this expensive?")} className="text-xs md:text-sm bg-gradient-to-r from-pink-50 to-pink-100 border-2 border-pink-300 px-3 py-1.5 rounded-full hover:from-pink-100 hover:to-pink-200 hover:border-pink-500 hover:text-pink-700 transition-all font-medium">
-                                    💰 Cost vs ROI
+                                <button onClick={() => handleSend("Do you speak Spanish?")} className="text-xs md:text-sm bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-300 px-3 py-1.5 rounded-full hover:from-green-100 hover:to-green-200 hover:border-green-500 hover:text-green-700 transition-all font-medium">
+                                    🌍 Do you speak Spanish?
                                 </button>
                             </div>
                             <div className="relative">
@@ -334,26 +360,37 @@ const StatsSection = () => {
                     </div>
 
                     {/* Right Stats Cards */}
-                    <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="grid sm:grid-cols-1 gap-6">
                         {/* Card 1 */}
-                        <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-3xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-green-200 h-full flex flex-col justify-center">
+                        <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-3xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-green-200">
                             <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">300+</div>
                             <div className="text-xs font-bold text-green-700 uppercase tracking-wider mb-4">
                                 Businesses Onboarded
                             </div>
                             <p className="text-gray-700 text-sm leading-relaxed">
-                                Across India, GCC and global markets. Delivering scalable AI architectures.
+                                India, GCC, and Global markets. Scalable AI architectures that work.
                             </p>
                         </div>
 
                         {/* Card 2 */}
-                        <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-8 rounded-3xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-blue-200 h-full flex flex-col justify-center">
-                            <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">&lt; 6 Mo</div>
+                        <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-8 rounded-3xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-blue-200">
+                            <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">&lt; 6 Months</div>
                             <div className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-4">
                                 Avg. Payback Period
                             </div>
                             <p className="text-gray-700 text-sm leading-relaxed">
                                 Most clients recover their AI investment inside two quarters through efficiency gains.
+                            </p>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="bg-gradient-to-br from-purple-50 to-pink-100 p-8 rounded-3xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-purple-200">
+                            <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">₹500 Cr+</div>
+                            <div className="text-xs font-bold text-purple-700 uppercase tracking-wider mb-4">
+                                Pipeline Generated
+                            </div>
+                            <p className="text-gray-700 text-sm leading-relaxed">
+                                Qualified pipeline generated for clients through AI-powered outreach and lead capture.
                             </p>
                         </div>
                     </div>
@@ -363,196 +400,196 @@ const StatsSection = () => {
     )
 }
 
-// Solutions Overview Section
-const SolutionsOverview = () => {
+
+
+// The Autonomous Suite Section
+const ProductsShowcase = () => {
     return (
-        <section className="py-24 bg-gradient-to-br from-slate-50 to-purple-50">
+        <section id="products" className="py-24 bg-gradient-to-br from-slate-50 to-purple-50">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Enterprise AI Solutions
+                        Pick Your Digital Employee.
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Industry-specific AI infrastructure designed to solve real-world operational challenges
+                        The Autonomous Suite — purpose-built agents that work 24/7.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* AI for Sales */}
-                    <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="bg-white rounded-3xl p-8 border-2 border-purple-200 hover:border-purple-400 shadow-lg hover:shadow-2xl transition-all"
-                    >
-                        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
-                            <BarChart3 className="text-white" size={32} />
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* SalesX */}
+                    <div className="bg-white rounded-3xl p-8 border-2 border-purple-200 hover:shadow-xl hover:border-purple-400 transition-all">
+                        <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
+                            <Send className="text-white" size={28} />
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-4">AI for Sales</h3>
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                            Deploy autonomous AI Sales Agents that qualify, nurture, and close leads across voice and text channels. Zero latency, infinite scale.
+                        <span className="text-xs font-bold text-purple-600 uppercase tracking-wider">The Revenue Engine</span>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2 mt-1">SalesX</h3>
+                        <p className="text-gray-500 text-sm mb-4">Role: Autonomous SDR & Closer</p>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
+                            Calls 10,000 leads in 24 hours. Handles Voice, WhatsApp, and Email simultaneously.
                         </p>
-                        <div className="space-y-3 mb-6">
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-purple-600" size={18} />
-                                <span className="text-gray-700">Omnichannel deployment (Voice, WhatsApp, Email, Web)</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-purple-600" size={18} />
-                                <span className="text-gray-700">Dynamic conversation flow with objection handling</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-purple-600" size={18} />
-                                <span className="text-gray-700">CRM integration with instant lead sync</span>
-                            </div>
-                        </div>
                         <a
-                            href="/solutions/sales"
+                            href="/products/salesx"
                             className="inline-flex items-center gap-2 text-purple-600 font-semibold hover:gap-4 transition-all"
                         >
-                            Explore Sales AI <ArrowRight size={20} />
+                            Explore SalesX <ArrowRight size={18} />
                         </a>
-                    </motion.div>
+                    </div>
 
-                    {/* AI for Recruitment */}
-                    <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="bg-white rounded-3xl p-8 border-2 border-blue-200 hover:border-blue-400 shadow-lg hover:shadow-2xl transition-all"
-                    >
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-6">
-                            <Users className="text-white" size={32} />
+                    {/* Recruiter Agent */}
+                    <div className="bg-white rounded-3xl p-8 border-2 border-blue-200 hover:shadow-xl hover:border-blue-400 transition-all">
+                        <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-6">
+                            <Users className="text-white" size={28} />
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-4">AI for Recruitment</h3>
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                            Hire the top 1% automatically with AI-powered screening, adaptive interviews, and proctored evaluations. 90% reduction in time-to-hire.
+                        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">The Talent Scout</span>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2 mt-1">Recruiter Agent</h3>
+                        <p className="text-gray-500 text-sm mb-4">Role: Technical Interviewer</p>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
+                            Screens 5,000 resumes and conducts proctored video interviews to find the top 1% talent.
                         </p>
-                        <div className="space-y-3 mb-6">
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-blue-600" size={18} />
-                                <span className="text-gray-700">Adaptive voice & video interviews with technical vivas</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-blue-600" size={18} />
-                                <span className="text-gray-700">Military-grade proctoring (lip-sync, tab monitoring)</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <CheckCircle className="text-blue-600" size={18} />
-                                <span className="text-gray-700">Multi-lingual support across 30+ languages</span>
-                            </div>
-                        </div>
                         <a
-                            href="/solutions/recruitment"
+                            href="/products/ai-recruiter"
                             className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:gap-4 transition-all"
                         >
-                            Explore Recruitment AI <ArrowRight size={20} />
+                            Explore Recruiter <ArrowRight size={18} />
                         </a>
-                    </motion.div>
+                    </div>
+
+                    {/* Expo Insight */}
+                    <div className="bg-white rounded-3xl p-8 border-2 border-green-200 hover:shadow-xl hover:border-green-400 transition-all">
+                        <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6">
+                            <BarChart3 className="text-white" size={28} />
+                        </div>
+                        <span className="text-xs font-bold text-green-600 uppercase tracking-wider">The Event Manager</span>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2 mt-1">Expo Insight</h3>
+                        <p className="text-gray-500 text-sm mb-4">Role: Offline Lead Capture</p>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
+                            Scans badges offline, tags intent, and sends WhatsApp brochures before the visitor leaves the stall.
+                        </p>
+                        <a
+                            href="/products/expo-insight"
+                            className="inline-flex items-center gap-2 text-green-600 font-semibold hover:gap-4 transition-all"
+                        >
+                            Explore Expo <ArrowRight size={18} />
+                        </a>
+                    </div>
+
+                    {/* Support Assist */}
+                    <div className="bg-white rounded-3xl p-8 border-2 border-orange-200 hover:shadow-xl hover:border-orange-400 transition-all">
+                        <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6">
+                            <CheckCircle className="text-white" size={28} />
+                        </div>
+                        <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">The Ops Analyst</span>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2 mt-1">Support Assist</h3>
+                        <p className="text-gray-500 text-sm mb-4">Role: L1/L2 Support Automation</p>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
+                            Resolves 70% of tickets by reading your internal documentation. Zero hallucinations.
+                        </p>
+                        <a
+                            href="/products/support-assist"
+                            className="inline-flex items-center gap-2 text-orange-600 font-semibold hover:gap-4 transition-all"
+                        >
+                            Explore Support <ArrowRight size={18} />
+                        </a>
+                    </div>
+
+                    {/* Sovereign AI */}
+                    <div className="bg-white rounded-3xl p-8 border-2 border-slate-300 hover:shadow-xl hover:border-slate-500 transition-all lg:col-span-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-6">
+                            <div className="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl flex items-center justify-center shrink-0">
+                                <Lock className="text-white" size={28} />
+                            </div>
+                            <div className="flex-1">
+                                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">For Government</span>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2 mt-1">Sovereign AI</h3>
+                                <p className="text-gray-500 text-sm mb-4">Role: Secure Citizen Interface</p>
+                                <p className="text-gray-700 mb-6 leading-relaxed">
+                                    On-premise deployment for data localization. Powering emergency response and tender automation.
+                                </p>
+                                <a
+                                    href="/solutions/government/ai-call-assistant"
+                                    className="inline-flex items-center gap-2 text-slate-700 font-semibold hover:gap-4 transition-all"
+                                >
+                                    Explore Government <ArrowRight size={18} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     );
 };
 
-// Products Showcase Section
-const ProductsShowcase = () => {
+// Vertical Intelligence Section (Industries)
+const IndustryExpertise = () => {
     return (
-        <section id="products" className="py-24 bg-white">
+        <section className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Our Product Suite
+                        Vertical Intelligence.
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Purpose-built AI platforms for specific business functions
+                        We don't believe in "One AI Fits All." Our models are fine-tuned on industry-specific datasets.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
-                    {/* AI Recruiter */}
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border-2 border-blue-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6">
-                            <Users className="text-white" size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">AI Recruiter</h3>
-                        <p className="text-gray-700 mb-6 leading-relaxed">
-                            Autonomous hiring platform that screens, interviews, and ranks talent at infinite scale. 100% data-driven, 0% bias.
-                        </p>
-                        <div className="space-y-2 mb-6">
-                            <div className="flex items-center gap-2 text-sm">
-                                <Lock className="text-blue-600" size={16} />
-                                <span className="text-gray-600">Fake candidate detection</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <CheckCircle className="text-blue-600" size={16} />
-                                <span className="text-gray-600">Proctored technical assessments</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <BarChart3 className="text-blue-600" size={16} />
-                                <span className="text-gray-600">ATS integration ready</span>
-                            </div>
-                        </div>
-                        <a
-                            href="/products/ai-recruiter"
-                            className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:gap-4 transition-all"
-                        >
-                            Learn More <ArrowRight size={18} />
-                        </a>
-                    </div>
-
-                    {/* AI TeleCaller */}
+                    {/* Real Estate */}
                     <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 border-2 border-purple-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center mb-6">
-                            <Send className="text-white" size={28} />
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Real Estate Developers</h3>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Use Case</p>
+                            <p className="text-gray-700">Turning dead databases into site visits.</p>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">AI TeleCaller</h3>
-                        <p className="text-gray-700 mb-6 leading-relaxed">
-                            Enterprise voice agents that handle qualification calls, objections, and appointment booking with human-level nuance.
-                        </p>
-                        <div className="space-y-2 mb-6">
-                            <div className="flex items-center gap-2 text-sm">
-                                <Lock className="text-purple-600" size={16} />
-                                <span className="text-gray-600">Ultra-low latency voice synthesis</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <CheckCircle className="text-purple-600" size={16} />
-                                <span className="text-gray-600">Dynamic objection handling</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <BarChart3 className="text-purple-600" size={16} />
-                                <span className="text-gray-600">Calendar integration</span>
-                            </div>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Result</p>
+                            <p className="text-2xl font-bold text-purple-600">₹40 Cr</p>
+                            <p className="text-gray-700">Fresh bookings for a Mumbai Developer.</p>
                         </div>
                         <a
-                            href="/products/ai-telecaller"
+                            href="/solutions/real-estate"
                             className="inline-flex items-center gap-2 text-purple-600 font-semibold hover:gap-4 transition-all"
                         >
                             Learn More <ArrowRight size={18} />
                         </a>
                     </div>
 
-                    {/* Expo Insight */}
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-8 border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center mb-6">
-                            <BarChart3 className="text-white" size={28} />
+                    {/* Manufacturing */}
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border-2 border-blue-200 hover:shadow-xl transition-all">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Manufacturing & Industrial</h3>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Use Case</p>
+                            <p className="text-gray-700">Reading 500-page Tender RFPs automatically.</p>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">Expo Insight</h3>
-                        <p className="text-gray-700 mb-6 leading-relaxed">
-                            The operating system for trade shows. Offline-first mobile app & powerful analytics dashboard for exhibitions.
-                        </p>
-                        <div className="space-y-2 mb-6">
-                            <div className="flex items-center gap-2 text-sm">
-                                <Lock className="text-green-600" size={16} />
-                                <span className="text-gray-600">Military-grade OCR scanning</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <CheckCircle className="text-green-600" size={16} />
-                                <span className="text-gray-600">100% offline capable</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <BarChart3 className="text-green-600" size={16} />
-                                <span className="text-gray-600">Real-time lead analytics</span>
-                            </div>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Result</p>
+                            <p className="text-2xl font-bold text-blue-600">10 days → 4 hours</p>
+                            <p className="text-gray-700">Reduced tender analysis time.</p>
                         </div>
                         <a
-                            href="/products/expo-insight"
+                            href="/solutions/manufacturing"
+                            className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:gap-4 transition-all"
+                        >
+                            Learn More <ArrowRight size={18} />
+                        </a>
+                    </div>
+
+                    {/* Pharmaceuticals */}
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-8 border-2 border-green-200 hover:shadow-xl transition-all">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Pharmaceuticals</h3>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Use Case</p>
+                            <p className="text-gray-700">Managing Stockist orders and Export queries in Spanish/German.</p>
+                        </div>
+                        <div className="mb-6">
+                            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">The Result</p>
+                            <p className="text-2xl font-bold text-green-600">40%</p>
+                            <p className="text-gray-700">Increase in field force efficiency.</p>
+                        </div>
+                        <a
+                            href="/solutions/pharma"
                             className="inline-flex items-center gap-2 text-green-600 font-semibold hover:gap-4 transition-all"
                         >
                             Learn More <ArrowRight size={18} />
@@ -564,168 +601,47 @@ const ProductsShowcase = () => {
     );
 };
 
-// Industry Expertise Section
-const IndustryExpertise = () => {
+// Partner Ecosystem Section
+const PartnerSection = () => {
     return (
         <section className="py-24 bg-slate-900 text-white">
             <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        Industry Expertise
-                    </h2>
-                    <p className="text-xl text-purple-300">
-                        Proven deployments across highly regulated and complex sectors
-                    </p>
-                </div>
-
-                <div className="grid md:grid-cols-4 gap-6">
-                    <div className="bg-white/5 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Real Estate</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Lead qualification, revival campaigns, and walk-in generation
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                            You Sell the Vision.<br />We Build the Intelligence.
+                        </h2>
+                        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                            Are you a Digital Agency, System Integrator, or Consultant? Stop leaving revenue on the table. Partner with Nexby to offer end-to-end AI automation to your clients.
                         </p>
+                        <a
+                            href="/partnerships"
+                            className="inline-flex items-center gap-2 bg-white text-slate-900 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all"
+                        >
+                            Join Partner Program <ArrowRight size={20} />
+                        </a>
                     </div>
 
-                    <div className="bg-white/5 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Manufacturing</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            B2B sales enablement and technical buyer engagement
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Government</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Emergency response systems and citizen service automation
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-pink-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Technology</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Campus hiring, technical screening, and mass recruitment
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-orange-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Banking & Finance</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Frontline sales hiring and compliance-ready deployments
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-cyan-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Pharmaceuticals</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Medical conference lead capture with HIPAA compliance
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-yellow-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">BPO & Support</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            Voice accent evaluation and communication skills assessment
-                        </p>
-                    </div>
-
-                    <div className="bg-white/5 backdrop-blur-sm border border-red-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
-                        <h3 className="text-xl font-bold mb-3">Luxury & Retail</h3>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                            High-value client engagement and exhibition lead management
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-// Technology Stack Section
-const TechnologyStack = () => {
-    return (
-        <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Enterprise-Grade Technology
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Built on cutting-edge AI infrastructure with flexible deployment options
-                    </p>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-8 mb-12">
-                    <div className="bg-white rounded-2xl p-8 border-2 border-purple-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                            <Lock className="text-purple-600" size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">Cloud Deployment</h3>
-                        <p className="text-gray-600">
-                            Rapid scaling on secure, global infrastructure with 99.9% uptime SLA
-                        </p>
-                    </div>
-
-                    <div className="bg-white rounded-2xl p-8 border-2 border-blue-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                            <Lock className="text-blue-600" size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">On-Premise / Air-Gapped</h3>
-                        <p className="text-gray-600">
-                            Deploy LLM within your private infrastructure. Your data never leaves your perimeter
-                        </p>
-                    </div>
-
-                    <div className="bg-white rounded-2xl p-8 border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                            <Lock className="text-green-600" size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">Compliance Ready</h3>
-                        <p className="text-gray-600">
-                            Built to adhere to GDPR, TCPA, HIPAA and regional data sovereignty standards
-                        </p>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-3xl p-8 border-2 border-gray-200">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Integration Ecosystem</h3>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div>
-                            <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <Send className="text-purple-600" size={20} />
-                                Communication
-                            </h4>
-                            <ul className="space-y-2 text-gray-600">
-                                <li>• WhatsApp Business API</li>
-                                <li>• Twilio, Exotel (Voice)</li>
-                                <li>• Facebook Messenger</li>
-                                <li>• Custom SIP Trunks</li>
-                            </ul>
+                    <div className="space-y-6">
+                        <div className="bg-white/5 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
+                            <h3 className="text-xl font-bold mb-2 text-purple-300">For Agencies</h3>
+                            <p className="text-gray-300">
+                                Bundle "SalesX" with your lead gen services. Offer AI-powered outreach as a premium add-on.
+                            </p>
                         </div>
 
-                        <div>
-                            <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <BarChart3 className="text-blue-600" size={20} />
-                                CRM & ATS
-                            </h4>
-                            <ul className="space-y-2 text-gray-600">
-                                <li>• Salesforce, HubSpot, Zoho</li>
-                                <li>• Greenhouse, Lever, Workday</li>
-                                <li>• SAP SuccessFactors</li>
-                                <li>• Pipedrive, Dynamics 365</li>
-                            </ul>
+                        <div className="bg-white/5 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
+                            <h3 className="text-xl font-bold mb-2 text-green-300">For Fabricators</h3>
+                            <p className="text-gray-300">
+                                Bundle "Expo Insight" with your stall designs. Give exhibitors instant lead capture tech.
+                            </p>
                         </div>
 
-                        <div>
-                            <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <CheckCircle className="text-green-600" size={20} />
-                                Calendar & Collaboration
-                            </h4>
-                            <ul className="space-y-2 text-gray-600">
-                                <li>• Google Calendar</li>
-                                <li>• Microsoft Outlook</li>
-                                <li>• Calendly</li>
-                                <li>• Slack Integration</li>
-                            </ul>
+                        <div className="bg-white/5 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6 hover:bg-white/10 transition-all">
+                            <h3 className="text-xl font-bold mb-2 text-blue-300">For Consultants</h3>
+                            <p className="text-gray-300">
+                                Refer deals and earn recurring revenue. We handle the tech, you keep the relationship.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -734,73 +650,7 @@ const TechnologyStack = () => {
     );
 };
 
-// Why Choose Nexby Section
-const WhyChooseNexby = () => {
-    return (
-        <section className="py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        Why Choose Nexby
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        We don't build experiments. We ship production-grade AI systems that stick.
-                    </p>
-                </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border-2 border-purple-200">
-                        <div className="text-3xl font-bold text-purple-600 mb-4">300+</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Businesses Onboarded</h3>
-                        <p className="text-gray-600">
-                            Across India, GCC, and global markets with scalable AI architectures
-                        </p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border-2 border-blue-200">
-                        <div className="text-3xl font-bold text-blue-600 mb-4">&lt; 6 Mo</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Avg. Payback Period</h3>
-                        <p className="text-gray-600">
-                            Most clients recover AI investment inside two quarters through efficiency gains
-                        </p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200">
-                        <div className="text-3xl font-bold text-green-600 mb-4">90%</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Time Reduction</h3>
-                        <p className="text-gray-600">
-                            From 140 hours to 13 minutes per hire in recruitment use cases
-                        </p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-8 border-2 border-orange-200">
-                        <div className="text-3xl font-bold text-orange-600 mb-4">40%</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Lead Conversion Increase</h3>
-                        <p className="text-gray-600">
-                            Average improvement in sales conversion within first quarter
-                        </p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-8 border-2 border-cyan-200">
-                        <div className="text-3xl font-bold text-cyan-600 mb-4">Zero</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Dropped Calls</h3>
-                        <p className="text-gray-600">
-                            100% call pickup rate in government emergency response deployments
-                        </p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 border-2 border-pink-200">
-                        <div className="text-3xl font-bold text-pink-600 mb-4">24/7</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Always Available</h3>
-                        <p className="text-gray-600">
-                            AI agents work round the clock across all time zones
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
 
 const HomePage = () => {
     useEffect(() => {
@@ -854,14 +704,11 @@ const HomePage = () => {
             </Helmet>
             <HeroSection />
             <ScrollAnimationSection />
-            <SolutionsOverview />
             <ChatSection />
             <ProductsShowcase />
             <StatsSection />
             <IndustryExpertise />
-            <TechnologyStack />
-            <WhyChooseNexby />
-            <ContactForm formId="home_page_contact_form" />
+            <PartnerSection />
         </>
     );
 };
