@@ -1,66 +1,96 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronDown, Check } from 'lucide-react';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// import { ChevronDown, Check } from "lucide-react";
+import Form from "./Form";
 
-const COUNTRY_CODES = [
-    { code: '+1', country: 'US', flag: '🇺🇸' },
-    { code: '+44', country: 'UK', flag: '🇬🇧' },
-    { code: '+91', country: 'IN', flag: '🇮🇳' },
-    { code: '+1', country: 'CA', flag: '🇨🇦' },
-    { code: '+61', country: 'AU', flag: '🇦🇺' },
-    { code: '+971', country: 'AE', flag: '🇦🇪' },
-    { code: '+65', country: 'SG', flag: '🇸🇬' },
-    { code: '+49', country: 'DE', flag: '🇩🇪' },
-];
+// const COUNTRY_CODES = [
+//   { code: "+1", country: "US", flag: "🇺🇸" },
+//   { code: "+44", country: "UK", flag: "🇬🇧" },
+//   { code: "+91", country: "IN", flag: "🇮🇳" },
+//   { code: "+1", country: "CA", flag: "🇨🇦" },
+//   { code: "+61", country: "AU", flag: "🇦🇺" },
+//   { code: "+971", country: "AE", flag: "🇦🇪" },
+//   { code: "+65", country: "SG", flag: "🇸🇬" },
+//   { code: "+49", country: "DE", flag: "🇩🇪" },
+// ];
 
-const DESIGNATIONS = [
-    "Founder / CXO",
-    "VP / Director",
-    "Manager",
-    "Individual Contributor",
-    "Other"
-];
+// const DESIGNATIONS = [
+//   "Founder / CXO",
+//   "VP / Director",
+//   "Manager",
+//   "Individual Contributor",
+//   "Other",
+// ];
 
-const TIMELINES = [
-    "Within a month",
-    "1-2 months",
-    "After 2 months"
-];
+// const TIMELINES = ["Within a month", "1-2 months", "After 2 months"];
 
 const ExpoDemoForm = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        designation: '',
-        email: '',
-        countryCode: '+1',
-        mobile: '',
-        timeline: ''
-    });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    designation: "",
+    email: "",
+    countryCode: "+1",
+    mobile: "",
+    timeline: "",
+  });
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Expo Demo Request:', formData);
-        // TODO: Send data to backend
-        navigate('/products/expo-insight/thank-you');
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Expo Demo Request:", formData);
+    // TODO: Send data to backend
+    navigate("/products/expo-insight/thank-you");
+  };
 
-    return (
-        <section id="demo-form" className="py-20 bg-white border-t border-gray-100">
-            <div className="max-w-4xl mx-auto px-6">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Ready to Upgrade Your Event ROI?
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Book a personalized demo of Expo Insight. See how you can capture, qualify, and engage leads in real-time.
-                    </p>
-                </div>
+  return (
+    <section id="demo-form" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Ready to Upgrade Your Event ROI?
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Book a personalized demo of Expo Insight. See how you can capture,
+            qualify, and engage leads in real-time.
+          </p>
+        </div>
 
-                <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Row 1: Name & Company */}
+        <div className="w-[80%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
+          <Form
+            title={null}
+            buttonName="Book Product Demo"
+            fields={[
+              {
+                id: "fullName",
+                label: "Full Name",
+                type: "text",
+                required: true,
+              },
+              { id: "email", label: "Email", type: "email", required: true },
+              {
+                id: "company",
+                label: "Company Name",
+                type: "text",
+                required: true,
+              },
+              {
+                id: "phone",
+                label: "Mobile Number",
+                type: "phone",
+                required: true,
+              },
+            ]}
+
+            // Later you can call API:
+            // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
+          />
+          <p className="text-center text-xs text-purple-300/60 mt-4">
+            By booking a demo, you agree to our privacy policy. Your data is
+            secure.
+          </p>
+          {/* <form onSubmit={handleSubmit} className="space-y-6">
+                       
                         <div className="grid gap-6 md:grid-cols-2">
                             <div>
                                 <label className="block text-sm font-semibold text-purple-100 mb-2">
@@ -90,7 +120,7 @@ const ExpoDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 2: Email & Designation */}
+                        
                         <div className="grid gap-6 md:grid-cols-2">
                             <div>
                                 <label className="block text-sm font-semibold text-purple-100 mb-2">
@@ -126,7 +156,7 @@ const ExpoDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 3: Mobile Number */}
+                       
                         <div>
                             <label className="block text-sm font-semibold text-purple-100 mb-2">
                                 Mobile Number <span className="text-purple-300 font-normal">(Optional)</span>
@@ -156,7 +186,7 @@ const ExpoDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 4: Timeline */}
+                       
                         <div>
                             <label className="block text-sm font-semibold text-purple-100 mb-2">
                                 When is your next exhibition?
@@ -201,11 +231,11 @@ const ExpoDemoForm = () => {
                         <p className="text-center text-xs text-purple-300/60 mt-4">
                             By booking a demo, you agree to our privacy policy. Your data is secure.
                         </p>
-                    </form>
-                </div>
-            </div>
-        </section>
-    );
+                    </form> */}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default ExpoDemoForm;

@@ -1,0 +1,17 @@
+[
+  { "name": "India", "code": "IN", "dial_code": "+91", "flag": "🇮🇳" },
+  { "name": "United States", "code": "US", "dial_code": "+1", "flag": "🇺🇸" },
+  { "name": "United Kingdom", "code": "GB", "dial_code": "+44", "flag": "🇬🇧" },
+  { "name": "United Arab Emirates", "code": "AE", "dial_code": "+971", "flag": "🇦🇪" },
+  { "name": "Saudi Arabia", "code": "SA", "dial_code": "+966", "flag": "🇸🇦" },
+  { "name": "Australia", "code": "AU", "dial_code": "+61", "flag": "🇦🇺" },
+  { "name": "Canada", "code": "CA", "dial_code": "+1", "flag": "🇨🇦" },
+  { "name": "Germany", "code": "DE", "dial_code": "+49", "flag": "🇩🇪" },
+  { "name": "Pakistan", "code": "PK", "dial_code": "+92", "flag": "🇵🇰" },
+  { "name": "Bangladesh", "code": "BD", "dial_code": "+880", "flag": "🇧🇩" },
+  { "name": "Sri Lanka", "code": "LK", "dial_code": "+94", "flag": "🇱🇰" },
+  { "name": "Nepal", "code": "NP", "dial_code": "+977", "flag": "🇳🇵" },
+  { "name": "Singapore", "code": "SG", "dial_code": "+65", "flag": "🇸🇬" },
+  { "name": "Malaysia", "code": "MY", "dial_code": "+60", "flag": "🇲🇾" },
+  { "name": "South Africa", "code": "ZA", "dial_code": "+27", "flag": "🇿🇦" }
+]

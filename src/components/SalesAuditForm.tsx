@@ -1,53 +1,85 @@
-import { useState } from 'react';
-import { TrendingUp, Zap, Users } from 'lucide-react';
+import { useState } from "react";
+import { TrendingUp, Zap, Users } from "lucide-react";
+import Form from "./Form";
 
 interface SalesAuditFormProps {
-    formId: string;
+  formId: string;
 }
 
 const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
-    const [leadsVolume, setLeadsVolume] = useState(250);
-    const [conversionRate, setConversionRate] = useState(15);
-    const [challengeText, setChallengeText] = useState("");
+  const [leadsVolume, setLeadsVolume] = useState(250);
+  const [conversionRate, setConversionRate] = useState(15);
+  const [challengeText, setChallengeText] = useState("");
 
-    const [contactMethod, setContactMethod] = useState("email");
+  const [contactMethod, setContactMethod] = useState("email");
 
-    const handleTagClick = (text: string) => {
-        setChallengeText(text);
-    };
+  const handleTagClick = (text: string) => {
+    setChallengeText(text);
+  };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        console.log('Sales Audit Form Submitted:', {
-            formId,
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            leadsVolume,
-            responseTime: formData.get('responseTime'),
-            conversionRate,
-            challenge: challengeText,
-            contactMethod: contactMethod,
-            phoneNumber: formData.get('phoneNumber')
-        });
-        // TODO: Wire to backend
-        alert('Thank you! Our sales optimization team will analyze your data and reach out within 24 hours.');
-    };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log("Sales Audit Form Submitted:", {
+      formId,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      leadsVolume,
+      responseTime: formData.get("responseTime"),
+      conversionRate,
+      challenge: challengeText,
+      contactMethod: contactMethod,
+      phoneNumber: formData.get("phoneNumber"),
+    });
+    // TODO: Wire to backend
+    alert(
+      "Thank you! Our sales optimization team will analyze your data and reach out within 24 hours."
+    );
+  };
 
-    return (
-        <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-            <div className="mb-8">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-                    Audit My Sales Process
-                </h3>
-                <p className="text-purple-200 text-lg">
-                    Share your current metrics. We'll identify where AI can double your conversion rate.
-                </p>
-            </div>
+  return (
+    <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
+      <div className="mb-8">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          Audit My Sales Process
+        </h3>
+        <p className="text-purple-200 text-lg">
+          Share your current metrics. We'll identify where AI can double your
+          conversion rate.
+        </p>
+      </div>
+      {/* <Form ButtonName="Datat" /> */}
+      <Form
+        title={null}
+        buttonName="Get My Free Sales Audit"
+        fields={[
+          {
+            id: "fullName",
+            label: "Full Name",
+            type: "text",
+            required: true,
+          },
+          { id: "email", label: "Email", type: "email", required: true },
+          {
+            id: "company",
+            label: "Company Name",
+            type: "text",
+            required: true,
+          },
+          {
+            id: "phone",
+            label: "Mobile Number",
+            type: "phone",
+            required: true,
+          },
+        ]}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Basic Info */}
+        // Later you can call API:
+        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
+      />
+      {/* <form onSubmit={handleSubmit} className="space-y-6">
+               
                 <div className="grid gap-5 md:grid-cols-2">
                     <div>
                         <label className="text-sm font-semibold text-white mb-2 block">
@@ -88,7 +120,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                     />
                 </div>
 
-                {/* Sales Metrics */}
+            
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-purple-400/20">
                     <h4 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <TrendingUp size={20} className="text-purple-400" />
@@ -96,7 +128,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                     </h4>
 
                     <div className="space-y-5">
-                        {/* Monthly Leads */}
+                    
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Monthly Inbound Leads: <span className="text-purple-400">{leadsVolume}{leadsVolume >= 1000 ? '+' : ''}</span>
@@ -117,7 +149,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                             </div>
                         </div>
 
-                        {/* Response Time */}
+                     
                         <div>
                             <label className="text-sm font-semibold text-white mb-2 block">
                                 Average Response Time to New Leads
@@ -134,7 +166,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                             </select>
                         </div>
 
-                        {/* Conversion Rate */}
+                      
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Current Lead-to-Customer Conversion Rate: <span className="text-purple-400">{conversionRate}%</span>
@@ -157,14 +189,14 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                     </div>
                 </div>
 
-                {/* Challenges */}
+               
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Zap size={18} className="text-yellow-400" />
                         What's your biggest sales challenge right now?
                     </label>
 
-                    {/* Quick Select Tags */}
+             
                     <div className="flex flex-wrap gap-2 mb-3">
                         <button
                             type="button"
@@ -205,7 +237,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                     />
                 </div>
 
-                {/* Preferred Contact Method */}
+        
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Users size={18} className="text-purple-400" />
@@ -247,7 +279,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                         </label>
                     </div>
 
-                    {/* Conditional Phone Input */}
+               
                     {(contactMethod === 'phone' || contactMethod === 'whatsapp') && (
                         <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <label className="text-sm font-semibold text-white mb-2 block">
@@ -266,23 +298,23 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
                     )}
                 </div>
 
-                {/* Trust Message */}
+             
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-400/30 rounded-2xl px-5 py-4">
                     <p className="text-sm text-purple-100 leading-relaxed">
                         <span className="font-bold text-white">Expert Analysis Guaranteed:</span> Our sales optimization specialists will review your metrics, benchmark against industry standards, and identify 3-5 specific opportunities where AI can increase your revenue within 90 days.
                     </p>
                 </div>
 
-                {/* Submit Button */}
+              
                 <button
                     type="submit"
                     className="w-full h-14 bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:from-purple-700 hover:via-purple-600 hover:to-pink-700 rounded-full text-white font-bold text-base uppercase tracking-wider shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                     Get My Free Sales Audit
                 </button>
-            </form>
-        </div>
-    );
+            </form> */}
+    </div>
+  );
 };
 
 export default SalesAuditForm;

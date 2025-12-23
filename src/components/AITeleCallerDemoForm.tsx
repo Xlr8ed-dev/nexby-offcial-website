@@ -1,83 +1,117 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronDown, Check, Loader2 } from 'lucide-react';
-import { submitDemoRequest } from '../services/api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// import { ChevronDown, Check, Loader2 } from "lucide-react";
+import { submitDemoRequest } from "../services/api";
+import Form from "./Form";
 
-const COUNTRY_CODES = [
-    { code: '+1', country: 'US', flag: '🇺🇸' },
-    { code: '+44', country: 'UK', flag: '🇬🇧' },
-    { code: '+91', country: 'IN', flag: '🇮🇳' },
-    { code: '+1', country: 'CA', flag: '🇨🇦' },
-    { code: '+61', country: 'AU', flag: '🇦🇺' },
-    { code: '+971', country: 'AE', flag: '🇦🇪' },
-    { code: '+65', country: 'SG', flag: '🇸🇬' },
-    { code: '+49', country: 'DE', flag: '🇩🇪' },
-];
+// const COUNTRY_CODES = [
+//   { code: "+1", country: "US", flag: "🇺🇸" },
+//   { code: "+44", country: "UK", flag: "🇬🇧" },
+//   { code: "+91", country: "IN", flag: "🇮🇳" },
+//   { code: "+1", country: "CA", flag: "🇨🇦" },
+//   { code: "+61", country: "AU", flag: "🇦🇺" },
+//   { code: "+971", country: "AE", flag: "🇦🇪" },
+//   { code: "+65", country: "SG", flag: "🇸🇬" },
+//   { code: "+49", country: "DE", flag: "🇩🇪" },
+// ];
 
-const DESIGNATIONS = [
-    "Founder / CXO",
-    "VP / Director",
-    "Manager",
-    "Individual Contributor",
-    "Other"
-];
+// const DESIGNATIONS = [
+//   "Founder / CXO",
+//   "VP / Director",
+//   "Manager",
+//   "Individual Contributor",
+//   "Other",
+// ];
 
-const USE_CASES = [
-    "Debt Collection",
-    "Customer Service",
-    "Lead Qualification",
-    "Other"
-];
+// const USE_CASES = [
+//   "Debt Collection",
+//   "Customer Service",
+//   "Lead Qualification",
+//   "Other",
+// ];
 
-const CALL_VOLUMES = [
-    "<1,000 calls/day",
-    "1K-10K calls/day",
-    "10K-100K calls/day",
-    ">100K calls/day"
-];
+// const CALL_VOLUMES = [
+//   "<1,000 calls/day",
+//   "1K-10K calls/day",
+//   "10K-100K calls/day",
+//   ">100K calls/day",
+// ];
 
 const AITeleCallerDemoForm = () => {
-    const navigate = useNavigate();
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        designation: '',
-        email: '',
-        countryCode: '+1',
-        mobile: '',
-        useCase: '',
-        callVolume: ''
-    });
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    designation: "",
+    email: "",
+    countryCode: "+1",
+    mobile: "",
+    useCase: "",
+    callVolume: "",
+  });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        try {
-            await submitDemoRequest(formData);
-            navigate('/products/ai-telecaller/thank-you');
-        } catch (error) {
-            console.error('Submission failed', error);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await submitDemoRequest(formData);
+      navigate("/products/ai-telecaller/thank-you");
+    } catch (error) {
+      console.error("Submission failed", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    return (
-        <section id="demo-form" className="py-20 bg-white border-t border-gray-100">
-            <div className="max-w-4xl mx-auto px-6">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Ready to Deploy Your Voice Agent?
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Request a personalized voice demo. Hear our AI in action and see how it can transform your call operations.
-                    </p>
-                </div>
+  return (
+    <section id="demo-form" className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Ready to Deploy Your Voice Agent?
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Request a personalized voice demo. Hear our AI in action and see how
+            it can transform your call operations.
+          </p>
+        </div>
 
-                <div className="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-indigo-500/20">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Row 1: Name & Company */}
+        <div className="w-[80%] mx-auto bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-indigo-500/20">
+          <Form
+            title={null}
+            buttonName="Request Voice Demo"
+            fields={[
+              {
+                id: "fullName",
+                label: "Full Name",
+                type: "text",
+                required: true,
+              },
+              { id: "email", label: "Email", type: "email", required: true },
+              {
+                id: "company",
+                label: "Company Name",
+                type: "text",
+                required: true,
+              },
+              {
+                id: "phone",
+                label: "Mobile Number",
+                type: "phone",
+                required: true,
+              },
+            ]}
+
+            // Later you can call API:
+            // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
+          />
+          <p className="text-center text-xs text-indigo-300/60 mt-4">
+            By requesting a demo, you agree to our privacy policy. Your data is
+            secure.
+          </p>
+          {/* <form onSubmit={handleSubmit} className="space-y-6">
+                        
                         <div className="grid gap-6 md:grid-cols-2">
                             <div>
                                 <label className="block text-sm font-semibold text-indigo-100 mb-2">
@@ -107,7 +141,7 @@ const AITeleCallerDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 2: Email & Designation */}
+                      
                         <div className="grid gap-6 md:grid-cols-2">
                             <div>
                                 <label className="block text-sm font-semibold text-indigo-100 mb-2">
@@ -143,7 +177,7 @@ const AITeleCallerDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 3: Mobile Number */}
+                     
                         <div>
                             <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                 Mobile Number <span className="text-indigo-300 font-normal">(Optional)</span>
@@ -173,7 +207,7 @@ const AITeleCallerDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 4: Use Case */}
+                       
                         <div>
                             <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                 Primary Use Case
@@ -208,7 +242,7 @@ const AITeleCallerDemoForm = () => {
                             </div>
                         </div>
 
-                        {/* Row 5: Expected Call Volume */}
+                     
                         <div>
                             <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                 Expected Call Volume
@@ -247,11 +281,11 @@ const AITeleCallerDemoForm = () => {
                         <p className="text-center text-xs text-indigo-300/60 mt-4">
                             By requesting a demo, you agree to our privacy policy. Your data is secure.
                         </p>
-                    </form>
-                </div>
-            </div>
-        </section>
-    );
+                    </form> */}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default AITeleCallerDemoForm;

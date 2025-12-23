@@ -1,53 +1,84 @@
-import { useState } from 'react';
-import { TrendingUp, Zap, Users } from 'lucide-react';
+import { useState } from "react";
+// import { TrendingUp, Zap, Users } from "lucide-react";
+import Form from "./Form";
 
 interface OperationsAuditFormProps {
-    formId: string;
+  formId: string;
 }
 
 const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
-    const [ticketVolume, setTicketVolume] = useState(500);
-    const [teamSize, setTeamSize] = useState(5);
-    const [challengeText, setChallengeText] = useState("");
+  const [ticketVolume, setTicketVolume] = useState(500);
+  const [teamSize, setTeamSize] = useState(5);
+  const [challengeText, setChallengeText] = useState("");
 
-    const [contactMethod, setContactMethod] = useState("email");
+  const [contactMethod, setContactMethod] = useState("email");
 
-    const handleTagClick = (text: string) => {
-        setChallengeText(text);
-    };
+  const handleTagClick = (text: string) => {
+    setChallengeText(text);
+  };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        console.log('Operations Audit Form Submitted:', {
-            formId,
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            ticketVolume,
-            teamSize,
-            avgHandleTime: formData.get('avgHandleTime'),
-            challenge: challengeText,
-            contactMethod: contactMethod,
-            phoneNumber: formData.get('phoneNumber')
-        });
-        // TODO: Wire to backend
-        alert('Thank you! Our operations optimization team will analyze your data and reach out within 24 hours.');
-    };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log("Operations Audit Form Submitted:", {
+      formId,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      ticketVolume,
+      teamSize,
+      avgHandleTime: formData.get("avgHandleTime"),
+      challenge: challengeText,
+      contactMethod: contactMethod,
+      phoneNumber: formData.get("phoneNumber"),
+    });
+    // TODO: Wire to backend
+    alert(
+      "Thank you! Our operations optimization team will analyze your data and reach out within 24 hours."
+    );
+  };
 
-    return (
-        <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-500/20">
-            <div className="mb-8">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-                    Audit My Support Operations
-                </h3>
-                <p className="text-blue-200 text-lg">
-                    Share your current metrics. We'll identify where AI can automate 70% of your tickets.
-                </p>
-            </div>
+  return (
+    <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-500/20">
+      <div className="mb-8">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          Audit My Support Operations
+        </h3>
+        <p className="text-blue-200 text-lg">
+          Share your current metrics. We'll identify where AI can automate 70%
+          of your tickets.
+        </p>
+      </div>
+      <Form
+        title={null}
+        buttonName="Automate Your Ops"
+        fields={[
+          {
+            id: "fullName",
+            label: "Full Name",
+            type: "text",
+            required: true,
+          },
+          { id: "email", label: "Email", type: "email", required: true },
+          {
+            id: "company",
+            label: "Company Name",
+            type: "text",
+            required: true,
+          },
+          {
+            id: "phone",
+            label: "Mobile Number",
+            type: "phone",
+            required: true,
+          },
+        ]}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Basic Info */}
+        // Later you can call API:
+        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
+      />
+      {/* <form onSubmit={handleSubmit} className="space-y-6">
+              
                 <div className="grid gap-5 md:grid-cols-2">
                     <div>
                         <label className="text-sm font-semibold text-white mb-2 block">
@@ -88,7 +119,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                     />
                 </div>
 
-                {/* Operations Metrics */}
+                
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/20">
                     <h4 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <TrendingUp size={20} className="text-blue-400" />
@@ -96,7 +127,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                     </h4>
 
                     <div className="space-y-5">
-                        {/* Monthly Tickets */}
+                       
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Monthly Support Tickets: <span className="text-blue-400">{ticketVolume}{ticketVolume >= 5000 ? '+' : ''}</span>
@@ -117,7 +148,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                             </div>
                         </div>
 
-                        {/* Team Size */}
+                     
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Support Team Size: <span className="text-blue-400">{teamSize}{teamSize >= 50 ? '+' : ''}</span>
@@ -138,7 +169,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                             </div>
                         </div>
 
-                        {/* Average Handle Time */}
+                      
                         <div>
                             <label className="text-sm font-semibold text-white mb-2 block">
                                 Average Handle Time (AHT)
@@ -157,14 +188,14 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                     </div>
                 </div>
 
-                {/* Challenges */}
+            
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Zap size={18} className="text-yellow-400" />
                         What's your biggest operational challenge?
                     </label>
 
-                    {/* Quick Select Tags */}
+                  
                     <div className="flex flex-wrap gap-2 mb-3">
                         <button
                             type="button"
@@ -205,7 +236,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                     />
                 </div>
 
-                {/* Preferred Contact Method */}
+              
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Users size={18} className="text-blue-400" />
@@ -247,7 +278,6 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                         </label>
                     </div>
 
-                    {/* Conditional Phone Input */}
                     {(contactMethod === 'phone' || contactMethod === 'whatsapp') && (
                         <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <label className="text-sm font-semibold text-white mb-2 block">
@@ -266,23 +296,23 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
                     )}
                 </div>
 
-                {/* Trust Message */}
+             
                 <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-400/30 rounded-2xl px-5 py-4">
                     <p className="text-sm text-blue-100 leading-relaxed">
                         <span className="font-bold text-white">Expert Analysis Guaranteed:</span> Our operations specialists will review your metrics and identify specific opportunities to reduce costs and improve response times within 90 days.
                     </p>
                 </div>
 
-                {/* Submit Button */}
+               
                 <button
                     type="submit"
                     className="w-full h-14 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 hover:from-blue-700 hover:via-blue-600 hover:to-cyan-700 rounded-full text-white font-bold text-base uppercase tracking-wider shadow-lg hover:shadow-blue-500/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                     Automate Your Ops
                 </button>
-            </form>
-        </div>
-    );
+            </form> */}
+    </div>
+  );
 };
 
 export default OperationsAuditForm;

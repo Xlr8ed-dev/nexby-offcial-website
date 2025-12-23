@@ -1,52 +1,83 @@
-import { useState } from 'react';
-import { Zap, Users, Briefcase } from 'lucide-react';
+import { useState } from "react";
+import { Zap, Users, Briefcase } from "lucide-react";
+import Form from "./Form";
 
 interface RecruitmentAuditFormProps {
-    formId: string;
+  formId: string;
 }
 
 const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
-    const [hiringVolume, setHiringVolume] = useState(10);
-    const [timeToHire, setTimeToHire] = useState(30);
-    const [challengeText, setChallengeText] = useState("");
+  const [hiringVolume, setHiringVolume] = useState(10);
+  const [timeToHire, setTimeToHire] = useState(30);
+  const [challengeText, setChallengeText] = useState("");
 
-    const [contactMethod, setContactMethod] = useState("email");
+  const [contactMethod, setContactMethod] = useState("email");
 
-    const handleTagClick = (text: string) => {
-        setChallengeText(text);
-    };
+  const handleTagClick = (text: string) => {
+    setChallengeText(text);
+  };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        console.log('Recruitment Audit Form Submitted:', {
-            formId,
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            hiringVolume,
-            timeToHire,
-            challenge: challengeText,
-            contactMethod: contactMethod,
-            phoneNumber: formData.get('phoneNumber')
-        });
-        // TODO: Wire to backend
-        alert('Thank you! Our recruitment optimization team will analyze your data and reach out within 24 hours.');
-    };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log("Recruitment Audit Form Submitted:", {
+      formId,
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      hiringVolume,
+      timeToHire,
+      challenge: challengeText,
+      contactMethod: contactMethod,
+      phoneNumber: formData.get("phoneNumber"),
+    });
+    // TODO: Wire to backend
+    alert(
+      "Thank you! Our recruitment optimization team will analyze your data and reach out within 24 hours."
+    );
+  };
 
-    return (
-        <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-            <div className="mb-8">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-                    Start Your Pilot
-                </h3>
-                <p className="text-purple-200 text-lg">
-                    Post a job today and let Nexby deliver your top 3 candidates by tomorrow morning.
-                </p>
-            </div>
+  return (
+    <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
+      <div className="mb-8">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          Start Your Pilot
+        </h3>
+        <p className="text-purple-200 text-lg">
+          Post a job today and let Nexby deliver your top 3 candidates by
+          tomorrow morning.
+        </p>
+      </div>
+      <Form
+        title={null}
+        buttonName="Start Your Pilot"
+        fields={[
+          {
+            id: "fullName",
+            label: "Full Name",
+            type: "text",
+            required: true,
+          },
+          { id: "email", label: "Email", type: "email", required: true },
+          {
+            id: "company",
+            label: "Company Name",
+            type: "text",
+            required: true,
+          },
+          {
+            id: "phone",
+            label: "Mobile Number",
+            type: "phone",
+            required: true,
+          },
+        ]}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Basic Info */}
+        // Later you can call API:
+        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
+      />
+      {/* <form onSubmit={handleSubmit} className="space-y-6">
+               
                 <div className="grid gap-5 md:grid-cols-2">
                     <div>
                         <label className="text-sm font-semibold text-white mb-2 block">
@@ -87,7 +118,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                     />
                 </div>
 
-                {/* Recruitment Metrics */}
+                
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-purple-400/20">
                     <h4 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <Briefcase size={20} className="text-purple-400" />
@@ -95,7 +126,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                     </h4>
 
                     <div className="space-y-5">
-                        {/* Monthly Hires */}
+                        
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Monthly Hires: <span className="text-purple-400">{hiringVolume}{hiringVolume >= 100 ? '+' : ''}</span>
@@ -116,7 +147,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                             </div>
                         </div>
 
-                        {/* Time to Hire */}
+                        
                         <div>
                             <label className="text-sm font-semibold text-white mb-3 block">
                                 Average Time to Hire (Days): <span className="text-purple-400">{timeToHire} days</span>
@@ -139,14 +170,14 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                     </div>
                 </div>
 
-                {/* Challenges */}
+              
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Zap size={18} className="text-yellow-400" />
                         What's your biggest hiring challenge?
                     </label>
 
-                    {/* Quick Select Tags */}
+                    
                     <div className="flex flex-wrap gap-2 mb-3">
                         <button
                             type="button"
@@ -187,7 +218,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                     />
                 </div>
 
-                {/* Preferred Contact Method */}
+             
                 <div>
                     <label className="text-sm font-semibold text-white mb-3 block flex items-center gap-2">
                         <Users size={18} className="text-purple-400" />
@@ -229,7 +260,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                         </label>
                     </div>
 
-                    {/* Conditional Phone Input */}
+                   
                     {(contactMethod === 'phone' || contactMethod === 'whatsapp') && (
                         <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <label className="text-sm font-semibold text-white mb-2 block">
@@ -248,23 +279,23 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
                     )}
                 </div>
 
-                {/* Trust Message */}
+             
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-400/30 rounded-2xl px-5 py-4">
                     <p className="text-sm text-purple-100 leading-relaxed">
                         <span className="font-bold text-white">Expert Analysis Guaranteed:</span> Our recruitment specialists will review your requirements and set up a pilot to demonstrate the power of AI in your hiring process.
                     </p>
                 </div>
 
-                {/* Submit Button */}
+                
                 <button
                     type="submit"
                     className="w-full h-14 bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:from-purple-700 hover:via-purple-600 hover:to-pink-700 rounded-full text-white font-bold text-base uppercase tracking-wider shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                     Start Your Pilot
                 </button>
-            </form>
-        </div>
-    );
+            </form> */}
+    </div>
+  );
 };
 
 export default RecruitmentAuditForm;
