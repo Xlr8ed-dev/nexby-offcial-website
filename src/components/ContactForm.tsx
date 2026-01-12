@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
 
 interface ContactFormProps {
   showDescription?: boolean;
@@ -42,6 +43,7 @@ ContactFormProps) => {
 
         {/* <div className="w-[60%] mx-auto"> */}
         <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 shadow-2xl border border-purple-500/20">
+          <DynamicFormContainer formId={3} />
           {/* <Form
             title={null}
             buttonName="Request Strategy Call"
@@ -71,7 +73,7 @@ ContactFormProps) => {
             // Later you can call API:
             // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
           /> */}
-          <Form
+          {/* <Form
             title={null}
             buttonName="Request Strategy Call"
             fields={[
@@ -79,21 +81,52 @@ ContactFormProps) => {
                 id: "fullName",
                 label: "Full Name",
                 type: "text",
+                required: true,
               },
-              { id: "email", label: "Email", type: "email" },
+              {
+                id: "email",
+                label: "Email",
+                type: "email",
+                required: true,
+              },
               {
                 id: "company",
                 label: "Company Name",
                 type: "text",
+                required: true,
               },
               {
                 id: "phone",
                 label: "Mobile Number",
                 type: "phone",
+                required: true,
+              },
+
+             
+              {
+                id: "product",
+                label: "Product Interested In",
+                type: "select",
+                required: true,
+                options: [
+                  "AI Recruiter",
+                  "SalesX",
+                  "Expo Insight",
+                  "Call Analyser",
+                  "AI Telecaller",
+                  "SupportAssist",
+                ],
+              },
+
+             
+              {
+                id: "remarks",
+                label: "Remarks",
+                type: "textarea",
               },
             ]}
             onSubmit={(data) => console.log("Form Data:", data)}
-          />
+          /> */}
 
           {/* <form
               className="space-y-6"

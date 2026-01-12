@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import { TrendingUp, Zap, Users } from "lucide-react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
 
 interface OperationsAuditFormProps {
   formId: string;
@@ -40,7 +41,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
 
   return (
     <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-500/20">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
           Audit My Support Operations
         </h3>
@@ -48,8 +49,9 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
           Share your current metrics. We'll identify where AI can automate 70%
           of your tickets.
         </p>
-      </div>
-      <Form
+      </div> */}
+      <DynamicFormContainer formId={6} />
+      {/* <Form
         title={null}
         buttonName="Automate Your Ops"
         fields={[
@@ -73,10 +75,7 @@ const OperationsAuditForm = ({ formId }: OperationsAuditFormProps) => {
             required: true,
           },
         ]}
-
-        // Later you can call API:
-        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
-      />
+      /> */}
       {/* <form onSubmit={handleSubmit} className="space-y-6">
               
                 <div className="grid gap-5 md:grid-cols-2">

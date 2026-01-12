@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { ChevronDown, Check } from "lucide-react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
 
 // const COUNTRY_CODES = [
 //   { code: "+1", country: "US", flag: "🇺🇸" },
@@ -57,7 +58,8 @@ const ExpoDemoForm = () => {
         </div>
 
         <div className="w-[80%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-          <Form
+          <DynamicFormContainer formId={10} />
+          {/* <Form
             title={null}
             buttonName="Book Product Demo"
             fields={[
@@ -81,10 +83,7 @@ const ExpoDemoForm = () => {
                 required: true,
               },
             ]}
-
-            // Later you can call API:
-            // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
-          />
+          /> */}
           <p className="text-center text-xs text-purple-300/60 mt-4">
             By booking a demo, you agree to our privacy policy. Your data is
             secure.

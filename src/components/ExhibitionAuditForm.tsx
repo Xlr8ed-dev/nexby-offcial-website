@@ -1,6 +1,7 @@
 import { useState } from "react";
 // import { TrendingUp, Zap, Users } from "lucide-react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
 
 interface ExhibitionAuditFormProps {
   formId: string;
@@ -40,7 +41,7 @@ const ExhibitionAuditForm = ({ formId }: ExhibitionAuditFormProps) => {
 
   return (
     <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
           Audit My Exhibition Strategy
         </h3>
@@ -48,36 +49,9 @@ const ExhibitionAuditForm = ({ formId }: ExhibitionAuditFormProps) => {
           Share your event metrics. We'll identify where AI can capture more
           leads.
         </p>
-      </div>
-      <Form
-        title={null}
-        // api="sgvsgcvgdvc"
-        buttonName="Deploy Nexby for Your Next Event"
-        fields={[
-          {
-            id: "fullName",
-            label: "Full Name",
-            type: "text",
-            required: true,
-          },
-          { id: "email", label: "Email", type: "email", required: true },
-          {
-            id: "company",
-            label: "Company Name",
-            type: "text",
-            required: true,
-          },
-          {
-            id: "phone",
-            label: "Mobile Number",
-            type: "phone",
-            required: true,
-          },
-        ]}
+      </div> */}
+      <DynamicFormContainer formId={7} />
 
-        // Later you can call API:
-        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
-      />
       {/* <form onSubmit={handleSubmit} className="space-y-6">
                 
                 <div className="grid gap-5 md:grid-cols-2">

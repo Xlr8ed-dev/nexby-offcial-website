@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import countryList from "../data/Country.json";
 import { z } from "zod";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // -------- SEARCHABLE COUNTRY DROPDOWN --------
 interface SearchableCountryDropdownProps {
@@ -127,14 +128,30 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
 };
 
 // -------- DYNAMIC FORM WITH LIVE VALIDATION --------
+// interface FormProps {
+//   buttonName?: string;
+//   title?: string | null;
+//   fields?: {
+//     id: string;
+//     label: string;
+//     type: "text" | "email" | "phone";
+//     required?: boolean;
+//   }[];
+//   onSubmit?: (data: Record<string, any>) => void;
+// }
+
+type FieldType = "text" | "email" | "phone" | "select" | "textarea";
+
 interface FormProps {
   buttonName?: string;
   title?: string | null;
+  description?: string | null;
   fields?: {
     id: string;
     label: string;
-    type: "text" | "email" | "phone";
+    type: FieldType;
     required?: boolean;
+    options?: string[];
   }[];
   onSubmit?: (data: Record<string, any>) => void;
 }
@@ -142,12 +159,31 @@ interface FormProps {
 const Form: React.FC<FormProps> = ({
   buttonName = "Submit",
   title = "Contact Form",
+  description,
   fields = [],
   onSubmit,
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  // const [isHuman, setIsHuman] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const productDropdownRef = useRef<HTMLDivElement>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        productDropdownRef.current &&
+        !productDropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   useEffect(() => {
     fields.forEach((field) => {
       if (field.type === "phone") {
@@ -183,10 +219,22 @@ const Form: React.FC<FormProps> = ({
               );
           }
 
-          if (field.type === "text" && field.id !== "fullName") {
+          // if (field.type === "text" && field.id !== "fullName") {
+          //   validator = z
+          //     .string()
+          //     .min(3, "Company name is required")
+          //     .max(200, `${field.label} cannot exceed 200 characters`);
+          // }
+          if (field.type === "text" && field.id === "full_name") {
             validator = z
               .string()
-              .min(3, "Company name is required")
+              .min(5, "Full name must be at least 5 characters")
+              .max(50, "Full name cannot exceed 50 characters")
+              .regex(/^[A-Za-z\s]+$/, "Full name must contain only letters");
+          } else if (field.type === "text") {
+            validator = z
+              .string()
+              .min(3, `${field.label} is required`)
               .max(200, `${field.label} cannot exceed 200 characters`);
           }
 
@@ -202,6 +250,50 @@ const Form: React.FC<FormProps> = ({
           if (field.required && field.type !== "phone") {
             validator = validator.min(1, `${field.label} is required`);
           }
+
+          if (field.type === "select") {
+            validator = z.string().min(1, `${field.label} is required`);
+          }
+
+          if (field.type === "textarea") {
+            validator = z
+              .string()
+              .max(500, "Remarks cannot exceed 500 characters")
+              .optional();
+          }
+
+          {
+            field.type === "select" && (
+              <select
+                className={`w-full h-11 rounded-xl border-2 ${
+                  errors[field.id] ? "border-red-500" : "border-purple-400/30"
+                } bg-slate-900 px-4 text-white outline-none`}
+                value={formData[field.id] || ""}
+                onChange={(e) => handleChange(field.id, e.target.value)}
+              >
+                <option value="">Select product</option>
+                {field.options?.map((opt: string) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            );
+          }
+
+          // {
+          //   field.type === "textarea" && (
+          //     <textarea
+          //       rows={4}
+          //       className={`w-full rounded-xl border-2 ${
+          //         errors[field.id] ? "border-red-500" : "border-purple-400/30"
+          //       } bg-white/10 px-4 py-3 text-white outline-none`}
+          //       placeholder="Enter remarks..."
+          //       value={formData[field.id] || ""}
+          //       onChange={(e) => handleChange(field.id, e.target.value)}
+          //     />
+          //   );
+          // }
 
           return [field.id, validator];
         })
@@ -270,66 +362,154 @@ const Form: React.FC<FormProps> = ({
 
     setErrors({});
     onSubmit?.(result.data);
+
+    const resetData: Record<string, any> = {};
+    fields.forEach((field) => {
+      if (field.type === "phone") {
+        resetData[`${field.id}_country`] = "+91";
+        resetData[field.id] = "";
+      } else {
+        resetData[field.id] = "";
+      }
+    });
+
+    setFormData(resetData);
+    setOpen(false);
+    setRecaptchaToken(null);
+    recaptchaRef.current?.reset();
   };
 
   return (
     <form onSubmit={handleSubmitForm} className="space-y-6">
-      {title && <h2 className="text-xl font-bold text-white">{title}</h2>}
+      {/* {title && <h2 className="text-xl font-bold text-white">{title}</h2>}
+      {description && (
+        <p className="text-sm text-purple-300/80 mb-4">{description}</p>
+      )} */}
+      {(title || description) && (
+        <div className="mb-8">
+          {title && (
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              {title}
+            </h3>
+          )}
 
+          {description && (
+            <p className="text-purple-200 text-lg">{description}</p>
+          )}
+        </div>
+      )}
       <div className="grid gap-5">
         {fields.map((field) => (
           <div key={field.id}>
             <label className="text-sm font-semibold text-white mb-2 block">
               {field.label}
+              {/* <span className="text-red-500 ml-1">*</span> */}
+              {field.required ? (
+                <span className="text-red-500 ml-1">*</span>
+              ) : (
+                <span className="text-purple-300 text-xs ml-2"></span>
+              )}
             </label>
 
+            {/* PHONE */}
             {field.type === "phone" && (
               <div className="flex gap-3">
                 <SearchableCountryDropdown
+                  fieldId={field.id}
                   value={formData[`${field.id}_country`] || "+91"}
                   onChange={(dialCode) =>
                     handleChange(`${field.id}_country`, dialCode)
                   }
-                  fieldId={field.id}
                 />
                 <input
                   type="tel"
-                  className={`flex-1 h-11 rounded-xl border-2 ${
-                    errors[field.id] ? "border-red-500" : "border-purple-400/30"
-                  } bg-white/10 backdrop-blur-sm px-4 text-white placeholder-purple-300/50 
-                    outline-none focus:border-purple-400 focus:bg-white/20 transition-all`}
-                  placeholder="123 456 7890"
+                  className="flex-1 h-11 rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 text-white"
                   value={formData[field.id] || ""}
-                  onChange={(e) => {
-                    const numeric = e.target.value.replace(/\D/g, "");
-                    handleChange(field.id, numeric);
-                  }}
+                  onChange={(e) =>
+                    handleChange(field.id, e.target.value.replace(/\D/g, ""))
+                  }
                 />
               </div>
             )}
-            {/* {errors[field.id] && (
-              <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
-            )} */}
 
-            {field.type !== "phone" && (
-              <>
-                <input
-                  type={field.type}
-                  required={field.required}
-                  className={`w-full h-11 rounded-xl border-2 ${
-                    errors[field.id] ? "border-red-500" : "border-purple-400/30"
-                  } bg-white/10 backdrop-blur-sm px-4 text-white placeholder-purple-300/50 
-                    outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 
-                    transition-all`}
-                  onChange={(e) => handleChange(field.id, e.target.value)}
-                />
-                {/* {errors[field.id] && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors[field.id]}
-                  </p>
-                )} */}
-              </>
+            {/* SELECT */}
+            {/* {field.type === "select" && (
+              <select
+                className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-slate-900 px-4 text-white"
+                value={formData[field.id] || ""}
+                onChange={(e) => handleChange(field.id, e.target.value)}
+              >
+                <option value="">Select product</option>
+                {field.options?.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            )} */}
+            {field.type === "select" && (
+              <div ref={productDropdownRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setOpen((prev) => !prev)}
+                  className="w-full h-11 rounded-xl border-2 border-purple-400/30
+      bg-white/10 backdrop-blur-sm px-4 text-white
+      flex justify-between items-center"
+                >
+                  <span
+                    className={
+                      formData[field.id] ? "text-white" : "text-purple-300/50"
+                    }
+                  >
+                    {formData[field.id] || "Select product"}
+                  </span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+
+                {open && (
+                  <div
+                    className="absolute z-50 mt-2 w-full rounded-xl border
+        border-purple-400/30 bg-slate-900 backdrop-blur-xl overflow-hidden"
+                  >
+                    {field.options?.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => {
+                          handleChange(field.id, opt);
+                          setOpen(false);
+                        }}
+                        className="w-full px-4 py-3 text-left text-white
+            hover:bg-purple-500/20 transition"
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
+
+            {/* TEXTAREA */}
+            {field.type === "textarea" && (
+              <textarea
+                rows={4}
+                className="w-full rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 py-3 text-white"
+                value={formData[field.id] || ""}
+                onChange={(e) => handleChange(field.id, e.target.value)}
+              />
+            )}
+
+            {/* DEFAULT INPUT → ONLY text & email */}
+            {field.type === "text" || field.type === "email" ? (
+              <input
+                type={field.type}
+                className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 text-white"
+                value={formData[field.id] || ""}
+                onChange={(e) => handleChange(field.id, e.target.value)}
+              />
+            ) : null}
+
             {errors[field.id] && (
               <p className="text-red-500 text-sm mt-1">{errors[field.id]}</p>
             )}
@@ -337,13 +517,47 @@ const Form: React.FC<FormProps> = ({
         ))}
       </div>
 
-      <button
+      {/* <div className="flex items-center gap-3">
+        <input
+          type="checkbox"
+          id="robotCheck"
+          checked={isHuman}
+          onChange={(e) => setIsHuman(e.target.checked)}
+          className="w-4 h-4 accent-purple-600"
+        />
+        <label htmlFor="robotCheck" className="text-sm text-white">
+          I am not a robot
+        </label>
+      </div> */}
+      <div className="flex justify-start">
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY || ""}
+          onChange={(value) => setRecaptchaToken(value)}
+          onExpired={() => setRecaptchaToken(null)}
+          onErrored={() => setRecaptchaToken(null)}
+          theme="light"
+        />
+      </div>
+      {/* <button
         type="submit"
         className="w-full h-14 bg-gradient-to-r from-purple-600 via-purple-500 
           to-pink-600 hover:from-purple-700 hover:via-purple-600 hover:to-pink-700 
           rounded-full text-white font-bold text-base uppercase tracking-wider shadow-lg 
           hover:shadow-purple-500/50 transition-all transform 
           hover:scale-[1.02] active:scale-[0.98]"
+      >
+        {buttonName}
+      </button> */}
+      <button
+        type="submit"
+        disabled={!recaptchaToken}
+        className={`w-full h-14 rounded-full font-bold uppercase tracking-wider transition-all
+    ${
+      recaptchaToken
+        ? "bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:scale-[1.02]"
+        : "bg-gray-600 cursor-not-allowed opacity-60"
+    }`}
       >
         {buttonName}
       </button>

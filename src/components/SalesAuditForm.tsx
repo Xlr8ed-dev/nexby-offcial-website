@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { TrendingUp, Zap, Users } from "lucide-react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
+// import DynamicFormContainer from "./DynamicFormContainer";
 
 interface SalesAuditFormProps {
   formId: string;
@@ -40,7 +42,7 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
 
   return (
     <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
           Audit My Sales Process
         </h3>
@@ -48,9 +50,11 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
           Share your current metrics. We'll identify where AI can double your
           conversion rate.
         </p>
-      </div>
+      </div> */}
       {/* <Form ButtonName="Datat" /> */}
-      <Form
+      <DynamicFormContainer formId={4} />
+
+      {/* <Form
         title={null}
         buttonName="Get My Free Sales Audit"
         fields={[
@@ -74,10 +78,10 @@ const SalesAuditForm = ({ formId }: SalesAuditFormProps) => {
             required: true,
           },
         ]}
+      /> */}
 
-        // Later you can call API:
-        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
-      />
+      {/* Later you can call API:
+     await fetch("/api/send", { method: "POST", body: JSON.stringify(data) }); */}
       {/* <form onSubmit={handleSubmit} className="space-y-6">
                
                 <div className="grid gap-5 md:grid-cols-2">

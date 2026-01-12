@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Zap, Users, Briefcase } from "lucide-react";
 import Form from "./Form";
+import DynamicFormContainer from "./DynamicFormContainer";
 
 interface RecruitmentAuditFormProps {
   formId: string;
@@ -39,7 +40,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
 
   return (
     <div className="w-[60%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
           Start Your Pilot
         </h3>
@@ -47,8 +48,9 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
           Post a job today and let Nexby deliver your top 3 candidates by
           tomorrow morning.
         </p>
-      </div>
-      <Form
+      </div> */}
+      <DynamicFormContainer formId={5} />
+      {/* <Form
         title={null}
         buttonName="Start Your Pilot"
         fields={[
@@ -73,9 +75,7 @@ const RecruitmentAuditForm = ({ formId }: RecruitmentAuditFormProps) => {
           },
         ]}
 
-        // Later you can call API:
-        // await fetch("/api/send", { method: "POST", body: JSON.stringify(data) });
-      />
+      /> */}
       {/* <form onSubmit={handleSubmit} className="space-y-6">
                
                 <div className="grid gap-5 md:grid-cols-2">
