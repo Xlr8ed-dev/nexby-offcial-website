@@ -50,7 +50,7 @@ const ExhibitionAuditForm = ({ formId }: ExhibitionAuditFormProps) => {
           leads.
         </p>
       </div> */}
-      <DynamicFormContainer formId={7} />
+      <DynamicFormContainer />
 
       {/* <form onSubmit={handleSubmit} className="space-y-6">
                 

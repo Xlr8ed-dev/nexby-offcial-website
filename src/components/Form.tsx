@@ -3,12 +3,20 @@ import { Search, ChevronDown } from "lucide-react";
 import countryList from "../data/Country.json";
 import { z } from "zod";
 import ReCAPTCHA from "react-google-recaptcha";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 // -------- SEARCHABLE COUNTRY DROPDOWN --------
 interface SearchableCountryDropdownProps {
   value?: string;
   onChange: (dialCode: string) => void;
   fieldId: string;
+}
+
+interface PhoneCountryData {
+  dialCode: string;
+  countryCode: string;
+  name: string;
 }
 
 const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
@@ -127,19 +135,6 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
   );
 };
 
-// -------- DYNAMIC FORM WITH LIVE VALIDATION --------
-// interface FormProps {
-//   buttonName?: string;
-//   title?: string | null;
-//   fields?: {
-//     id: string;
-//     label: string;
-//     type: "text" | "email" | "phone";
-//     required?: boolean;
-//   }[];
-//   onSubmit?: (data: Record<string, any>) => void;
-// }
-
 type FieldType = "text" | "email" | "phone" | "select" | "textarea";
 
 interface FormProps {
@@ -165,11 +160,13 @@ const Form: React.FC<FormProps> = ({
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
-  // const [isHuman, setIsHuman] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const productDropdownRef = useRef<HTMLDivElement>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const getBorderClass = (fieldId: string) =>
+    errors[fieldId] ? "border-red-500" : "border-purple-400/30";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -185,14 +182,26 @@ const Form: React.FC<FormProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   useEffect(() => {
-    fields.forEach((field) => {
-      if (field.type === "phone") {
-        setFormData((prev) => ({
-          ...prev,
-          [`${field.id}_country`]: "+91",
-        }));
-      }
-    });
+    // fields.forEach((field) => {
+    //   if (field.type === "phone") {
+    //     setFormData((prev) => ({
+    //       ...prev,
+    //       [`${field.id}_country`]: "+91",
+    //     }));
+    //   }
+    // });
+    if (fields.length > 0) {
+      const initialData: Record<string, any> = {};
+
+      fields.forEach((field) => {
+        initialData[field.id] = "";
+        if (field.type === "phone") {
+          initialData[`${field.id}_country`] = "+91";
+        }
+      });
+
+      setFormData(initialData);
+    }
   }, [fields]);
 
   const buildDynamicSchema = (fields: any[]) =>
@@ -201,18 +210,21 @@ const Form: React.FC<FormProps> = ({
         fields.map((field) => {
           let validator: any = z.string();
 
-          if (field.id === "fullName") {
+          if (field.id === "full_name") {
             validator = z
               .string()
               .min(5, "Full name must be at least 5 characters")
               .max(50, "Full name cannot exceed 50 characters")
               .regex(/^[A-Za-z\s]+$/, "Full name must contain only letters");
           }
-
           if (field.type === "email") {
             validator = z
               .string()
               .email("Invalid email format")
+              .refine(
+                (val) => val === val.toLowerCase(),
+                "Email must be in lowercase"
+              )
               .refine(
                 (val) => val.endsWith(".com"),
                 "Email must end with .com"
@@ -225,29 +237,31 @@ const Form: React.FC<FormProps> = ({
           //     .min(3, "Company name is required")
           //     .max(200, `${field.label} cannot exceed 200 characters`);
           // }
-          if (field.type === "text" && field.id === "full_name") {
-            validator = z
-              .string()
-              .min(5, "Full name must be at least 5 characters")
-              .max(50, "Full name cannot exceed 50 characters")
-              .regex(/^[A-Za-z\s]+$/, "Full name must contain only letters");
-          } else if (field.type === "text") {
-            validator = z
-              .string()
-              .min(3, `${field.label} is required`)
-              .max(200, `${field.label} cannot exceed 200 characters`);
-          }
 
+          // if (field.type === "phone") {
+          //   validator = z.object({
+          //     country: z.string().min(1, "Country code required"),
+          //     number: z
+          //       .string()
+          //       .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+          //   });
+          // }
           if (field.type === "phone") {
-            validator = z.object({
-              country: z.string().min(1, "Country code required"),
-              number: z
-                .string()
-                .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-            });
+            validator = z
+              .string()
+              .min(8, "Phone number is too short")
+              .max(15, "Phone number is too long");
           }
+          // if (field.type === "phone") {
+          //   validator = z
+          //     .string()
+          //     .regex(/^\+[1-9]\d{7,14}$/, "Invalid phone number");
+          // }
 
-          if (field.required && field.type !== "phone") {
+          // if (field.required && field.type !== "phone") {
+          //   validator = validator.min(1, `${field.label} is required`);
+          // }
+          if (field.required) {
             validator = validator.min(1, `${field.label} is required`);
           }
 
@@ -305,15 +319,16 @@ const Form: React.FC<FormProps> = ({
     if (!field) return;
 
     const schema = buildDynamicSchema([field]);
-    const parsedData =
-      field.type === "phone"
-        ? {
-            [fieldId]: {
-              country: formData[`${fieldId}_country`] || "",
-              number: value || "",
-            },
-          }
-        : { [fieldId]: value };
+    // const parsedData =
+    //   field.type === "phone"
+    //     ? {
+    //         [fieldId]: {
+    //           country: formData[`${fieldId}_country`] || "",
+    //           number: value || "",
+    //         },
+    //       }
+    //     : { [fieldId]: value };
+    const parsedData = { [fieldId]: value };
 
     const result = schema.safeParse(parsedData);
 
@@ -338,12 +353,12 @@ const Form: React.FC<FormProps> = ({
     const parsedData = Object.fromEntries(
       Object.entries(formData).map(([key, value]) => {
         if (key.includes("_country")) return [];
-        if (fields.find((f) => f.type === "phone" && f.id === key)) {
-          return [
-            key,
-            { country: formData[`${key}_country`] || "", number: value || "" },
-          ];
-        }
+        // if (fields.find((f) => f.type === "phone" && f.id === key)) {
+        //   return [
+        //     key,
+        //     { country: formData[`${key}_country`] || "", number: value || "" },
+        //   ];
+        // }
         return [key, value];
       })
     );
@@ -381,10 +396,6 @@ const Form: React.FC<FormProps> = ({
 
   return (
     <form onSubmit={handleSubmitForm} className="space-y-6">
-      {/* {title && <h2 className="text-xl font-bold text-white">{title}</h2>}
-      {description && (
-        <p className="text-sm text-purple-300/80 mb-4">{description}</p>
-      )} */}
       {(title || description) && (
         <div className="mb-8">
           {title && (
@@ -412,7 +423,7 @@ const Form: React.FC<FormProps> = ({
             </label>
 
             {/* PHONE */}
-            {field.type === "phone" && (
+            {/* {field.type === "phone" && (
               <div className="flex gap-3">
                 <SearchableCountryDropdown
                   fieldId={field.id}
@@ -430,31 +441,109 @@ const Form: React.FC<FormProps> = ({
                   }
                 />
               </div>
-            )}
-
-            {/* SELECT */}
-            {/* {field.type === "select" && (
-              <select
-                className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-slate-900 px-4 text-white"
-                value={formData[field.id] || ""}
-                onChange={(e) => handleChange(field.id, e.target.value)}
-              >
-                <option value="">Select product</option>
-                {field.options?.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
             )} */}
+            {field.type === "phone" && (
+              <PhoneInput
+                country={"in"}
+                value={formData[field.id] || ""}
+                onChange={(phone: string, country: PhoneCountryData) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    [field.id]: phone,
+                    [`${field.id}_country`]: `+${country.dialCode}`,
+                  }));
+
+                  validateField(field.id, phone);
+                }}
+                enableSearch
+                containerClass={`react-tel-input ${
+                  errors[field.id] ? "phone-error" : ""
+                }`}
+                inputProps={{
+                  name: field.id,
+                  required: field.required,
+                }}
+                inputClass="!w-full !h-11 !bg-white/10 !text-white !rounded-xl"
+                buttonClass="!bg-white/10 !rounded-l-xl"
+                dropdownClass="!bg-slate-900 !text-white"
+                searchClass="!bg-slate-800 !text-white"
+              />
+              // <PhoneInput
+              //   country={"in"}
+              //   value={formData[field.id] || ""}
+              //   onChange={(phone: string, country: PhoneCountryData) => {
+              //     const e164Phone = `+${phone}`;
+
+              //     setFormData((prev) => ({
+              //       ...prev,
+              //       [field.id]: e164Phone,
+              //     }));
+
+              //     validateField(field.id, e164Phone); // ✅ SAME value
+              //   }}
+              //   enableSearch
+              //   containerClass={`react-tel-input ${
+              //     errors[field.id] ? "phone-error" : ""
+              //   }`}
+              //   inputClass="!w-full !h-11 !bg-white/10 !text-white !rounded-xl"
+              //   buttonClass="!bg-white/10 !rounded-l-xl"
+              //   dropdownClass="!bg-slate-900 !text-white"
+              //   searchClass="!bg-slate-800 !text-white"
+              // />
+            )}
+            <style>{`
+  .react-tel-input .country-list {
+    background-color: #1f2937;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .react-tel-input .country-list .country {
+    padding: 10px 12px;
+    color: #ffffff;
+    transition: background-color 0.15s ease;
+  }
+
+  /* HOVER effect (your 2nd image style) */
+  .react-tel-input .country-list .country:hover,
+  .react-tel-input .country-list .country.highlight {
+    background-color: #e5e7eb;
+    color: #111827;
+  }
+
+  .react-tel-input .country-list .country:hover .dial-code,
+  .react-tel-input .country-list .country.highlight .dial-code {
+    color: #374151;
+  }
+
+  .react-tel-input .country-list .country:hover .country-name,
+  .react-tel-input .country-list .country.highlight .country-name {
+   color: #111827;
+  }
+
+   /* Default border */
+  .react-tel-input .form-control {
+    border: 2px solid rgba(168, 85, 247, 0.3);
+  }
+
+  /* 🔴 ERROR border */
+  .react-tel-input.phone-error .form-control,
+  .react-tel-input.phone-error .flag-dropdown {
+    border-color: #ef4444 !important;
+  }
+`}</style>
             {field.type === "select" && (
               <div ref={productDropdownRef} className="relative">
                 <button
                   type="button"
                   onClick={() => setOpen((prev) => !prev)}
-                  className="w-full h-11 rounded-xl border-2 border-purple-400/30
-      bg-white/10 backdrop-blur-sm px-4 text-white
-      flex justify-between items-center"
+                  //             className="w-full h-11 rounded-xl border-2 border-purple-400/30
+                  // bg-white/10 backdrop-blur-sm px-4 text-white
+                  // flex justify-between items-center"
+                  className={`w-full h-11 rounded-xl border-2
+    bg-white/10 backdrop-blur-sm px-4 text-white
+    flex justify-between items-center
+    ${getBorderClass(field.id)}`}
                 >
                   <span
                     className={
@@ -494,7 +583,9 @@ const Form: React.FC<FormProps> = ({
             {field.type === "textarea" && (
               <textarea
                 rows={4}
-                className="w-full rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 py-3 text-white"
+                // className="w-full rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 py-3 text-white"
+                className={`w-full rounded-xl border-2 bg-white/10 px-4 py-3 text-white
+    ${getBorderClass(field.id)}`}
                 value={formData[field.id] || ""}
                 onChange={(e) => handleChange(field.id, e.target.value)}
               />
@@ -504,9 +595,19 @@ const Form: React.FC<FormProps> = ({
             {field.type === "text" || field.type === "email" ? (
               <input
                 type={field.type}
-                className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 text-white"
+                // className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 text-white"
+                className={`w-full rounded-xl border-2 bg-white/10 px-4 py-3 text-white
+    ${getBorderClass(field.id)}`}
                 value={formData[field.id] || ""}
-                onChange={(e) => handleChange(field.id, e.target.value)}
+                // onChange={(e) => handleChange(field.id, e.target.value)}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  if (field.id === "full_name") {
+                    value = value.replace(/[^A-Za-z\s]/g, "");
+                  }
+
+                  handleChange(field.id, value);
+                }}
               />
             ) : null}
 

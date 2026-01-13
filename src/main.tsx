@@ -1,10 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <GoogleReCaptchaProvider
+      reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY}
+    >
+      <App />
+    </GoogleReCaptchaProvider>
+  </StrictMode>
+);

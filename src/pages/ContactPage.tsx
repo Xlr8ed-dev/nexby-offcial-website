@@ -219,7 +219,7 @@ const ContactPage = () => {
                   formId="contact_page_form"
                 /> */}
                 <div className=" mx-auto bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-blue-500/20">
-                  <DynamicFormContainer formId={12} />
+                  <DynamicFormContainer />
                   {/* <Form
                     title={null}
                     buttonName="Request Voice Demo"
