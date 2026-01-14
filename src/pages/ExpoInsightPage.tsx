@@ -94,6 +94,19 @@ const ExpoInsightPage = () => {
     return () => observer.disconnect();
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -323,20 +336,42 @@ const ExpoInsightPage = () => {
                 const color = colorMap[feature.accentColor];
 
                 return (
+                  // <motion.div
+                  //   ref={(el) => {
+                  //     if (el) cardRefs.current[index] = el;
+                  //   }}
+
+                  //   style={{
+                  //     height: maxHeight ? `${maxHeight}px` : "auto",
+                  //   }}
+                  //   key={feature.id}
+                  //   initial={{ opacity: 0, y: 50 }}
+                  //   whileInView={{ opacity: 1, y: 0 }}
+                  //   viewport={{ once: true, margin: "-100px" }}
+                  //   transition={{ duration: 0.6 }}
+                  //   className={`sticky top-24 md:top-20 bg-white rounded-3xl overflow-hidden hover:shadow-blue-200/50 transition-shadow duration-300`}
+                  // >
                   <motion.div
                     ref={(el) => {
                       if (el) cardRefs.current[index] = el;
-                    }}
-                    // className="bg-white rounded-3xl shadow-2xl border-2 border-blue-200"
-                    style={{
-                      height: maxHeight ? `${maxHeight}px` : "auto",
                     }}
                     key={feature.id}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
-                    className={`sticky top-24 md:top-20 bg-white rounded-3xl overflow-hidden hover:shadow-blue-200/50 transition-shadow duration-300`}
+                    style={{
+                      height: isMobile
+                        ? "auto"
+                        : maxHeight
+                        ? `${maxHeight}px`
+                        : "auto",
+                    }}
+                    className={`
+    ${isMobile ? "" : "sticky top-20"}
+    bg-white rounded-3xl overflow-hidden
+    hover:shadow-blue-200/50 transition-shadow duration-300
+  `}
                   >
                     {/* HERO */}
                     <div

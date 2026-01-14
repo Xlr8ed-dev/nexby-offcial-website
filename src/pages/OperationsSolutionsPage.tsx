@@ -130,8 +130,16 @@ const OperationsSolutionsPage = () => {
                 </span>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              {/* <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                 The Ticket Queue Ends Here.
+              </h1> */}
+              <h1 className="font-bold text-gray-900 mb-6 leading-tight text-center">
+                <span className="block text-3xl sm:text-4xl md:text-6xl lg:text-7xl">
+                  The Ticket Queue
+                </span>
+                <span className="block text-3xl sm:text-4xl md:text-6xl lg:text-7xl">
+                  Ends Here.
+                </span>
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">

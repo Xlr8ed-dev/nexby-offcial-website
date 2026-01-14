@@ -630,7 +630,17 @@ const Form: React.FC<FormProps> = ({
           I am not a robot
         </label>
       </div> */}
-      <div className="flex justify-start">
+      {/* <div className="flex justify-start">
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY || ""}
+          onChange={(value) => setRecaptchaToken(value)}
+          onExpired={() => setRecaptchaToken(null)}
+          onErrored={() => setRecaptchaToken(null)}
+          theme="light"
+        />
+      </div> */}
+      <div className="flex justify-center scale-[0.85] sm:scale-100 origin-center">
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY || ""}

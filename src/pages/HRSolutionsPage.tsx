@@ -160,10 +160,27 @@ const HRSolutionsPage = () => {
                 </span>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              {/* <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                 Hire the Top 1%.
                 <br />
                 <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+                  Automatically.
+                </span>
+              </h1> */}
+              <h1 className="font-bold text-gray-900 mb-6 leading-tight text-center">
+                <span className="block text-3xl sm:text-4xl md:text-6xl lg:text-7xl">
+                  Hire the Top 1%.
+                </span>
+
+                <span
+                  className="
+      block
+      text-4xl sm:text-5xl md:text-6xl lg:text-7xl
+      bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600
+      bg-clip-text text-transparent
+      break-words
+    "
+                >
                   Automatically.
                 </span>
               </h1>

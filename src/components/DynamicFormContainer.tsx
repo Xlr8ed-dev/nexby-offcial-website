@@ -1,6 +1,10 @@
+"use client";
+
+import type React from "react";
+
 import { useEffect, useState } from "react";
 import Form from "./Form";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type FieldType = "text" | "email" | "phone" | "select" | "textarea";
 
@@ -74,6 +78,7 @@ const DynamicFormContainer: React.FC = () => {
         setLoading(false);
       });
   }, [currentPath]);
+
   const handleSubmit = async (formData: Record<string, any>) => {
     const payload = {
       formId,
@@ -95,41 +100,42 @@ const DynamicFormContainer: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="w-full animate-pulse">
+      <div className="w-full animate-pulse px-4 sm:px-6 md:px-8">
         {/* Title */}
-        <div className="h-8 w-2/3 bg-white/20 rounded-lg mb-6" />
+        <div className="h-6 sm:h-7 md:h-8 w-2/3 bg-white/20 rounded-lg mb-4 sm:mb-6" />
 
         {/* Description */}
-        <div className="h-4 w-3/4 bg-white/10 rounded mb-10" />
+        <div className="h-3 sm:h-4 w-3/4 bg-white/10 rounded mb-6 sm:mb-10" />
 
         {/* Inputs */}
-        <div className="space-y-5">
-          <div className="h-11 w-full bg-white/10 rounded-xl" />
-          <div className="h-11 w-full bg-white/10 rounded-xl" />
-          <div className="h-11 w-full bg-white/10 rounded-xl" />
-          <div className="h-11 w-full bg-white/10 rounded-xl" />
+        <div className="space-y-4 sm:space-y-5">
+          <div className="h-10 sm:h-11 md:h-12 w-full bg-white/10 rounded-xl" />
+          <div className="h-10 sm:h-11 md:h-12 w-full bg-white/10 rounded-xl" />
+          <div className="h-10 sm:h-11 md:h-12 w-full bg-white/10 rounded-xl" />
+          <div className="h-10 sm:h-11 md:h-12 w-full bg-white/10 rounded-xl" />
         </div>
 
         {/* Recaptcha */}
-        <div className="h-16 w-64 bg-white/10 rounded-lg mt-10" />
+        <div className="h-14 sm:h-16 w-48 sm:w-64 bg-white/10 rounded-lg mt-8 sm:mt-10" />
 
         {/* Button */}
-        <div className="h-14 w-full bg-white/20 rounded-full mt-8" />
+        <div className="h-11 sm:h-12 md:h-14 w-full bg-white/20 rounded-full mt-6 sm:mt-8" />
       </div>
     );
   }
+
   // Error state → SHOW CONTACT CARD
   if (error) {
     return (
-      <div className="w-full text-center px-6 py-16">
-        <h3 className="text-2xl font-bold text-white mb-4">
+      <div className="w-full text-center px-4 sm:px-6 md:px-8 py-12 sm:py-16">
+        <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">
           Kindly contact our sales team
         </h3>
-        <p className="text-purple-200 mb-6">
+        <p className="text-sm sm:text-base text-purple-200 mb-6 sm:mb-8">
           Kindly contact our sales team using the details below.
         </p>
 
-        <div className="space-y-2 text-white font-medium">
+        <div className="space-y-2 text-white font-medium text-sm sm:text-base">
           <p>
             📧 Email:{" "}
             <a

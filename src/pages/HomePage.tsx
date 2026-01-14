@@ -50,86 +50,77 @@ const TypewriterText = ({ text }: { text: string }) => {
 
 const HeroSection = () => {
   return (
-    <section className="h-screen pt-24 flex flex-col md:flex-row overflow-hidden gap-0 md:gap-4 px-0 md:px-4">
-      {/* Left 70% */}
-      <div className="relative w-full md:w-[70%] h-[60vh] md:h-full bg-gray-900 overflow-hidden group md:rounded-3xl">
-        <div className="absolute inset-0 z-0">
-          {/* Simulated Image Background */}
+    <section className="relative pt-20 md:pt-24 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:gap-4">
+        {/* LEFT: HERO */}
+        <div className="relative w-full md:w-[70%] min-h-[70vh] md:h-[calc(100vh-6rem)] bg-gray-900 overflow-hidden rounded-2xl md:rounded-3xl">
+          {/* Background */}
           <img
             src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
             alt="AI Network"
-            className="w-full h-full object-cover opacity-60"
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
           />
-        </div>
-        <div className="absolute inset-0 z-10 flex flex-col justify-center px-12 md:px-20">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            {/* Updated Text: Simpler, CEO-friendly */}
-            <TypewriterText text="Automate Your Growth. Without the Headcount." />
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-xl mt-4 backdrop-blur-sm p-2 rounded">
-            Deploy custom AI agents for Sales and Recruitment. Practical,
-            profitable, and live in weeks.
-          </p>
-        </div>
-      </div>
 
-      {/* Right 30% */}
-      <div className="w-full md:w-[30%] h-[40vh] md:h-full flex flex-col bg-white md:rounded-3xl overflow-hidden shadow-xl gap-4 p-4">
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className="relative flex-1 flex flex-col justify-center p-8 overflow-hidden cursor-pointer group rounded-2xl"
-        >
-          {/* Background Image */}
-          <div className="absolute inset-0 z-0">
+          {/* Content */}
+          <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-16">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+              <TypewriterText text="Automate Your Growth. Without the Headcount." />
+            </h1>
+
+            <p className="mt-6 text-base sm:text-lg md:text-xl text-gray-200 max-w-xl bg-black/40 backdrop-blur-sm rounded-lg p-3">
+              Deploy custom AI agents for Sales and Recruitment. Practical,
+              profitable, and live in weeks.
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT: CARDS */}
+        <div className="w-full md:w-[30%] flex flex-col gap-4">
+          {/* SALES */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
+          >
             <img
               src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
-              alt="Sales Background"
-              className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
+              alt="Sales"
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
             />
-          </div>
-          {/* Overlay */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-50/70 to-blue-100/70 hover:from-blue-100/60 hover:to-blue-200/60 transition-all"></div>
-
-          <div className="relative z-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-              <BarChart3 className="text-white" />
+            <div className="absolute inset-0 bg-blue-50/80" />
+            <div className="relative z-10">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
+                <BarChart3 className="text-white" />
+              </div>
+              <h3 className="text-xl font-semibold">AI for Sales</h3>
+              <p className="text-sm text-gray-700 mt-2">
+                Your best salesperson, available 24/7 to qualify and close
+                leads.
+              </p>
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-gray-900">
-              AI for Sales
-            </h3>
-            <p className="text-gray-600 text-sm font-medium">
-              Your best salesperson, available 24/7 to qualify and close leads.
-            </p>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className="relative flex-1 flex flex-col justify-center p-8 overflow-hidden cursor-pointer group rounded-2xl"
-        >
-          {/* Background Image */}
-          <div className="absolute inset-0 z-0">
+          {/* HR */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
+          >
             <img
               src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop"
-              alt="HR Background"
-              className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
+              alt="HR"
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
             />
-          </div>
-          {/* Overlay */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-br from-purple-50/70 to-purple-100/70 hover:from-purple-100/60 hover:to-purple-200/60 transition-all"></div>
-
-          <div className="relative z-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-              <Users className="text-white" />
+            <div className="absolute inset-0 bg-purple-50/80" />
+            <div className="relative z-10">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
+                <Users className="text-white" />
+              </div>
+              <h3 className="text-xl font-semibold">AI for HR</h3>
+              <p className="text-sm text-gray-700 mt-2">
+                Interview 1,000 candidates in a day. Hire the top 1% faster.
+              </p>
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-gray-900">
-              AI for HR
-            </h3>
-            <p className="text-gray-600 text-sm font-medium">
-              Interview 1,000 candidates in a day. Hire the top 1% faster.
-            </p>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

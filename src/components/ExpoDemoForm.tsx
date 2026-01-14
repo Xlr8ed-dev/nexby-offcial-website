@@ -57,7 +57,7 @@ const ExpoDemoForm = () => {
           </p>
         </div>
 
-        <div className="w-[80%] mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-500/20">
+        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-purple-500/20">
           <DynamicFormContainer />
           {/* <Form
             title={null}

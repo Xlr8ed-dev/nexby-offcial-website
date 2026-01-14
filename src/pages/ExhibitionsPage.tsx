@@ -166,6 +166,22 @@ const ExhibitionsPage = () => {
                   Never Sleeps.
                 </span>
               </h1>
+              {/* <h1 className="font-bold text-gray-900 mb-6 text-center leading-tight">
+                <span className="block text-5xl sm:text-4xl md:text-7xl lg:text-8xl">
+                  The Booth That
+                </span>
+
+                <span
+                  className="
+      block
+      text-5xl sm:text-5xl md:text-7xl lg:text-8xl
+      bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600
+      bg-clip-text text-transparent
+    "
+                >
+                  Never Sleeps.
+                </span>
+              </h1> */}
 
               <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
                 Turn handshake chaos into organized revenue. Nexby’s

@@ -23,6 +23,19 @@ import { capabilitiesData } from "./ProductAiData";
 const AITeleCallerPage = () => {
   const formRef = useRef<HTMLDivElement>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -100,13 +113,36 @@ const AITeleCallerPage = () => {
                   </span>
                 </div>
 
-                <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+                {/* <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
                   The Voice of Your Brand.{" "}
                   <span className="text-indigo-600">
                     Indistinguishable from Human.
                   </span>
-                </h1>
+                </h1> */}
+                <h1
+                  className="
+    font-bold text-gray-900 mb-6 leading-tight
+    text-[2.25rem]
+    sm:text-5xl
+    md:text-7xl
+  "
+                >
+                  {/* LINE 1 */}
+                  <span className="block">
+                    The Voice of{" "}
+                    <span className="block sm:inline">Your Brand.</span>
+                  </span>
 
+                  {/* LINE 2 (HIGHLIGHT) */}
+                  <span
+                    className="
+      block mt-2 text-indigo-600 leading-snug
+    "
+                  >
+                    <span className="block sm:inline">Indistinguishable</span>{" "}
+                    <span className="block sm:inline">from Human.</span>
+                  </span>
+                </h1>
                 <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
                   Deploy enterprise-grade voice agents that handle millions of
                   calls with sub-second latency and perfect context. We don't
@@ -129,7 +165,6 @@ const AITeleCallerPage = () => {
                 </div>
               </div>
 
-              {/* Hero Visual Placeholder */}
               <div className="relative">
                 <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 animate-pulse"></div>
@@ -200,21 +235,42 @@ const AITeleCallerPage = () => {
                 const HeroIcon = cap.hero.icon;
 
                 return (
+                  // <motion.div
+                  //   ref={(el) => {
+                  //     if (el) cardRefs.current[index] = el;
+                  //   }}
+
+                  //   style={{
+                  //     height: maxHeight ? `${maxHeight}px` : "auto",
+                  //   }}
+                  //   key={cap.id}
+                  //   initial={{ opacity: 0, y: 50 }}
+                  //   whileInView={{ opacity: 1, y: 0 }}
+                  //   viewport={{ once: true, margin: "-100px" }}
+                  //   transition={{ duration: 0.6, delay: index * 0.1 }}
+                  //   className={`sticky top-24 md:top-20 bg-white rounded-3xl overflow-hidden hover:shadow-blue-200/50 transition-shadow duration-300`}
+                  // >
                   <motion.div
                     ref={(el) => {
                       if (el) cardRefs.current[index] = el;
-                    }}
-                    // className="bg-white rounded-3xl shadow-2xl border-2 border-blue-200"
-                    style={{
-                      height: maxHeight ? `${maxHeight}px` : "auto",
                     }}
                     key={cap.id}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    // className={`sticky ${cap.stickyTop} bg-white rounded-3xl overflow-hidden shadow-2xl border-2 ${color.border} ${color.hover} transition-shadow duration-300`}
-                    className={`sticky top-24 md:top-20 bg-white rounded-3xl overflow-hidden hover:shadow-blue-200/50 transition-shadow duration-300`}
+                    transition={{ duration: 0.6 }}
+                    style={{
+                      height: isMobile
+                        ? "auto"
+                        : maxHeight
+                        ? `${maxHeight}px`
+                        : "auto",
+                    }}
+                    className={`
+    ${isMobile ? "" : "sticky top-20"}
+    bg-white rounded-3xl overflow-hidden
+    hover:shadow-blue-200/50 transition-shadow duration-300
+  `}
                   >
                     {/* HERO */}
                     <div
