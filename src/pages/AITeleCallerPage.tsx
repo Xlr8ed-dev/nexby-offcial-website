@@ -165,7 +165,7 @@ const AITeleCallerPage = () => {
                 </div>
               </div>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 animate-pulse"></div>
                   <div className="text-center p-8 relative z-10">
@@ -181,13 +181,47 @@ const AITeleCallerPage = () => {
                     </p>
                   </div>
                 </div>
+              </div> */}
+              <div className="relative">
+                <div
+                  className="
+      bg-slate-900 rounded-2xl sm:rounded-3xl
+      overflow-hidden shadow-2xl border-4 border-white
+      aspect-[4/3] sm:aspect-video
+      flex items-center justify-center relative
+    "
+                >
+                  {/* Background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 animate-pulse" />
+
+                  <div className="text-center px-4 py-6 sm:p-8 relative z-10">
+                    {/* MOBILE ICON */}
+                    <Activity
+                      className="text-indigo-400 mx-auto mb-3 animate-bounce sm:hidden"
+                      size={48}
+                    />
+
+                    {/* DESKTOP ICON */}
+                    <Activity
+                      className="text-indigo-400 mx-auto mb-4 animate-bounce hidden sm:block"
+                      size={80}
+                    />
+
+                    <p className="text-indigo-200 font-medium text-sm sm:text-base">
+                      3D Audio Waveform Visualization
+                    </p>
+                    <p className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">
+                      Reacting in real-time to conversation
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* The Nexby Advantage */}
-        <section className="py-20 bg-white">
+        {/* <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-6">
             <div className="bg-slate-900 rounded-3xl p-8 md:p-16 text-white text-center">
               <h2 className="text-3xl md:text-5xl font-bold mb-8">
@@ -210,6 +244,83 @@ const AITeleCallerPage = () => {
                   ingest your call recordings, study your top performers, and
                   code a bespoke neural agent that mimics your best employee,
                   not a robot.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section> */}
+
+        <section className="py-16 sm:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div
+              className="
+      bg-slate-900 rounded-2xl sm:rounded-3xl
+      p-6 sm:p-12 md:p-16
+      text-white text-center
+    "
+            >
+              {/* Heading */}
+              <h2
+                className="
+        text-2xl sm:text-3xl md:text-5xl
+        font-bold mb-5 sm:mb-8
+        leading-snug
+      "
+              >
+                Why "Build-It-Yourself"
+                <br className="sm:hidden" />
+                Fails at Scale.
+              </h2>
+
+              {/* Description */}
+              <p
+                className="
+        text-base sm:text-lg md:text-xl
+        text-gray-300
+        max-w-4xl mx-auto
+        leading-relaxed
+        mb-8 sm:mb-12
+      "
+              >
+                The market is flooded with “No-Code Voice Builders.” They look
+                easy, but they break under pressure. Handling interruptions,
+                accents, background noise, and emotional nuance requires deep
+                engineering — not drag-and-drop widgets.
+              </p>
+
+              {/* Highlight Card */}
+              <div
+                className="
+        bg-white/10 backdrop-blur-sm
+        rounded-xl sm:rounded-2xl
+        p-5 sm:p-6 md:p-8
+        border border-white/20
+        max-w-3xl mx-auto
+      "
+              >
+                <h3
+                  className="
+          text-lg sm:text-xl md:text-2xl
+          font-bold mb-3 sm:mb-4
+          text-indigo-300
+        "
+                >
+                  The Nexby Difference
+                </h3>
+
+                <p
+                  className="
+          text-sm sm:text-base md:text-lg
+          text-white
+          leading-relaxed
+        "
+                >
+                  At Nexby,{" "}
+                  <strong>we do not ask you to build your own bot.</strong>
+                  Our linguistic engineers and voice architects build it for
+                  you. We ingest your call recordings, study your top
+                  performers, and code a bespoke neural agent that mimics your
+                  best employee — not a robot.
                 </p>
               </div>
             </div>
@@ -292,18 +403,51 @@ const AITeleCallerPage = () => {
                       <div className="text-center">
                         {cap.id === 2 ? (
                           /* 🔹 Infographic: Call → WhatsApp */
+                          // <div className="relative flex items-center justify-center">
+                          //   <div className="w-56 h-56 rounded-full border-2 border-dashed border-green-300 flex items-center justify-center">
+                          //     <div className="flex flex-col items-center gap-3">
+                          //       <Phone size={36} className="text-green-500" />
+                          //       <ArrowRight
+                          //         size={24}
+                          //         className="text-gray-300 rotate-90"
+                          //       />
+                          //       <MessageSquare
+                          //         size={36}
+                          //         className="text-green-500"
+                          //       />
+                          //     </div>
+                          //   </div>
+                          // </div>
                           <div className="relative flex items-center justify-center">
-                            <div className="w-56 h-56 rounded-full border-2 border-dashed border-green-300 flex items-center justify-center">
-                              <div className="flex flex-col items-center gap-3">
-                                <Phone size={36} className="text-green-500" />
-                                <ArrowRight
-                                  size={24}
-                                  className="text-gray-300 rotate-90"
-                                />
-                                <MessageSquare
-                                  size={36}
-                                  className="text-green-500"
-                                />
+                            <div
+                              className="
+      w-40 h-40 sm:w-56 sm:h-56
+      rounded-full
+      border-2 border-dashed border-green-300
+      flex items-center justify-center
+    "
+                            >
+                              <div className="flex flex-col items-center gap-2 sm:gap-3">
+                                {/* Phone */}
+                                <div className="scale-75 sm:scale-100">
+                                  <Phone size={36} className="text-green-500" />
+                                </div>
+
+                                {/* Arrow */}
+                                <div className="scale-75 sm:scale-100">
+                                  <ArrowRight
+                                    size={24}
+                                    className="text-gray-300 rotate-90"
+                                  />
+                                </div>
+
+                                {/* Message */}
+                                <div className="scale-75 sm:scale-100">
+                                  <MessageSquare
+                                    size={36}
+                                    className="text-green-500"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -400,13 +544,35 @@ const AITeleCallerPage = () => {
               </p>
             </div>
 
-            <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 aspect-[16/9] flex items-center justify-center mb-12">
+            {/* <div className="bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 aspect-[16/9] flex items-center justify-center mb-12">
               <div className="text-center">
                 <BarChart3 className="text-indigo-500 mx-auto mb-4" size={80} />
                 <p className="text-slate-400 font-medium text-lg">
                   High-Fidelity Command Center Dashboard
                 </p>
                 <p className="text-slate-600 mt-2">
+                  Live Call Volume | Sentiment Heatmap | Live Listen
+                </p>
+              </div>
+            </div> */}
+            <div
+              className="
+    bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800
+    flex items-center justify-center mb-12
+    aspect-[4/3] sm:aspect-[3/2] md:aspect-[16/9]
+  "
+            >
+              <div className="text-center px-6 py-8 md:py-0">
+                <BarChart3
+                  className="text-indigo-500 mx-auto mb-3 md:mb-4"
+                  size={56}
+                />
+
+                <p className="text-slate-300 font-medium text-base sm:text-lg md:text-lg">
+                  High-Fidelity Command Center Dashboard
+                </p>
+
+                <p className="text-slate-500 text-sm sm:text-base mt-1 md:mt-2">
                   Live Call Volume | Sentiment Heatmap | Live Listen
                 </p>
               </div>

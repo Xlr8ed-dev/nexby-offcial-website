@@ -109,7 +109,7 @@ const Navbar = () => {
 
           {/* DESKTOP MENU */}
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="nav-link">
+            <Link to="/" className="nav-link hover:text-blue-600">
               Home
             </Link>
 
@@ -119,7 +119,7 @@ const Navbar = () => {
               onMouseEnter={() => setActiveDropdown("solutions")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className="nav-link flex items-center gap-1">
+              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
                 Solutions <ChevronDown size={14} />
               </button>
 
@@ -211,7 +211,7 @@ const Navbar = () => {
               onMouseEnter={() => setActiveDropdown("products")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className="nav-link flex items-center gap-1">
+              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
                 Products <ChevronDown size={14} />
               </button>
 
@@ -238,10 +238,10 @@ const Navbar = () => {
                 )}
               </AnimatePresence>
             </div>
-            <Link to="/about-us" className="nav-link">
+            <Link to="/about-us" className="nav-link hover:text-blue-600">
               About Us
             </Link>
-            <Link to="/contact-us" className="nav-link">
+            <Link to="/contact-us" className="nav-link hover:text-blue-600">
               Contact
             </Link>
           </div>
@@ -250,11 +250,10 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/contact-us"
-              className="hidden sm:inline-flex px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
+              className="hidden sm:inline-flex px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-gray-800"
             >
               Get Started
             </Link>
-
             <button
               className="md:hidden"
               onClick={() => setMobileMenuOpen(true)}
@@ -434,9 +433,9 @@ const Navbar = () => {
                 to="/contact-us"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center py-4 rounded-xl
-            bg-blue-600 text-white font-semibold
+            bg-black text-white font-semibold
             shadow-lg shadow-blue-600/30
-            active:scale-[0.98] transition"
+            active:scale-[0.98] transition hover:bg-gray-800"
               >
                 Get Started
               </Link>
