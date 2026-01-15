@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Mail, MapPin, Phone, Clock, MessageCircle } from "lucide-react";
-// import ContactForm from "../components/ContactForm";
-import Form from "@/components/Form";
 import DynamicFormContainer from "@/components/DynamicFormContainer";
 
 const ContactPage = () => {
@@ -213,47 +211,9 @@ const ContactPage = () => {
                     within 24 hours.
                   </p>
                 </div>
-                {/* <div className="w-[800px]"> */}
-                {/* <ContactForm
-                  showDescription={false}
-                  formId="contact_page_form"
-                /> */}
                 <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-purple-500/20">
                   <DynamicFormContainer />
-                  {/* <Form
-                    title={null}
-                    buttonName="Request Voice Demo"
-                    fields={[
-                      {
-                        id: "fullName",
-                        label: "Full Name",
-                        type: "text",
-                        required: true,
-                      },
-                      {
-                        id: "email",
-                        label: "Email",
-                        type: "email",
-                        required: true,
-                      },
-                      {
-                        id: "company",
-                        label: "Company Name",
-                        type: "text",
-                        required: true,
-                      },
-                      {
-                        id: "phone",
-                        label: "Mobile Number",
-                        type: "phone",
-                        required: true,
-                      },
-                    ]}
-
-                
-                  /> */}
                 </div>
-                {/* </div> */}
               </div>
 
               {/* Right Side - Office Location & Map */}
