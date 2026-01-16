@@ -447,13 +447,14 @@ const Form: React.FC<FormProps> = ({
                 country={"in"}
                 value={formData[field.id] || ""}
                 onChange={(phone: string, country: PhoneCountryData) => {
+                  const e164Phone = `+${phone}`;
                   setFormData((prev) => ({
                     ...prev,
-                    [field.id]: phone,
+                    [field.id]: e164Phone,
                     [`${field.id}_country`]: `+${country.dialCode}`,
                   }));
 
-                  validateField(field.id, phone);
+                  validateField(field.id, e164Phone);
                 }}
                 enableSearch
                 containerClass={`react-tel-input ${

@@ -31,6 +31,7 @@ const DynamicFormContainer: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [buttonName, setButtonName] = useState<string>("Submit");
   const [formId, setFormId] = useState<number>(0);
+  const [endpointId, setEndpointId] = useState<number>(0);
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -43,7 +44,7 @@ const DynamicFormContainer: React.FC = () => {
     setLoading(true);
     setError(false);
 
-    fetch(`${API_BASE_URL}/api/form/endpoint?endpoint=${currentPath}`)
+    fetch(`${API_BASE_URL}/api/form-endpoint?endpoint=${currentPath}`)
       .then((res) => {
         if (!res.ok) throw new Error("Backend error");
         return res.json();
@@ -51,9 +52,10 @@ const DynamicFormContainer: React.FC = () => {
       .then((data) => {
         const backendFields = data.form.schema.fields;
 
-        setFormId(data.form.id);
+        setFormId(data.form.formId);
+        setEndpointId(data.form.endpointId);
 
-        const submitField = backendFields.find((f: any) => f.type === "submit");
+        // const submitField = backendFields.find((f: any) => f.type === "submit");
 
         const mappedFields = backendFields
           .filter((f: any) => f.type !== "submit")
@@ -67,7 +69,8 @@ const DynamicFormContainer: React.FC = () => {
 
         setTitle(data.form.title);
         setDescription(data.form.description);
-        setButtonName(submitField?.label || "Submit");
+        // setButtonName(submitField?.label || "Submit");
+        setButtonName(data.form.submitButtonText || "Submit");
         setFields(mappedFields);
 
         setLoading(false);
@@ -81,6 +84,7 @@ const DynamicFormContainer: React.FC = () => {
 
   const handleSubmit = async (formData: Record<string, any>) => {
     const payload = {
+      endpointId,
       formId,
       response: {
         ...formData,
