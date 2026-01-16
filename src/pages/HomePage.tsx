@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle,
@@ -175,6 +175,74 @@ const ScrollAnimationSection = () => {
     </div>
   );
 };
+
+// const ScrollAnimationSection = () => {
+//   const ref = useRef<HTMLDivElement>(null);
+//   const isInView = useInView(ref, { once: false, amount: 0.05 });
+
+//   const { scrollYProgress } = useScroll({
+//     target: ref,
+//     offset: ["center center", "start center"],
+//   });
+
+//   // X shrinks smoothly (like old design)
+//   const scale = useTransform(scrollYProgress, [0, 0.4], [12, 1]);
+//   const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+
+//   // Text reveal timing (unchanged from old)
+//   const opacity = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
+
+//   return (
+//     <section ref={ref} className="min-h-[200vh] relative">
+//       {/* Sticky Hero */}
+//       <div className="sticky top-0 h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden flex flex-col items-center justify-center">
+//         {/* Background Orbs */}
+//         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+//           <motion.div
+//             className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
+//             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+//             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+//           />
+//           <motion.div
+//             className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl"
+//             animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
+//             transition={{
+//               duration: 4,
+//               repeat: Infinity,
+//               ease: "easeInOut",
+//               delay: 1,
+//             }}
+//           />
+//         </div>
+
+//         {/* X + Text */}
+//         <div className="relative flex flex-col items-center justify-center">
+//           <motion.div
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: isInView ? 1 : 0 }}
+//             transition={{ duration: 0.3 }}
+//             style={{ scale, y }}
+//             className="z-20 text-[10rem] sm:text-[14rem] md:text-[18rem] font-black leading-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-2xl select-none will-change-transform"
+//           >
+//             X
+//           </motion.div>
+
+//           <motion.div
+//             style={{ opacity }}
+//             className="mt-12 text-center max-w-2xl px-4 z-10"
+//           >
+//             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+//               The Multiplier Effect
+//             </h2>
+//             <p className="text-xl text-gray-700 font-medium">
+//               Where human potential meets artificial precision.
+//             </p>
+//           </motion.div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 // const ChatSection = () => {
 //     const [messages, setMessages] = useState<ChatMessage[]>([
