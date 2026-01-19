@@ -37,6 +37,8 @@ import PharmaPage from './pages/PharmaPage';
 import PharmaThankYouPage from './pages/PharmaThankYouPage';
 import UniversityExamPage from './pages/UniversityExamPage';
 import ExamPilotThankYouPage from './pages/ExamPilotThankYouPage';
+import DynamicLandingPage from './pages/DynamicLandingPage';
+import SalesXAntiGravityPage from './pages/landing-pages/SalesXAntiGravityPage';
 
 function App() {
   return (
@@ -80,6 +82,10 @@ function App() {
             <Route path="/solutions/government/citizen-ai-interface" element={<CitizenAIInterfacePage />} />
             <Route path="/solutions/university-exam-portal" element={<UniversityExamPage />} />
             <Route path="/solutions/university-exam-portal/thank-you" element={<ExamPilotThankYouPage />} />
+
+            {/* Dynamic Landing Pages */}
+            <Route path="/lp/salesx-antigravity" element={<SalesXAntiGravityPage />} />
+            <Route path="/lp/:slug" element={<DynamicLandingPage />} />
 
           </Routes>
           <Footer />
