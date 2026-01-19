@@ -5,6 +5,7 @@ import { z } from "zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import toast from "react-hot-toast";
 
 // -------- SEARCHABLE COUNTRY DROPDOWN --------
 interface SearchableCountryDropdownProps {
@@ -164,6 +165,9 @@ const Form: React.FC<FormProps> = ({
   const [open, setOpen] = useState(false);
   const productDropdownRef = useRef<HTMLDivElement>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const getBorderClass = (fieldId: string) =>
     errors[fieldId] ? "border-red-500" : "border-purple-400/30";
@@ -345,53 +349,108 @@ const Form: React.FC<FormProps> = ({
     validateField(id, value); // Live validation
   };
 
-  const handleSubmitForm = (e: React.FormEvent) => {
+  // const handleSubmitForm = (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   const schema = buildDynamicSchema(fields);
+
+  //   const parsedData = Object.fromEntries(
+  //     Object.entries(formData).map(([key, value]) => {
+  //       if (key.includes("_country")) return [];
+  //       // if (fields.find((f) => f.type === "phone" && f.id === key)) {
+  //       //   return [
+  //       //     key,
+  //       //     { country: formData[`${key}_country`] || "", number: value || "" },
+  //       //   ];
+  //       // }
+  //       return [key, value];
+  //     })
+  //   );
+
+  //   const result = schema.safeParse(parsedData);
+
+  //   if (!result.success) {
+  //     const formattedErrors: Record<string, string> = {};
+  //     const fieldErrors = result.error.flatten().fieldErrors;
+  //     for (const key in fieldErrors) {
+  //       formattedErrors[key] = fieldErrors[key]?.[0] || "";
+  //     }
+  //     setErrors(formattedErrors);
+  //     return;
+  //   }
+
+  //   setErrors({});
+  //   onSubmit?.(result.data);
+
+  //   const resetData: Record<string, any> = {};
+  //   fields.forEach((field) => {
+  //     if (field.type === "phone") {
+  //       resetData[`${field.id}_country`] = "+91";
+  //       resetData[field.id] = "";
+  //     } else {
+  //       resetData[field.id] = "";
+  //     }
+  //   });
+
+  //   setFormData(resetData);
+  //   setOpen(false);
+  //   setRecaptchaToken(null);
+  //   recaptchaRef.current?.reset();
+  // };
+
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const schema = buildDynamicSchema(fields);
 
     const parsedData = Object.fromEntries(
-      Object.entries(formData).map(([key, value]) => {
-        if (key.includes("_country")) return [];
-        // if (fields.find((f) => f.type === "phone" && f.id === key)) {
-        //   return [
-        //     key,
-        //     { country: formData[`${key}_country`] || "", number: value || "" },
-        //   ];
-        // }
-        return [key, value];
-      })
+      Object.entries(formData).filter(([key]) => !key.includes("_country"))
     );
 
     const result = schema.safeParse(parsedData);
 
+    //  Frontend validation error
     if (!result.success) {
       const formattedErrors: Record<string, string> = {};
       const fieldErrors = result.error.flatten().fieldErrors;
+
       for (const key in fieldErrors) {
         formattedErrors[key] = fieldErrors[key]?.[0] || "";
       }
+
       setErrors(formattedErrors);
       return;
     }
 
-    setErrors({});
-    onSubmit?.(result.data);
+    try {
+      setSubmitting(true);
+      setSubmitError(null);
+      setErrors({});
 
-    const resetData: Record<string, any> = {};
-    fields.forEach((field) => {
-      if (field.type === "phone") {
-        resetData[`${field.id}_country`] = "+91";
-        resetData[field.id] = "";
-      } else {
-        resetData[field.id] = "";
-      }
-    });
+      // WAIT for backend
+      await onSubmit?.(result.data);
+      toast.success("Form submitted successfully!");
 
-    setFormData(resetData);
-    setOpen(false);
-    setRecaptchaToken(null);
-    recaptchaRef.current?.reset();
+      // ONLY reset on SUCCESS
+      const resetData: Record<string, any> = {};
+      fields.forEach((field) => {
+        if (field.type === "phone") {
+          resetData[`${field.id}_country`] = "+91";
+          resetData[field.id] = "";
+        } else {
+          resetData[field.id] = "";
+        }
+      });
+
+      setFormData(resetData);
+      setOpen(false);
+      setRecaptchaToken(null);
+      recaptchaRef.current?.reset();
+    } catch (err: any) {
+      toast.error(err.message || "Submission failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -650,6 +709,11 @@ const Form: React.FC<FormProps> = ({
           onErrored={() => setRecaptchaToken(null)}
           theme="light"
         />
+        {submitError && (
+          <div className="rounded-xl bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 text-sm text-center">
+            {submitError}
+          </div>
+        )}
       </div>
       {/* <button
         type="submit"
@@ -661,7 +725,7 @@ const Form: React.FC<FormProps> = ({
       >
         {buttonName}
       </button> */}
-      <button
+      {/* <button
         type="submit"
         disabled={!recaptchaToken}
         className={`w-full h-14 rounded-full font-bold uppercase tracking-wider transition-all
@@ -672,6 +736,18 @@ const Form: React.FC<FormProps> = ({
     }`}
       >
         {buttonName}
+      </button> */}
+      <button
+        type="submit"
+        disabled={!recaptchaToken || submitting}
+        className={`w-full h-14 rounded-full font-bold uppercase tracking-wider transition-all
+    ${
+      !recaptchaToken || submitting
+        ? "bg-gray-600 cursor-not-allowed opacity-60"
+        : "bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:scale-[1.02]"
+    }`}
+      >
+        {submitting ? "Submitting..." : buttonName}
       </button>
     </form>
   );
