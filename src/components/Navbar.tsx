@@ -22,6 +22,7 @@ import {
   Bot,
   TrendingUp,
   Headphones,
+  GraduationCap,
 } from "lucide-react";
 
 // const SOLUTIONS = {
@@ -44,6 +45,11 @@ const SOLUTIONS = {
     { name: "Recruitment", icon: Users, path: "/solutions/recruitment" },
     { name: "Operations", icon: CheckCircle, path: "/solutions/operations" },
     { name: "Exhibitors", icon: Briefcase, path: "/solutions/exhibitions" },
+    {
+      name: "Examination",
+      icon: GraduationCap,
+      path: "/solutions/university-exam-portal",
+    },
   ],
   industries: [
     {
@@ -51,24 +57,42 @@ const SOLUTIONS = {
       icon: Building2,
       path: "/solutions/industry/real-estate",
     },
-    { name: "Manufacturing", icon: Factory, path: "#" },
-    { name: "Pharma", icon: FlaskConical, path: "#" },
-    { name: "Tech & SaaS", icon: Lightbulb, path: "#" },
+    {
+      name: "Manufacturing",
+      icon: Factory,
+      path: "/solutions/industry/manufacturing",
+    },
+    { name: "Pharma", icon: FlaskConical, path: "/solutions/industry/pharma" },
+    // { name: "Tech & SaaS", icon: Lightbulb, path: "#" },
   ],
   government: [
-    { name: "AI Call Assistant", icon: PhoneCall, path: "#" },
-    { name: "AI RFP Analyser", icon: FileSearch, path: "#" },
-    { name: "AI Chatbots", icon: Bot, path: "#" },
+    {
+      name: "AI Call Assistant",
+      icon: PhoneCall,
+      path: "/solutions/government/ai-call-assistant",
+    },
+    // { name: "AI RFP Analyser", icon: FileSearch, path: "#" },
+    {
+      name: "Tender Query Automation",
+      icon: FileSearch,
+      path: "/solutions/government/tender-query-automation",
+    },
+    // { name: "AI Chatbots", icon: Bot, path: "#" },
+    {
+      name: "Citizen AI Interface",
+      icon: Bot,
+      path: "/solutions/government/citizen-ai-interface",
+    },
   ],
 };
 
 const PRODUCTS = [
   { name: "AI Recruiter", icon: BrainCircuit, path: "/products/ai-recruiter" },
-  { name: "SalesX", icon: TrendingUp, path: "#" },
+  { name: "SalesX", icon: TrendingUp, path: "/products/salesx" },
   { name: "Expo Insight", icon: Presentation, path: "/products/expo-insight" },
-  { name: "Call Analyser", icon: BarChart3, path: "#" },
+  { name: "Call Analyser", icon: BarChart3, path: "/products/call-analyser" },
   { name: "AI TeleCaller", icon: Phone, path: "/products/ai-telecaller" },
-  { name: "SupportAssist", icon: Headphones, path: "#" },
+  { name: "SupportAssist", icon: Headphones, path: "/products/support-assist" },
 ];
 
 const Navbar = () => {
@@ -112,7 +136,42 @@ const Navbar = () => {
             <Link to="/" className="nav-link hover:text-blue-600">
               Home
             </Link>
+            <Link to="/about-us" className="nav-link hover:text-blue-600">
+              About Us
+            </Link>
+            {/* PRODUCTS */}
+            <div
+              className="relative"
+              onMouseEnter={() => setActiveDropdown("products")}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
+                Products <ChevronDown size={14} />
+              </button>
 
+              <AnimatePresence>
+                {activeDropdown === "products" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[420px]"
+                  >
+                    <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
+                      {PRODUCTS.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg"
+                        >
+                          <item.icon size={16} /> {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             {/* SOLUTIONS */}
             <div
               className="relative"
@@ -205,41 +264,14 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            {/* PRODUCTS */}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown("products")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
-                Products <ChevronDown size={14} />
-              </button>
-
-              <AnimatePresence>
-                {activeDropdown === "products" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[420px]"
-                  >
-                    <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
-                      {PRODUCTS.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg"
-                        >
-                          <item.icon size={16} /> {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <Link to="/about-us" className="nav-link hover:text-blue-600">
+            {/* <Link to="/about-us" className="nav-link hover:text-blue-600">
               About Us
+            </Link> */}
+            <Link to="/careers" className="nav-link hover:text-blue-600">
+              Careers
+            </Link>
+            <Link to="/partnerships" className="nav-link hover:text-blue-600">
+              Partnerships
             </Link>
             <Link to="/contact-us" className="nav-link hover:text-blue-600">
               Contact
@@ -292,7 +324,51 @@ const Navbar = () => {
               >
                 Home
               </Link>
+              <Link
+                to="/about-us"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
 
+              {/* PRODUCTS */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileProducts((p) => !p)}
+                  className="w-full flex items-center justify-between font-medium"
+                >
+                  <span>Products</span>
+                  <ChevronDown
+                    size={18}
+                    className={`transition-transform ${
+                      openMobileProducts ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {openMobileProducts && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      className="mt-4 rounded-xl bg-gray-50 p-4 space-y-2"
+                    >
+                      {PRODUCTS.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="block py-1 text-gray-700"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               {/* SOLUTIONS */}
               <div>
                 <button
@@ -371,53 +447,54 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* PRODUCTS */}
-              <div>
-                <button
-                  onClick={() => setOpenMobileProducts((p) => !p)}
-                  className="w-full flex items-center justify-between font-medium"
-                >
-                  <span>Products</span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform ${
-                      openMobileProducts ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                <AnimatePresence>
-                  {openMobileProducts && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className="mt-4 rounded-xl bg-gray-50 p-4 space-y-2"
-                    >
-                      {PRODUCTS.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="block py-1 text-gray-700"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
               {/* STATIC LINKS */}
-              <Link
+              {/* <Link
                 to="/about-us"
                 className="block font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About Us
+              </Link> */}
+              {/* <Link
+                to="/careers"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Careers
               </Link>
-
+              <Link
+                to="/partnerships"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Partnerships
+              </Link> */}
+              {/* <Link
+                to="/careers"
+                className="text-sm font-medium hover:text-blue-600 transition-colors"
+              >
+                Careers
+              </Link>
+              <Link
+                to="/partnerships"
+                className="text-sm font-medium hover:text-blue-600 transition-colors"
+              >
+                Partnerships
+              </Link> */}
+              <Link
+                to="/careers"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Careers
+              </Link>
+              <Link
+                to="/partnerships"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Partnerships
+              </Link>
               <Link
                 to="/contact-us"
                 className="block font-medium"
