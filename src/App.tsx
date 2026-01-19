@@ -36,6 +36,8 @@ import GovernmentThankYouPage from "./pages/GovernmentThankYouPage";
 import SalesXThankYouPage from "./pages/SalesXThankYouPage";
 import CallAnalyserThankYouPage from "./pages/CallAnalyserThankYouPage";
 import SupportAssistThankYouPage from "./pages/SupportAssistThankYouPage";
+import PartnershipsPage from "./pages/PartnershipsPage";
+import Chatbot from "./components/Chatbot";
 
 function App() {
   return (
@@ -71,6 +73,7 @@ function App() {
             />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/partnerships" element={<PartnershipsPage />} />
             <Route
               path="/products/expo-insight"
               element={<ExpoInsightPage />}
@@ -155,6 +158,7 @@ function App() {
             />
           </Routes>
           <Footer />
+          <Chatbot />
         </div>
       </BrowserRouter>
     </HelmetProvider>

@@ -136,7 +136,42 @@ const Navbar = () => {
             <Link to="/" className="nav-link hover:text-blue-600">
               Home
             </Link>
+            <Link to="/about-us" className="nav-link hover:text-blue-600">
+              About Us
+            </Link>
+            {/* PRODUCTS */}
+            <div
+              className="relative"
+              onMouseEnter={() => setActiveDropdown("products")}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
+                Products <ChevronDown size={14} />
+              </button>
 
+              <AnimatePresence>
+                {activeDropdown === "products" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[420px]"
+                  >
+                    <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
+                      {PRODUCTS.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg"
+                        >
+                          <item.icon size={16} /> {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             {/* SOLUTIONS */}
             <div
               className="relative"
@@ -229,41 +264,14 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            {/* PRODUCTS */}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown("products")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="nav-link flex items-center gap-1 hover:text-blue-600">
-                Products <ChevronDown size={14} />
-              </button>
-
-              <AnimatePresence>
-                {activeDropdown === "products" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[420px]"
-                  >
-                    <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
-                      {PRODUCTS.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg"
-                        >
-                          <item.icon size={16} /> {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <Link to="/about-us" className="nav-link hover:text-blue-600">
+            {/* <Link to="/about-us" className="nav-link hover:text-blue-600">
               About Us
+            </Link> */}
+            <Link to="/careers" className="nav-link hover:text-blue-600">
+              Careers
+            </Link>
+            <Link to="/partnerships" className="nav-link hover:text-blue-600">
+              Partnerships
             </Link>
             <Link to="/contact-us" className="nav-link hover:text-blue-600">
               Contact
@@ -316,7 +324,51 @@ const Navbar = () => {
               >
                 Home
               </Link>
+              <Link
+                to="/about-us"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
 
+              {/* PRODUCTS */}
+              <div>
+                <button
+                  onClick={() => setOpenMobileProducts((p) => !p)}
+                  className="w-full flex items-center justify-between font-medium"
+                >
+                  <span>Products</span>
+                  <ChevronDown
+                    size={18}
+                    className={`transition-transform ${
+                      openMobileProducts ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {openMobileProducts && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      className="mt-4 rounded-xl bg-gray-50 p-4 space-y-2"
+                    >
+                      {PRODUCTS.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="block py-1 text-gray-700"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               {/* SOLUTIONS */}
               <div>
                 <button
@@ -395,52 +447,28 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* PRODUCTS */}
-              <div>
-                <button
-                  onClick={() => setOpenMobileProducts((p) => !p)}
-                  className="w-full flex items-center justify-between font-medium"
-                >
-                  <span>Products</span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform ${
-                      openMobileProducts ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                <AnimatePresence>
-                  {openMobileProducts && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className="mt-4 rounded-xl bg-gray-50 p-4 space-y-2"
-                    >
-                      {PRODUCTS.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="block py-1 text-gray-700"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
               {/* STATIC LINKS */}
-              <Link
+              {/* <Link
                 to="/about-us"
                 className="block font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About Us
+              </Link> */}
+              {/* <Link
+                to="/careers"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Careers
               </Link>
+              <Link
+                to="/partnerships"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Partnerships
+              </Link> */}
               {/* <Link
                 to="/careers"
                 className="text-sm font-medium hover:text-blue-600 transition-colors"
@@ -453,7 +481,20 @@ const Navbar = () => {
               >
                 Partnerships
               </Link> */}
-
+              <Link
+                to="/careers"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Careers
+              </Link>
+              <Link
+                to="/partnerships"
+                className="block font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Partnerships
+              </Link>
               <Link
                 to="/contact-us"
                 className="block font-medium"
