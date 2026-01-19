@@ -5,7 +5,7 @@ import { z } from "zod";
 import ReCAPTCHA from "react-google-recaptcha";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 // -------- SEARCHABLE COUNTRY DROPDOWN --------
 interface SearchableCountryDropdownProps {
@@ -36,7 +36,7 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
     (country) =>
       country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       country.dial_code.includes(searchTerm) ||
-      country.code.toLowerCase().includes(searchTerm.toLowerCase())
+      country.code.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   useEffect(() => {
@@ -227,11 +227,11 @@ const Form: React.FC<FormProps> = ({
               .email("Invalid email format")
               .refine(
                 (val) => val === val.toLowerCase(),
-                "Email must be in lowercase"
+                "Email must be in lowercase",
               )
               .refine(
                 (val) => val.endsWith(".com"),
-                "Email must end with .com"
+                "Email must end with .com",
               );
           }
 
@@ -314,8 +314,8 @@ const Form: React.FC<FormProps> = ({
           // }
 
           return [field.id, validator];
-        })
-      )
+        }),
+      ),
     );
 
   const validateField = (fieldId: string, value: any) => {
@@ -404,7 +404,7 @@ const Form: React.FC<FormProps> = ({
     const schema = buildDynamicSchema(fields);
 
     const parsedData = Object.fromEntries(
-      Object.entries(formData).filter(([key]) => !key.includes("_country"))
+      Object.entries(formData).filter(([key]) => !key.includes("_country")),
     );
 
     const result = schema.safeParse(parsedData);

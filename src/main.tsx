@@ -2,21 +2,19 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
-    <Toaster
+    <ToastContainer
       position="top-right"
-      toastOptions={{
-        duration: 4000,
-        style: {
-          background: "#1f2937",
-          color: "#fff",
-          borderRadius: "12px",
-        },
-      }}
+      autoClose={4000}
+      theme="dark"
+      closeOnClick
+      pauseOnHover
+      draggable
     />
-  </StrictMode>
+  </StrictMode>,
 );
