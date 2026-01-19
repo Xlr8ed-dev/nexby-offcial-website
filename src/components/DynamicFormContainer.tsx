@@ -92,16 +92,26 @@ const DynamicFormContainer: React.FC = () => {
       },
     };
 
-    await fetch(`${API_BASE_URL}/api/form/submit`, {
+    const res = await fetch(`${API_BASE_URL}/api/form/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    Navigate("/thank-you", {
-      state: { formId },
-    });
-  };
 
+    if (!res.ok) {
+      let message = "Something went wrong. Please try again.";
+
+      if (res.status >= 500) {
+        message = "Server error. Please try again later.";
+      } else if (res.status === 404) {
+        message = "Service unavailable. Please contact support.";
+      }
+
+      throw new Error(message);
+    }
+
+    Navigate("/thank-you", { state: { formId } });
+  };
   if (loading) {
     return (
       <div className="w-full animate-pulse px-4 sm:px-6 md:px-8">
