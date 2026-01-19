@@ -22,6 +22,7 @@ import {
   Bot,
   TrendingUp,
   Headphones,
+  GraduationCap,
 } from "lucide-react";
 
 // const SOLUTIONS = {
@@ -44,6 +45,11 @@ const SOLUTIONS = {
     { name: "Recruitment", icon: Users, path: "/solutions/recruitment" },
     { name: "Operations", icon: CheckCircle, path: "/solutions/operations" },
     { name: "Exhibitors", icon: Briefcase, path: "/solutions/exhibitions" },
+    {
+      name: "Examination",
+      icon: GraduationCap,
+      path: "/solutions/university-exam-portal",
+    },
   ],
   industries: [
     {
@@ -51,24 +57,42 @@ const SOLUTIONS = {
       icon: Building2,
       path: "/solutions/industry/real-estate",
     },
-    { name: "Manufacturing", icon: Factory, path: "#" },
-    { name: "Pharma", icon: FlaskConical, path: "#" },
-    { name: "Tech & SaaS", icon: Lightbulb, path: "#" },
+    {
+      name: "Manufacturing",
+      icon: Factory,
+      path: "/solutions/industry/manufacturing",
+    },
+    { name: "Pharma", icon: FlaskConical, path: "/solutions/industry/pharma" },
+    // { name: "Tech & SaaS", icon: Lightbulb, path: "#" },
   ],
   government: [
-    { name: "AI Call Assistant", icon: PhoneCall, path: "#" },
-    { name: "AI RFP Analyser", icon: FileSearch, path: "#" },
-    { name: "AI Chatbots", icon: Bot, path: "#" },
+    {
+      name: "AI Call Assistant",
+      icon: PhoneCall,
+      path: "/solutions/government/ai-call-assistant",
+    },
+    // { name: "AI RFP Analyser", icon: FileSearch, path: "#" },
+    {
+      name: "Tender Query Automation",
+      icon: FileSearch,
+      path: "/solutions/government/tender-query-automation",
+    },
+    // { name: "AI Chatbots", icon: Bot, path: "#" },
+    {
+      name: "Citizen AI Interface",
+      icon: Bot,
+      path: "/solutions/government/citizen-ai-interface",
+    },
   ],
 };
 
 const PRODUCTS = [
   { name: "AI Recruiter", icon: BrainCircuit, path: "/products/ai-recruiter" },
-  { name: "SalesX", icon: TrendingUp, path: "#" },
+  { name: "SalesX", icon: TrendingUp, path: "/products/salesx" },
   { name: "Expo Insight", icon: Presentation, path: "/products/expo-insight" },
-  { name: "Call Analyser", icon: BarChart3, path: "#" },
+  { name: "Call Analyser", icon: BarChart3, path: "/products/call-analyser" },
   { name: "AI TeleCaller", icon: Phone, path: "/products/ai-telecaller" },
-  { name: "SupportAssist", icon: Headphones, path: "#" },
+  { name: "SupportAssist", icon: Headphones, path: "/products/support-assist" },
 ];
 
 const Navbar = () => {
@@ -417,6 +441,18 @@ const Navbar = () => {
               >
                 About Us
               </Link>
+              {/* <Link
+                to="/careers"
+                className="text-sm font-medium hover:text-blue-600 transition-colors"
+              >
+                Careers
+              </Link>
+              <Link
+                to="/partnerships"
+                className="text-sm font-medium hover:text-blue-600 transition-colors"
+              >
+                Partnerships
+              </Link> */}
 
               <Link
                 to="/contact-us"
