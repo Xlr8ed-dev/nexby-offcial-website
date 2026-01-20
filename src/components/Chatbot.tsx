@@ -7,7 +7,17 @@ const Chatbot = () => {
 
   // Lock background scroll when chatbot is open (mobile)
   useEffect(() => {
-    document.body.style.overflow = isChatOpen ? "hidden" : "auto";
+    const isMobile = window.innerWidth < 640; // Tailwind sm breakpoint
+
+    if (isMobile && isChatOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isChatOpen]);
 
   return (

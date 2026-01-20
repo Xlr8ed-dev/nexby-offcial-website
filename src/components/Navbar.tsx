@@ -188,7 +188,8 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[500px]"
+                    // className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[500px]"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[670px]"
                   >
                     {/* <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
                       {SOLUTIONS.useCases.map((item) => (

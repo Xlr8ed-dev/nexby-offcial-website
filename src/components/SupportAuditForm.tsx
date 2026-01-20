@@ -289,12 +289,38 @@ const SupportAuditForm = ({
         </div>
 
         {/* Submit Button */}
-        <button
+        {/* <button
           type="submit"
           className="w-full h-14 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-700 hover:via-blue-600 hover:to-indigo-700 rounded-full text-white font-bold text-base uppercase tracking-wider shadow-lg hover:shadow-blue-500/50 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
         >
           <Zap size={20} className="text-yellow-400 fill-yellow-400" />
           Automate My Support
+        </button> */}
+        <button
+          type="submit"
+          className="
+    relative w-full h-14 px-6
+    bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600
+    hover:from-blue-700 hover:via-blue-600 hover:to-indigo-700
+    rounded-full text-white font-bold text-base uppercase tracking-wider
+    shadow-lg hover:shadow-blue-500/50
+    transition-all transform hover:scale-[1.02] active:scale-[0.98]
+    flex items-center justify-center gap-2
+  "
+        >
+          {/* ICON */}
+          <Zap
+            className="
+      text-yellow-400 fill-yellow-400
+      h-5 w-5
+      max-sm:absolute max-sm:left-4 max-sm:top-1/2 max-sm:-translate-y-1/2
+    "
+          />
+
+          {/* TEXT */}
+          <span className="max-sm:text-sm text-center pl-8 sm:pl-0">
+            Automate My Support
+          </span>
         </button>
       </form>
     </div>

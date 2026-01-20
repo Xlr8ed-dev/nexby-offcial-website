@@ -233,7 +233,7 @@ const PartnershipsPage = () => {
               </p>
             </div>
 
-            <div className="space-y-8">
+            {/* <div className="space-y-8">
               {partnershipModels.map((model, idx) => (
                 <motion.div
                   key={model.id}
@@ -262,7 +262,7 @@ const PartnershipsPage = () => {
                         {model.headline}
                       </h3>
 
-                      {/* The Pitch */}
+                     
                       <div className="mb-4">
                         <h4 className="font-bold text-slate-800 mb-2">
                           The Pitch:
@@ -270,7 +270,7 @@ const PartnershipsPage = () => {
                         <p className="text-slate-600">{model.pitch}</p>
                       </div>
 
-                      {/* The Solution */}
+                    
                       <div className="mb-4">
                         <h4 className="font-bold text-slate-800 mb-2">
                           The Collaboration:
@@ -284,7 +284,7 @@ const PartnershipsPage = () => {
                         </div>
                       </div>
 
-                      {/* The Win-Win */}
+                   
                       <div className="mb-4">
                         <h4 className="font-bold text-slate-800 mb-2">
                           The Win-Win:
@@ -292,10 +292,118 @@ const PartnershipsPage = () => {
                         <p className="text-slate-600">{model.winWin}</p>
                       </div>
 
-                      {/* Client Pitch (if exists) */}
+                     
                       {model.clientPitch && (
                         <div className="bg-slate-100 border-l-4 border-slate-400 p-4 rounded-r-lg italic">
                           <p className="text-slate-700">
+                            <strong>Client Pitch:</strong> {model.clientPitch}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div> */}
+            <div className="space-y-8">
+              {partnershipModels.map((model, idx) => (
+                <motion.div
+                  key={model.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="
+        bg-white rounded-3xl 
+        p-6 max-sm:p-5 md:p-10
+        shadow-lg border border-slate-200 
+        hover:shadow-xl transition-shadow
+      "
+                >
+                  {/* MOBILE STACK / DESKTOP ROW */}
+                  <div className="flex gap-6 max-sm:flex-col max-sm:items-center md:items-start">
+                    {/* ICON */}
+                    <div
+                      className={`
+            w-16 h-16 bg-${model.color}-100 rounded-2xl 
+            flex items-center justify-center shrink-0
+          `}
+                    >
+                      <model.icon
+                        className={`text-${model.color}-600`}
+                        size={32}
+                      />
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="flex-1 max-sm:text-center">
+                      {/* TAG */}
+                      <div
+                        className={`
+              inline-block bg-${model.color}-100 text-${model.color}-800 
+              px-3 py-1 rounded-full text-sm font-bold mb-3
+            `}
+                      >
+                        {model.forType}
+                      </div>
+
+                      {/* HEADLINE */}
+                      <h3 className="text-xl max-sm:text-lg md:text-3xl font-bold text-slate-900 mb-4">
+                        {model.headline}
+                      </h3>
+
+                      {/* PITCH */}
+                      <div className="mb-4 text-left max-sm:text-center">
+                        <h4 className="font-bold text-slate-800 mb-2">
+                          The Pitch:
+                        </h4>
+                        <p className="text-slate-600 leading-relaxed">
+                          {model.pitch}
+                        </p>
+                      </div>
+
+                      {/* COLLABORATION */}
+                      <div className="mb-4">
+                        <h4 className="font-bold text-slate-800 mb-2">
+                          The Collaboration:
+                        </h4>
+
+                        <div
+                          className={`
+                bg-${model.color}-50 
+                border-l-4 border-${model.color}-500
+                max-sm:border-l-0 max-sm:border-t-4
+                max-sm:rounded-t-lg
+                p-4 rounded-r-lg
+              `}
+                        >
+                          <p className="text-slate-700 leading-relaxed">
+                            <strong>The Solution:</strong> {model.solution}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* WIN-WIN */}
+                      <div className="mb-4 text-left max-sm:text-center">
+                        <h4 className="font-bold text-slate-800 mb-2">
+                          The Win-Win:
+                        </h4>
+                        <p className="text-slate-600 leading-relaxed">
+                          {model.winWin}
+                        </p>
+                      </div>
+
+                      {/* CLIENT PITCH */}
+                      {model.clientPitch && (
+                        <div
+                          className="
+                bg-slate-100 
+                border-l-4 border-slate-400
+                max-sm:border-l-0 max-sm:border-t-4
+                p-4 rounded-r-lg italic
+              "
+                        >
+                          <p className="text-slate-700 leading-relaxed">
                             <strong>Client Pitch:</strong> {model.clientPitch}
                           </p>
                         </div>
