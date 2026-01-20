@@ -374,7 +374,7 @@ const GovernmentAICallAssistantPage = () => {
                       local dialect.
                     </p>
                   </div>
-                  <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200">
+                  {/* <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200">
                     <div>
                       <p className="text-2xl font-bold text-blue-600">
                         &lt;600ms
@@ -391,6 +391,34 @@ const GovernmentAICallAssistantPage = () => {
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-blue-600">100%</p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        Data Local
+                      </p>
+                    </div>
+                  </div> */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-200">
+                    <div className="text-center sm:text-left">
+                      <p className="text-xl sm:text-2xl font-bold text-blue-600">
+                        &lt;600ms
+                      </p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        Latency
+                      </p>
+                    </div>
+
+                    <div className="text-center sm:text-left">
+                      <p className="text-xl sm:text-2xl font-bold text-blue-600">
+                        92%
+                      </p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        Intent Recog.
+                      </p>
+                    </div>
+
+                    <div className="text-center sm:text-left">
+                      <p className="text-xl sm:text-2xl font-bold text-blue-600">
+                        100%
+                      </p>
                       <p className="text-xs text-slate-500 font-medium">
                         Data Local
                       </p>

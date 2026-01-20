@@ -177,7 +177,7 @@ const CitizenAIInterfaceForm = () => {
             </p>
           </div>
 
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={isSubmitting}
@@ -191,6 +191,41 @@ const CitizenAIInterfaceForm = () => {
             ) : (
               <>
                 Request Digital Governance Roadmap <ArrowRight size={20} />
+              </>
+            )}
+          </motion.button> */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            disabled={isSubmitting}
+            type="submit"
+            className="
+    relative w-full py-4 px-6
+    bg-slate-900 hover:bg-slate-800
+    text-white rounded-xl font-bold text-lg
+    transition-all flex items-center justify-center gap-2
+    shadow-lg disabled:opacity-70 disabled:cursor-not-allowed
+  "
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="animate-spin max-sm:h-4 max-sm:w-4" />
+                <span className="max-sm:text-sm">Processing Request...</span>
+              </>
+            ) : (
+              <>
+                {/* TEXT */}
+                <span className="max-sm:text-sm text-center pr-8 sm:pr-0">
+                  Request Digital Governance Roadmap
+                </span>
+
+                {/* ICON */}
+                <ArrowRight
+                  className="
+          h-5 w-5
+          max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2
+        "
+                />
               </>
             )}
           </motion.button>
