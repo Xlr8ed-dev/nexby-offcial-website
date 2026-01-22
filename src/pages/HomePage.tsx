@@ -132,43 +132,106 @@ const HeroSection = () => {
   );
 };
 
+// const ScrollAnimationSection = () => {
+//   const ref = useRef(null);
+//   const { scrollYProgress } = useScroll({
+//     target: ref,
+//     offset: ["center center", "start center"],
+//   });
+
+//   const scale = useTransform(scrollYProgress, [0, 0.4], [100, 1]);
+//   const opacity = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
+//   const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+
+//   return (
+//     <div
+//       ref={ref}
+//       className="h-screen relative bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden flex flex-col items-center"
+//     >
+
+//       <div className="absolute inset-0 overflow-hidden">
+//         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+//         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+//       </div>
+
+//       <div className="sticky top-1/4 w-full flex flex-col items-center justify-center h-96">
+//         <motion.div
+//           style={{ scale, y }}
+//           className="z-20 font-bold leading-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-2xl"
+//         >
+//           X
+//         </motion.div>
+
+//         <motion.div
+//           style={{ opacity }}
+//           className="mt-12 text-center max-w-2xl px-4 z-10"
+//         >
+//           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+//             The Multiplier Effect
+//           </h2>
+//           <p className="text-xl text-gray-700 font-medium">
+//             Where human potential meets artificial precision.
+//           </p>
+//         </motion.div>
+//       </div>
+//     </div>
+//   );
+// };
+
 const ScrollAnimationSection = () => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: ref,
-    // offset: ["start end", "end start"],
     offset: ["center center", "start center"],
   });
 
-  // Transform the X: Scale down as we scroll through the container
-  const scale = useTransform(scrollYProgress, [0, 0.4], [100, 1]);
-  const opacity = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+  // 1️ Reduce extreme scale
+  const rawScale = useTransform(scrollYProgress, [0, 0.4], [8, 1]);
+  const rawY = useTransform(scrollYProgress, [0, 0.4], [0, -40]);
+  const rawOpacity = useTransform(scrollYProgress, [0.25, 0.45], [0, 1]);
+
+  // 2️ Add spring smoothing (CRITICAL)
+  const scale = useSpring(rawScale, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.6,
+  });
+
+  const y = useSpring(rawY, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.6,
+  });
+
+  const opacity = useSpring(rawOpacity, {
+    stiffness: 100,
+    damping: 25,
+  });
 
   return (
     <div
       ref={ref}
-      className="h-screen relative bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden flex flex-col items-center"
+      className="relative h-screen overflow-hidden flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50"
     >
-      {/* Animated gradient background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      {/* Background blobs (keep but lighter) */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl" />
       </div>
 
-      {/* The Sticky Container for the X Animation */}
-      <div className="sticky top-1/4 w-full flex flex-col items-center justify-center h-96">
+      {/* Sticky container */}
+      <div className="sticky top-1/4 h-96 w-full flex flex-col items-center justify-center">
         <motion.div
           style={{ scale, y }}
-          className="z-20 font-bold leading-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-2xl"
+          className="z-20 text-[12rem] font-extrabold leading-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent will-change-transform"
         >
           X
         </motion.div>
 
-        {/* The Text that reveals as X shrinks */}
         <motion.div
           style={{ opacity }}
-          className="mt-12 text-center max-w-2xl px-4 z-10"
+          className="mt-10 text-center max-w-2xl px-4 z-10"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
             The Multiplier Effect
