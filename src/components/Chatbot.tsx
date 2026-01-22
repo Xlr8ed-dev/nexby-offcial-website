@@ -39,7 +39,7 @@ const Chatbot = () => {
           <X className="w-6 h-6 sm:w-7 sm:h-7 transition" />
         ) : (
           <img
-            src="images/robot.png"
+            src="/images/robot.png"
             alt="Chat"
             className="w-7 h-7 sm:w-8 sm:h-8"
           />
