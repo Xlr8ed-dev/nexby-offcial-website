@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -80,6 +80,12 @@ const Chatbot = lazy(() => import("./components/Chatbot"));
 function App() {
   return (
     <HelmetProvider>
+      <Helmet>
+        <meta
+          name="google-site-verification"
+          content={import.meta.env.VITE_GOOGLE_SITE_VERIFICATION}
+        />
+      </Helmet>
       <BrowserRouter>
         <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
           <Navbar />
