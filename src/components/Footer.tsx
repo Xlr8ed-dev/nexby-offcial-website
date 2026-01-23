@@ -92,7 +92,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/about"
+                  to="/about-us"
                   className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                 >
                   About Us
@@ -108,7 +108,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="hover:text-indigo-400 transition-colors text-sm flex items-center gap-1 text-left"
                 >
                   Contact Us
