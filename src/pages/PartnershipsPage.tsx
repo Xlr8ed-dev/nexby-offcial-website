@@ -132,6 +132,17 @@ const PartnershipsPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-white pt-20">
+        {/* Breadcrumb Navigation */}
+        <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <a href="/" className="hover:text-blue-600 transition-colors">
+                Home
+              </a>
+            </li>
+            <li className="before:content-['/'] before:mx-2">Partnerships</li>
+          </ol>
+        </nav>
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 md:py-28 text-white">
           <div className="absolute inset-0 overflow-hidden opacity-20">

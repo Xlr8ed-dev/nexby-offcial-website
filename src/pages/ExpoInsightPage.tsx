@@ -82,7 +82,7 @@ const ExpoInsightPage = () => {
 
     const observer = new ResizeObserver(() => {
       const heights = cardRefs.current.map(
-        (el) => el?.getBoundingClientRect().height || 0
+        (el) => el?.getBoundingClientRect().height || 0,
       );
       setMaxHeight(Math.max(...heights));
     });
@@ -364,8 +364,8 @@ const ExpoInsightPage = () => {
                       height: isMobile
                         ? "auto"
                         : maxHeight
-                        ? `${maxHeight}px`
-                        : "auto",
+                          ? `${maxHeight}px`
+                          : "auto",
                     }}
                     className={`
     ${isMobile ? "" : "sticky top-20"}

@@ -31,6 +31,20 @@ const SalesXPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-white pt-20">
+        {/* Breadcrumb Navigation */}
+        <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <a href="/" className="hover:text-purple-600 transition-colors">
+                Home
+              </a>
+            </li>
+            <li className="before:content-['/'] before:mx-2">Products</li>
+            <li className="before:content-['/'] before:mx-2 text-purple-600 font-medium">
+              SalesX
+            </li>
+          </ol>
+        </nav>
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-slate-900 py-20 md:py-28 text-white">
           <div className="absolute inset-0 overflow-hidden opacity-20">

@@ -33,6 +33,27 @@ const UniversityExamPage = () => {
       </Helmet>
 
       <div className="min-h-screen bg-white pt-20">
+        {/* Breadcrumb Navigation */}
+        <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
+          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+            <li>
+              <a href="/" className="hover:text-purple-600 transition-colors">
+                Home
+              </a>
+            </li>
+            <li className="before:content-['/'] before:mx-2">Solutions</li>
+            <li
+              className="
+    relative before:content-['/'] before:mx-2
+    text-purple-600 font-medium
+    max-w-[160px] sm:max-w-none
+    truncate
+  "
+            >
+              University Exam Portal
+            </li>
+          </ol>
+        </nav>
         {/* Hero Section */}
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white py-32 md:py-48">

@@ -16,7 +16,26 @@ import TenderQueryAuditForm from "../components/TenderQueryAuditForm";
 
 const TenderQueryAutomationPage = () => {
   return (
-    <div className="font-sans text-slate-900 bg-slate-50">
+    <div className="min-h-screen pt-20 bg-white font-sans text-slate-900">
+      {/* Breadcrumb Navigation */}
+      <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
+        <ol className="flex items-center space-x-2 text-sm text-gray-600">
+          <li>
+            <a href="/" className="hover:text-purple-600 transition-colors">
+              Home
+            </a>
+          </li>
+          <li className="before:content-['/'] before:mx-2">Solutions</li>
+          <li
+            className="relative before:content-['/'] before:mx-2
+    text-purple-600 font-medium
+    max-w-[160px] sm:max-w-none
+    truncate"
+          >
+            Tender Query Automation
+          </li>
+        </ol>
+      </nav>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
