@@ -73,8 +73,9 @@ const Chatbot = () => {
           h-[calc(100dvh-5rem)]
 
           /* Desktop */
-          sm:top-auto sm:bottom-24 sm:right-6 sm:left-auto
+          sm:top-24 sm:right-6 sm:left-auto sm:bottom-auto
           sm:w-[420px] sm:h-[650px]
+          max-h-[calc(100vh-6rem)]
         `}
       >
         <div
