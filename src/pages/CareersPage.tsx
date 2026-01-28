@@ -155,6 +155,11 @@ const CareersPage = () => {
     });
   }, []);
 
+  useEffect(() => {
+    // Scroll to top on mount
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>
