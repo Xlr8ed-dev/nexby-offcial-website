@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import HeaderLogo from "../assets/name-logo.png";
 import {
@@ -25,20 +25,6 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-// const SOLUTIONS = {
-//   useCases: [
-//     { name: "Sales", icon: BarChart3, path: "/solutions/sales" },
-//     { name: "Recruitment", icon: Users, path: "/solutions/recruitment" },
-//     { name: "Operations", icon: CheckCircle, path: "/solutions/operations" },
-//     { name: "Exhibitors", icon: Briefcase, path: "/solutions/exhibitions" },
-//   ],
-// };
-
-// const PRODUCTS = [
-//   { name: "AI Recruiter", icon: BrainCircuit, path: "/products/ai-recruiter" },
-//   { name: "Expo Insight", icon: Presentation, path: "/products/expo-insight" },
-//   { name: "AI TeleCaller", icon: Phone, path: "/products/ai-telecaller" },
-// ];
 const SOLUTIONS = {
   useCases: [
     { name: "Sales", icon: BarChart3, path: "/solutions/sales" },
@@ -63,7 +49,6 @@ const SOLUTIONS = {
       path: "/solutions/industry/manufacturing",
     },
     { name: "Pharma", icon: FlaskConical, path: "/solutions/industry/pharma" },
-    // { name: "Tech & SaaS", icon: Lightbulb, path: "#" },
   ],
   government: [
     {
@@ -71,13 +56,11 @@ const SOLUTIONS = {
       icon: PhoneCall,
       path: "/solutions/government/ai-call-assistant",
     },
-    // { name: "AI RFP Analyser", icon: FileSearch, path: "#" },
     {
       name: "Tender Query Automation",
       icon: FileSearch,
       path: "/solutions/government/tender-query-automation",
     },
-    // { name: "AI Chatbots", icon: Bot, path: "#" },
     {
       name: "Citizen AI Interface",
       icon: Bot,
@@ -109,13 +92,28 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* 🔒 LOCK BODY SCROLL WHEN MOBILE MENU OPEN */
+  /*LOCK BODY SCROLL WHEN MOBILE MENU OPEN */
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      navigate("/");
+    }
+  };
 
   return (
     <>
@@ -127,7 +125,7 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* LOGO */}
-          <Link to="/">
+          <Link to="/" onClick={handleLogoClick}>
             <img src={HeaderLogo} alt="Nexby" className="h-9" />
           </Link>
 
@@ -188,20 +186,8 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    // className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[500px]"
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[670px]"
                   >
-                    {/* <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-2 gap-4">
-                      {SOLUTIONS.useCases.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className="flex items-center gap-2 text-sm text-gray-700 hover:text-blue-600 p-2 hover:bg-blue-50 rounded-lg"
-                        >
-                          <item.icon size={16} /> {item.name}
-                        </Link>
-                      ))}
-                    </div> */}
                     <div className="bg-white shadow-xl rounded-xl p-6 grid grid-cols-3 gap-8">
                       {/* USE CASES */}
                       <div>
@@ -264,10 +250,7 @@ const Navbar = () => {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* <Link to="/about-us" className="nav-link hover:text-blue-600">
-              About Us
-            </Link> */}
+            {/* STATIC LINKS */}
             <Link to="/careers" className="nav-link hover:text-blue-600">
               Careers
             </Link>
@@ -447,41 +430,7 @@ const Navbar = () => {
                   )}
                 </AnimatePresence>
               </div>
-
               {/* STATIC LINKS */}
-              {/* <Link
-                to="/about-us"
-                className="block font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About Us
-              </Link> */}
-              {/* <Link
-                to="/careers"
-                className="block font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Careers
-              </Link>
-              <Link
-                to="/partnerships"
-                className="block font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Partnerships
-              </Link> */}
-              {/* <Link
-                to="/careers"
-                className="text-sm font-medium hover:text-blue-600 transition-colors"
-              >
-                Careers
-              </Link>
-              <Link
-                to="/partnerships"
-                className="text-sm font-medium hover:text-blue-600 transition-colors"
-              >
-                Partnerships
-              </Link> */}
               <Link
                 to="/careers"
                 className="block font-medium"

@@ -2,8 +2,13 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { CheckCircle, Shield, Zap, Layers } from "lucide-react";
 import Sir from "../assets/Sir.jpg";
+import { useEffect } from "react";
 
 const AboutUsPage = () => {
+  useEffect(() => {
+    // Scroll to top on mount
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Helmet>
