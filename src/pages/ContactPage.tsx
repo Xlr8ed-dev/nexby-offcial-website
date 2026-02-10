@@ -225,18 +225,50 @@ const ContactPage = () => {
 
                   {/* Office Details */}
                   <div className="bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 rounded-2xl border-2 border-purple-200 p-6 mb-6">
+                    {/* Registered Office */}
+                    {/* Registered Office */}
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center shrink-0">
                         <MapPin className="text-white" size={20} />
                       </div>
+
                       <div>
-                        <h3 className="font-bold text-gray-900 mb-2">
-                          Nexby AI Solutions Private Limited
+                        <h3 className="font-bold text-gray-900 mb-1">
+                          Registered Office
                         </h3>
-                        <address className="text-gray-700 not-italic leading-relaxed">
-                          15, Khatau Building, 44 Bank Street
-                          <br />
-                          Mumbai - 400001, Maharashtra, India
+                        <address className="text-gray-700 not-italic text-sm leading-snug">
+                          <span className="block font-medium">
+                            NEXBY AI SOLUTIONS PRIVATE LIMITED
+                          </span>
+                          <span className="block">
+                            14–15, Khatau Building, Bank Street, Mumbai –
+                            400001, Maharashtra, India
+                          </span>
+                        </address>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-gray-200 my-4" />
+
+                    {/* Corporate Office */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shrink-0">
+                        <MapPin className="text-white" size={20} />
+                      </div>
+
+                      <div>
+                        <h3 className="font-bold text-gray-900 mb-1">
+                          Corporate Office
+                        </h3>
+                        <address className="text-gray-700 not-italic text-sm leading-snug">
+                          <span className="block font-medium">
+                            NEXBY AI SOLUTIONS PRIVATE LIMITED
+                          </span>
+                          <span className="block">
+                            H-85, RIICO Industrial Area, Sitapura, Jaipur –
+                            302022, Rajasthan, India
+                          </span>
                         </address>
                       </div>
                     </div>
@@ -264,7 +296,7 @@ const ContactPage = () => {
                     <iframe
                       src={mapsEmbedUrl}
                       width="100%"
-                      height="400"
+                      height="300"
                       style={{ border: 0 }}
                       allowFullScreen={true}
                       loading="lazy"
@@ -275,7 +307,7 @@ const ContactPage = () => {
                   </div>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      officeAddress
+                      officeAddress,
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
