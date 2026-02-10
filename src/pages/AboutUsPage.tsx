@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { CheckCircle, Shield, Zap, Layers } from "lucide-react";
 import Sir from "../assets/Sir.jpg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AboutUsPage = () => {
   useEffect(() => {
@@ -143,6 +143,144 @@ const AboutUsPage = () => {
                   infrastructure—Salesforce, Slack, Jira, or SAP—without
                   disrupting your current architecture.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/*Certifications & Recognition (NEW) */}
+        <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+          {/* <div className="container mx-auto px-4"> */}
+          <div className="max-w-screen-xl mx-auto px-6">
+            {/* Section Header */}
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <h2 className="text-4xl font-bold mb-4">
+                Certified. Recognized. Trusted.
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Independent validation of our engineering standards, operational
+                maturity, and impact across industries.
+              </p>
+            </div>
+
+            {/* Certificates Grid */}
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12"> */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-14 max-w-5xl mx-auto">
+              {/* Certificate 1 */}
+              <div
+                className="border border-black/30 bg-white 
+             transition-all duration-300 
+             hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+              >
+                <div className="relative bg-gray-100 p-6 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/certificates/bg-lines.svg"
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+
+                  <img
+                    src="/certificates/NexbyISOIEC2000012018Certificatepage-0001.jpg"
+                    alt="Information Technology – Service Management"
+                    className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
+                  />
+                </div>
+
+                <div className="px-6 py-5 text-center">
+                  <h3 className="text-base font-medium tracking-wide uppercase mb-3 text-black">
+                    Information Technology – Service Management
+                  </h3>
+                  <p className="text-gray-800 text-sm leading-relaxed tracking-wide">
+                    ITSM of Atishay Limited has been independently assessed and
+                    is compliant with the requirements of: ISO/IEC 20000-1:2018
+                  </p>
+                </div>
+              </div>
+
+              {/* Certificate 2 */}
+              <div
+                className="border border-black/30 bg-white 
+             transition-all duration-300 
+             hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+              >
+                <div className="relative bg-gray-100 p-6 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/certificates/bg-lines.svg"
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+
+                  <img
+                    src="/certificates/card10033page0001.jpg"
+                    alt="Information Technology – Service Management"
+                    className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
+                  />
+                </div>
+
+                <div className="px-6 py-5 text-center">
+                  <h3 className="text-base font-medium tracking-wide uppercase mb-3 text-black">
+                    Tech Solution Providers for Government
+                  </h3>
+                  <p className="text-gray-800 text-sm leading-relaxed tracking-wide">
+                    In Annual Roll of Honor as one of the 20 most promising Tech
+                    Solution Providers for Government and Public Sector – 2019.
+                  </p>
+                </div>
+              </div>
+
+              {/* Certificate 3 */}
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto"> */}
+              <div
+                className="border border-black/30 bg-white 
+             transition-all duration-300 
+             hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+              >
+                <div className="relative bg-gray-100 p-6 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/certificates/bg-lines.svg"
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+
+                  <img
+                    src="/certificates/NexbyISO90012015Certificatepage-0001.jpg"
+                    alt="Information Technology – Service Management"
+                    className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
+                  />
+                </div>
+
+                <div className="px-6 py-5 text-center">
+                  <h3 className="text-base font-medium tracking-wide uppercase mb-3 text-black">
+                    Quality Management System
+                  </h3>
+                </div>
+              </div>
+
+              {/* Certificate 4 */}
+              <div
+                className="border border-black/30 bg-white 
+             transition-all duration-300 
+             hover:shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+              >
+                <div className="relative bg-gray-100 p-6 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/certificates/bg-lines.svg"
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+
+                  <img
+                    src="/certificates/NexbyISOIEC270012022Certificatepage0001.jpg"
+                    alt="Information Technology – Service Management"
+                    className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
+                  />
+                </div>
+
+                <div className="px-6 py-5 text-center">
+                  <h3 className="text-base font-medium tracking-wide uppercase mb-3 text-black">
+                    Information Security Management System
+                  </h3>
+                </div>
               </div>
             </div>
           </div>
