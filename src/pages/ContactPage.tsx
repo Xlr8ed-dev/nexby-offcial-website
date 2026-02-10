@@ -296,7 +296,7 @@ const ContactPage = () => {
                     <iframe
                       src={mapsEmbedUrl}
                       width="100%"
-                      height="300"
+                      height="610"
                       style={{ border: 0 }}
                       allowFullScreen={true}
                       loading="lazy"
