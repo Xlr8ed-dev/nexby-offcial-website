@@ -2,12 +2,32 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Mail, MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 import DynamicFormContainer from "@/components/DynamicFormContainer";
+import { useLocation } from "react-router-dom";
 
 const ContactPage = () => {
   useEffect(() => {
     // Scroll to top on mount
     window.scrollTo(0, 0);
   }, []);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo === "contact-form") {
+      const el = document.getElementById("contact-form");
+
+      if (el) {
+        const yOffset = -120; // adjust for navbar height
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+        setTimeout(() => {
+          window.scrollTo({
+            top: y,
+            behavior: "smooth",
+          });
+        }, 200);
+      }
+    }
+  }, [location]);
 
   const officeAddress =
     "15, Khatau Building, 44 Bank Street, Mumbai - 400001, India";
@@ -211,7 +231,10 @@ const ContactPage = () => {
                     within 24 hours.
                   </p>
                 </div>
-                <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-purple-500/20">
+                <div
+                  id="contact-form"
+                  className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-purple-500/20"
+                >
                   <DynamicFormContainer />
                 </div>
               </div>
