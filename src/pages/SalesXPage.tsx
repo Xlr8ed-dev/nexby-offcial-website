@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   Clock,
@@ -14,11 +14,19 @@ import {
   Database,
 } from "lucide-react";
 import SalesXAuditForm from "../components/SalesXAuditForm";
+import { useNavigate } from "react-router-dom";
 
 const SalesXPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const formRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -76,52 +84,88 @@ const SalesXPage = () => {
                   empathy, and books meetings 24/7. It never sleeps, never
                   forgets, and never has a "bad day."
                 </p>
-
-                <div className="flex flex-wrap gap-4">
-                  <button className="inline-flex items-center gap-2 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 font-bold text-lg shadow-lg transition-all transform hover:scale-105">
+                <div className="flex flex-col sm:flex-row gap-5 mt-10">
+                  <button
+                    onClick={scrollToForm}
+                    className="
+      w-full sm:w-auto
+      flex items-center justify-center gap-3
+      h-16
+      bg-blue-600 hover:bg-blue-700
+      text-white
+      rounded-full
+      px-10
+      text-lg font-semibold
+      shadow-xl
+      transition-all duration-300
+      hover:scale-[1.02]
+      active:scale-95
+    "
+                  >
                     Calculate My ROI
-                    <Calculator size={20} />
+                    <Calculator size={22} />
                   </button>
-                  <button className="inline-flex items-center gap-2 h-14 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full px-8 font-bold text-lg backdrop-blur-sm transition-all">
-                    Hear Sample Conversations
-                    <Play size={20} />
+
+                  <button
+                    onClick={() =>
+                      navigate("/contact-us", {
+                        state: { scrollTo: "contact-form" },
+                      })
+                    }
+                    className="
+      w-full sm:w-auto
+      flex items-center justify-center gap-3
+      h-16
+      bg-white/10 hover:bg-white/20
+      text-white
+      border border-white/20
+      rounded-full
+      px-10
+      text-lg font-semibold
+      backdrop-blur-md
+      transition-all duration-300
+      hover:scale-[1.02]
+      active:scale-95
+    "
+                  >
+                    Book a Product Demo
+                    <ArrowRight size={22} />
                   </button>
                 </div>
               </div>
 
-              {/* Hero Visual Placeholder */}
-              <div className="relative bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-2xl">
-                <div className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg animate-bounce">
-                  Live Demo
+              {/* Sales youtube video */}
+              {/* Sales YouTube Video */}
+              <div
+                className="
+    relative mt-6
+    rounded-2xl
+    bg-slate-800/80 backdrop-blur-xl
+    border border-slate-700/60
+    shadow-2xl
+    overflow-hidden
+  "
+              >
+                {/* Video Full Width */}
+                <div className="aspect-video w-full">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/on3WbdrNTzM?rel=0&modestbranding=1&controls=1"
+                    title="Prospector AI in Action"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-4 h-full">
-                  <div className="bg-slate-900/50 rounded-xl p-4 flex flex-col items-center justify-center text-center border border-slate-700">
-                    <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center mb-4">
-                      <Clock className="text-red-500" size={32} />
-                    </div>
-                    <h3 className="text-white font-bold mb-1">5+ Minutes</h3>
-                    <p className="text-slate-400 text-sm">
-                      Lead turns "Blue/Cold"
-                    </p>
-                  </div>
-                  <div className="bg-blue-900/20 rounded-xl p-4 flex flex-col items-center justify-center text-center border border-blue-500/30 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-blue-500/10 animate-pulse"></div>
-                    <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-4 relative z-10">
-                      <CheckCircle className="text-green-400" size={32} />
-                    </div>
-                    <h3 className="text-white font-bold mb-1 relative z-10">
-                      10 Seconds
-                    </h3>
-                    <p className="text-blue-200 text-sm relative z-10">
-                      Lead "Green/Booked"
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-6 bg-slate-900 rounded-lg p-4 font-mono text-xs text-green-400">
-                  <p>&gt; Incoming Lead Detected...</p>
-                  <p>&gt; Initiating Call (0.5s)...</p>
-                  <p>&gt; Connection Established.</p>
-                  <p>&gt; "Hi John, saw you downloaded the guide..."</p>
+
+                {/* Caption with padding */}
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-white font-semibold text-lg sm:text-xl">
+                    Prospector AI in Action
+                  </h3>
+                  <p className="text-slate-400 text-sm sm:text-base mt-2">
+                    See how our AI agent automates your sales process
+                  </p>
                 </div>
               </div>
             </div>
@@ -779,10 +823,13 @@ const SalesXPage = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
               {/* Form is strictly required, remove buttons */}
             </div>
-
+          </div>
+          <div ref={formRef}>
             <SalesXAuditForm />
           </div>
         </section>
+
+        {/* Demo Form Section */}
       </div>
     </>
   );

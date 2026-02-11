@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import { Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
 import {
   Bot,
   ShieldCheck,
@@ -61,6 +62,56 @@ const AIRecruiterPage = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(0); // default muted
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+
+  // Play / Pause
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  // Mute / Unmute (0% <-> 100%)
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+
+    if (volume === 0) {
+      videoRef.current.volume = 1;
+      videoRef.current.muted = false;
+      setVolume(1);
+    } else {
+      videoRef.current.volume = 0;
+      videoRef.current.muted = true;
+      setVolume(0);
+    }
+  };
+
+  // Volume Slider Change
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!videoRef.current) return;
+
+    const newVolume = Number(e.target.value);
+    videoRef.current.volume = newVolume;
+    videoRef.current.muted = newVolume === 0;
+    setVolume(newVolume);
+  };
+
+  // Fullscreen
+  const handleFullscreen = () => {
+    if (!videoRef.current) return;
+    videoRef.current.requestFullscreen();
+  };
   return (
     <>
       <Helmet>
@@ -116,20 +167,92 @@ const AIRecruiterPage = () => {
                     Book a Product Demo
                     <ArrowRight size={20} />
                   </button>
-                  <button className="inline-flex items-center gap-2 h-14 bg-white text-blue-900 border-2 border-blue-100 hover:border-blue-300 rounded-full px-8 font-bold text-lg transition-all">
-                    Download Feature Sheet
-                  </button>
                 </div>
               </div>
 
-              {/* Hero Visual Placeholder */}
+              {/* HR Product video */}
               <div className="relative">
-                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video flex items-center justify-center">
-                  <img
-                    src="/images/ai-recruiter-hero.png"
-                    alt="AI Recruiter Interface"
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video">
+                  <video
+                    ref={videoRef}
                     className="w-full h-full object-cover"
+                    src="https://nexby-document-storage.s3.ap-south-1.amazonaws.com/static-assests/the-future-of-hiring-in-seconds-meet-the-all-new-AI-Powered-Recruiter.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                   />
+                </div>
+
+                {/* Controls */}
+                <div className="absolute bottom-6 right-6 flex items-center gap-4">
+                  {/* Play / Pause */}
+                  <button
+                    onClick={togglePlay}
+                    className="bg-black/70 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/90 transition"
+                  >
+                    {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                  </button>
+
+                  {/* Volume Wrapper */}
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setShowVolumeSlider(true)}
+                    onMouseLeave={() => setShowVolumeSlider(false)}
+                  >
+                    <button
+                      onClick={toggleMute}
+                      className="bg-black/70 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/90 transition"
+                    >
+                      {volume === 0 ? (
+                        <VolumeX size={18} />
+                      ) : (
+                        <Volume2 size={18} />
+                      )}
+                    </button>
+
+                    {/* Vertical Slider */}
+                    {showVolumeSlider && (
+                      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-md px-4 py-5 rounded-2xl flex flex-col items-center">
+                        {/* Slider Wrapper */}
+                        <div className="relative h-28 flex items-center">
+                          {/* Track Background */}
+                          <div className="absolute w-1 h-full bg-gray-500/40 rounded-full"></div>
+
+                          {/* Filled Volume */}
+                          <div
+                            className="absolute w-1 bg-white rounded-full bottom-0"
+                            style={{ height: `${volume * 100}%` }}
+                          ></div>
+
+                          {/* Range Input (Invisible but functional) */}
+                          <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleVolumeChange}
+                            className="absolute h-28 w-6 opacity-0 cursor-pointer"
+                            style={{ writingMode: "vertical-rl" }}
+                          />
+                        </div>
+
+                        {/* Percentage */}
+                        <span className="text-white text-xs mt-3">
+                          {Math.round(volume * 100)}%
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Fullscreen */}
+                  <button
+                    onClick={handleFullscreen}
+                    className="bg-black/70 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/90 transition"
+                  >
+                    <Maximize size={18} />
+                  </button>
                 </div>
               </div>
             </div>
