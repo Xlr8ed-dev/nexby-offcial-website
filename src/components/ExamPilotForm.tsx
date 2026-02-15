@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -8,197 +8,294 @@ import {
   Users,
   Mail,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
+  },
+});
 
 const ExamPilotForm = () => {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  const [formData, setFormData] = useState({
-    universityName: "",
-    studentCount: "",
-    currentMode: "Paper",
-    email: "",
-  });
+  const [loading, setLoading] = useState(true);
+  const [serverDown, setServerDown] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [endpointId, setEndpointId] = useState<number>(0);
+  const [formIdState, setFormIdState] = useState<number>(0);
+  const [formMeta, setFormMeta] = useState<any>(null);
+
+  const [formData, setFormData] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      try {
+        const res = await api.get(`/api/form-endpoint?endpoint=${currentPath}`);
+
+        if (!res.data.success || !res.data.form) {
+          throw new Error("Invalid form");
+        }
+
+        const form = res.data.form;
+
+        setFormMeta(form);
+        setEndpointId(form.endpointId);
+        setFormIdState(form.formId);
+
+        const initialValues: Record<string, any> = {};
+        form.schema.fields.forEach((field: any) => {
+          initialValues[field.id] = field.value ?? "";
+        });
+
+        setFormData(initialValues);
+      } catch (error: any) {
+        console.log("Fetch error:", error);
+        setServerDown(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchForm();
+  }, [currentPath]);
+
+  const handleChange = (id: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const getField = (id: string) =>
+    formMeta?.schema?.fields?.find((f: any) => f.id === id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
 
-    // Simulate API call
+    const requiredFields = formMeta?.schema?.fields?.filter(
+      (f: any) => f.required,
+    );
+
+    for (const field of requiredFields) {
+      if (!formData[field.id]) {
+        toast.error(`${field.label} is required`);
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      // Navigate to thank you page
-      navigate("/solutions/university-exam-portal/thank-you");
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
+      const payload = {
+        endpointId,
+        formId: formIdState,
+        response: formData,
+      };
+
+      const res = await api.post("/api/form/submit", payload);
+
+      if (res.data.success) {
+        toast.success("Form submitted successfully 🎉");
+        navigate("/solutions/university-exam-portal/thank-you");
+      } else {
+        toast.error(
+          res.data.message || "Something went wrong. Please try again.",
+        );
+      }
+    } catch (error: any) {
+      if (!error.response || error.response.status >= 500) {
+        toast.error("Something went wrong. Please try again.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 animate-pulse space-y-6">
+        <div className="h-6 bg-gray-200 rounded w-1/2" />
+        <div className="h-4 bg-gray-200 rounded w-2/3" />
+        <div className="h-12 bg-gray-200 rounded-xl" />
+        <div className="h-12 bg-gray-200 rounded-xl" />
+        <div className="h-12 bg-gray-200 rounded-xl" />
+        <div className="h-12 bg-gray-200 rounded-xl" />
+      </div>
+    );
+  }
+
+  if (serverDown && !formMeta) {
+    return (
+      <div className="bg-white rounded-3xl p-10 shadow-xl border border-gray-100 text-center">
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">
+          Kindly contact our sales team
+        </h3>
+
+        <p className="text-gray-600 mb-6">
+          Please reach out using the details below.
+        </p>
+
+        <div className="space-y-3 text-gray-800">
+          <p>
+            📧 Email:{" "}
+            <a href="mailto:hello@nexby.ai" className="underline font-semibold">
+              hello@nexby.ai
+            </a>
+          </p>
+          <p>
+            📞 Phone:{" "}
+            <a href="tel:+919892048816" className="underline font-semibold">
+              +91 98920 48816
+            </a>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const university = getField("university_name");
+  const students = getField("number_of_students");
+  const mode = getField("current_exam_mode");
+  const email = getField("official_email");
+
   return (
     <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100 relative overflow-hidden">
-      {/* Decorative Background */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
       <div className="relative z-10">
         <div className="mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            Request Pilot Demo
+            {formMeta.title}
           </h3>
-          <p className="text-gray-600">
-            Schedule a pilot exam for a single department. Experience the
-            security firsthand.
-          </p>
+          <p className="text-gray-600">{formMeta.description}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* University Name */}
           <div>
-            <label
-              htmlFor="universityName"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              University Name <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {university?.label}
+              {university?.required && <span className="text-red-500"> *</span>}
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                 <Building2 className="text-gray-400" size={18} />
               </div>
               <input
                 type="text"
-                id="universityName"
-                required
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
-                placeholder="e.g. State Technical University"
-                value={formData.universityName}
+                required={university?.required}
+                disabled={university?.disabled}
+                placeholder={university?.placeholder}
+                value={formData.university_name}
                 onChange={(e) =>
-                  setFormData({ ...formData, universityName: e.target.value })
+                  handleChange("university_name", e.target.value)
                 }
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none"
               />
             </div>
           </div>
 
-          {/* Number of Students */}
           <div>
-            <label
-              htmlFor="studentCount"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Number of Students <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {students?.label}
+              {students?.required && <span className="text-red-500"> *</span>}
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                 <Users className="text-gray-400" size={18} />
               </div>
+
               <select
-                id="studentCount"
-                required
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none appearance-none"
-                value={formData.studentCount}
+                required={students?.required}
+                disabled={students?.disabled}
+                value={formData.number_of_students}
                 onChange={(e) =>
-                  setFormData({ ...formData, studentCount: e.target.value })
+                  handleChange("number_of_students", e.target.value)
                 }
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"
               >
-                <option value="" disabled>
-                  Select range
-                </option>
-                <option value="<1000">Less than 1,000</option>
-                <option value="1000-5000">1,000 - 5,000</option>
-                <option value="5000-10000">5,000 - 10,000</option>
-                <option value="10000+">10,000+</option>
+                <option value="">{students?.placeholder}</option>
+
+                {students?.options?.map((opt: string) => (
+                  <option key={opt}>{opt}</option>
+                ))}
               </select>
             </div>
           </div>
 
-          {/* Current Mode */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Current Exam Mode
+              {mode?.label}
             </label>
+
             <div className="grid grid-cols-3 gap-3">
-              {["Paper", "Online", "Hybrid"].map((mode) => (
+              {mode?.options?.map((opt: string) => (
                 <button
-                  key={mode}
+                  key={opt}
                   type="button"
-                  onClick={() =>
-                    setFormData({ ...formData, currentMode: mode })
-                  }
+                  onClick={() => handleChange("current_exam_mode", opt)}
                   className={`py-2 px-3 rounded-lg text-sm font-medium border transition-all ${
-                    formData.currentMode === mode
+                    formData.current_exam_mode === opt
                       ? "bg-purple-50 border-purple-500 text-purple-700"
                       : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
                   }`}
                 >
-                  {mode}
+                  {opt}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Official Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Official Email (Registrar/VC Office){" "}
-              <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {email?.label}
+              {email?.required && <span className="text-red-500"> *</span>}
             </label>
+
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                 <Mail className="text-gray-400" size={18} />
               </div>
+
               <input
                 type="email"
-                id="email"
-                required
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none"
-                placeholder="registrar@university.edu"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                required={email?.required}
+                disabled={email?.disabled}
+                placeholder={email?.placeholder}
+                value={formData.official_email}
+                onChange={(e) => handleChange("official_email", e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none"
               />
             </div>
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-12 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full h-12 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="animate-spin" size={20} />
+                <Loader2 className="animate-spin" size={18} />
                 Submitting...
               </>
             ) : (
               <>
-                Request Pilot Demo
+                {formMeta.submitButtonText}
                 <Send size={18} />
               </>
             )}
           </button>
-
-          {/* Error Message */}
-          <AnimatePresence>
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-100"
-              >
-                <AlertCircle size={16} />
-                {error}
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           <p className="text-xs text-gray-500 text-center mt-4">
             Your data is processed securely under ISO 27001 standards.

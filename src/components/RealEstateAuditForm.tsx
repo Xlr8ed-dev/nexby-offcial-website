@@ -1,367 +1,357 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-    Globe,
-    Building2,
-    MapPin,
-    Database,
-    User,
-    CheckCircle,
-    ArrowRight,
-    Loader2,
-    Briefcase,
-    Phone,
-    Mail
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Globe, ArrowRight, CheckCircle } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 const RealEstateAuditForm = () => {
-    const navigate = useNavigate();
-    const [step, setStep] = useState(1);
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [formData, setFormData] = useState({
-        website: '',
-        projectName: '',
-        location: '',
-        projectStatus: '',
-        salesStatus: '',
-        dataVolume: '',
-        name: '',
-        companyName: '',
-        designation: '',
-        email: '',
-        phone: ''
-    });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState(false);
+  const [formMeta, setFormMeta] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const [endpointId, setEndpointId] = useState<number>(0);
+  const [formIdState, setFormIdState] = useState<number>(0);
+
+  const [formData, setFormData] = useState<any>({});
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      try {
+        const res = await api.get(`/api/form-endpoint?endpoint=${currentPath}`);
+
+        if (!res.data.success) throw new Error("Invalid response");
+
+        setFormMeta(res.data.form);
+        setEndpointId(res.data.form.endpointId);
+        setFormIdState(res.data.form.formId);
+
+        const initial: any = {};
+        res.data.form.schema.fields.forEach((f: any) => {
+          initial[f.id] = "";
+        });
+        setFormData(initial);
+      } catch (error) {
+        setServerError(true);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleNext = async () => {
-        if (step === 1) {
-            if (!formData.website) return;
-            setIsAnalyzing(true);
-            // Simulate analysis
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setIsAnalyzing(false);
-            setStep(step + 1);
-        } else {
-            setStep(step + 1);
-        }
-    };
+    fetchForm();
+  }, [currentPath]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // TODO: Wire to backend
-        console.log('Form Submitted:', formData);
-        navigate('/solutions/industry/real-estate/thank-you');
-    };
+  const handleChange = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const variants = {
-        enter: { x: 50, opacity: 0 },
-        center: { x: 0, opacity: 1 },
-        exit: { x: -50, opacity: 0 }
-    };
-
-    return (
-        <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
-            <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
-                <div>
-                    <h3 className="text-xl font-bold">Project Audit</h3>
-                    <p className="text-slate-400 text-sm">Step {step} of 4</p>
-                </div>
-                <div className="flex gap-2">
-                    {[1, 2, 3, 4].map(i => (
-                        <div
-                            key={i}
-                            className={`h-2 w-8 rounded-full transition-colors ${i <= step ? 'bg-blue-500' : 'bg-slate-700'}`}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            <div className="p-8 min-h-[400px] flex flex-col">
-                <AnimatePresence mode="wait">
-                    {step === 1 && (
-                        <motion.div
-                            key="step1"
-                            variants={variants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{ duration: 0.3 }}
-                            className="flex-1 flex flex-col justify-center"
-                        >
-                            <div className="text-center mb-8">
-                                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Globe className="text-blue-600" size={32} />
-                                </div>
-                                <h4 className="text-2xl font-bold text-slate-900 mb-2">Let's start with your digital footprint.</h4>
-                                <p className="text-slate-600">Our AI will analyze your current website structure.</p>
-                            </div>
-
-                            <div className="mb-8">
-                                <label className="block text-sm font-bold text-slate-700 mb-2">Company Website URL</label>
-                                <input
-                                    type="url"
-                                    name="website"
-                                    value={formData.website}
-                                    onChange={handleInputChange}
-                                    placeholder="https://www.yourcompany.com"
-                                    className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all"
-                                />
-                            </div>
-
-                            <button
-                                onClick={handleNext}
-                                disabled={!formData.website || isAnalyzing}
-                                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isAnalyzing ? (
-                                    <>
-                                        <Loader2 className="animate-spin" />
-                                        Analyzing Structure...
-                                    </>
-                                ) : (
-                                    <>
-                                        Analyze & Proceed <ArrowRight size={20} />
-                                    </>
-                                )}
-                            </button>
-                        </motion.div>
-                    )}
-
-                    {step === 2 && (
-                        <motion.div
-                            key="step2"
-                            variants={variants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{ duration: 0.3 }}
-                            className="flex-1"
-                        >
-                            <h4 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                                <Building2 className="text-blue-600" /> Project Details
-                            </h4>
-
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Project Name</label>
-                                    <input
-                                        type="text"
-                                        name="projectName"
-                                        value={formData.projectName}
-                                        onChange={handleInputChange}
-                                        className="w-full p-3 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                        placeholder="e.g. Green Valley Heights"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Location</label>
-                                    <div className="relative">
-                                        <MapPin className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                        <input
-                                            type="text"
-                                            name="location"
-                                            value={formData.location}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                            placeholder="City, Area"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-2">Project Status</label>
-                                        <select
-                                            name="projectStatus"
-                                            value={formData.projectStatus}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 rounded-lg border border-slate-300 focus:border-blue-500 outline-none bg-white"
-                                        >
-                                            <option value="">Select...</option>
-                                            <option value="Pre-launch">Pre-launch</option>
-                                            <option value="Under Construction">Under Construction</option>
-                                            <option value="Near Possession">Near Possession</option>
-                                            <option value="Ready to Move">Ready to Move</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-2">Sales Status</label>
-                                        <select
-                                            name="salesStatus"
-                                            value={formData.salesStatus}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 rounded-lg border border-slate-300 focus:border-blue-500 outline-none bg-white"
-                                        >
-                                            <option value="">Select...</option>
-                                            <option value="New Launch">New Launch</option>
-                                            <option value="Few Units Sold">Few Units Sold</option>
-                                            <option value="50% Sold">50% Sold</option>
-                                            <option value="Inventory Left">Only Inventory Left</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={handleNext}
-                                className="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
-                            >
-                                Next Step <ArrowRight size={20} />
-                            </button>
-                        </motion.div>
-                    )}
-
-                    {step === 3 && (
-                        <motion.div
-                            key="step3"
-                            variants={variants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{ duration: 0.3 }}
-                            className="flex-1"
-                        >
-                            <h4 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                                <Database className="text-blue-600" /> Data & Operations
-                            </h4>
-
-                            <div className="mb-8">
-                                <label className="block text-lg font-medium text-slate-700 mb-4">
-                                    How much old/dormant lead data do you have?
-                                </label>
-                                <div className="grid grid-cols-1 gap-3">
-                                    {['Less than 10,000', '10,000 - 50,000', '50,000 - 100,000', '100,000+'].map((option) => (
-                                        <label
-                                            key={option}
-                                            className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${formData.dataVolume === option ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300'}`}
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="dataVolume"
-                                                value={option}
-                                                checked={formData.dataVolume === option}
-                                                onChange={handleInputChange}
-                                                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
-                                            />
-                                            <span className="ml-3 font-medium text-slate-700">{option}</span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={handleNext}
-                                className="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
-                            >
-                                Next Step <ArrowRight size={20} />
-                            </button>
-                        </motion.div>
-                    )}
-
-                    {step === 4 && (
-                        <motion.div
-                            key="step4"
-                            variants={variants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{ duration: 0.3 }}
-                            className="flex-1"
-                        >
-                            <h4 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                                <User className="text-blue-600" /> Final Details
-                            </h4>
-
-                            <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-2">Designation</label>
-                                        <div className="relative">
-                                            <Briefcase className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                            <input
-                                                type="text"
-                                                name="designation"
-                                                value={formData.designation}
-                                                onChange={handleInputChange}
-                                                className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Company Name</label>
-                                    <input
-                                        type="text"
-                                        name="companyName"
-                                        value={formData.companyName}
-                                        onChange={handleInputChange}
-                                        className="w-full p-3 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Work Email</label>
-                                    <div className="relative">
-                                        <Mail className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Phone Number</label>
-                                    <div className="relative">
-                                        <Phone className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}
-                                            className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-500 outline-none"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100">
-                                <p className="text-xs text-blue-800 leading-relaxed">
-                                    <strong>Disclaimer:</strong> We are allowing the opportunity to schedule this call on a good faith basis and request only genuine information. Thank you for your understanding.
-                                </p>
-                            </div>
-
-                            <button
-                                onClick={handleSubmit}
-                                className="w-full mt-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                            >
-                                Submit & Schedule Call <CheckCircle size={20} />
-                            </button>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-        </div>
+  const handleNext = async () => {
+    const stepFields = formMeta.schema.fields.filter(
+      (f: any) => f.step === step,
     );
+
+    for (let field of stepFields) {
+      if (!formData[field.id]) {
+        toast.error("Please fill all required fields");
+        return;
+      }
+    }
+
+    if (step === 1) {
+      setIsAnalyzing(true);
+      await new Promise((r) => setTimeout(r, 1500));
+      setIsAnalyzing(false);
+    }
+
+    setStep(step + 1);
+  };
+
+  const handleSubmit = async () => {
+    for (let key in formData) {
+      if (!formData[key]) {
+        toast.error("All fields are required");
+        return;
+      }
+    }
+
+    try {
+      const payload = {
+        endpointId,
+        formId: formIdState,
+        response: formData,
+      };
+
+      const res = await api.post("/api/form/submit", payload);
+
+      if (res.data.success) {
+        toast.success("Form submitted successfully 🎉");
+        navigate("/solutions/industry/real-estate/thank-you");
+      } else {
+        toast.error(res.data.message || "Submission failed");
+      }
+    } catch (error: any) {
+      if (
+        error.code === "ERR_NETWORK" ||
+        !error.response ||
+        error.response.status >= 500
+      ) {
+        setServerError(true);
+        return;
+      }
+
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-3xl shadow-2xl p-8 animate-pulse">
+        <div className="h-6 bg-slate-200 w-1/2 rounded mb-6"></div>
+        <div className="h-12 bg-slate-200 rounded mb-4"></div>
+        <div className="h-12 bg-slate-200 rounded"></div>
+      </div>
+    );
+  }
+
+  if (serverError) {
+    return (
+      <div className="bg-white rounded-3xl shadow-2xl p-12 text-center">
+        <h3 className="text-2xl font-bold mb-4">
+          Kindly contact our sales team
+        </h3>
+        <p className="mb-6 text-slate-600">
+          Please reach out using the details below.
+        </p>
+        <p>📧 hello@nexby.ai</p>
+        <p>📞 +91 98920 48816</p>
+      </div>
+    );
+  }
+
+  const fieldsForStep = formMeta.schema.fields.filter(
+    (f: any) => f.step === step,
+  );
+  const descriptionParts = formMeta.description.split(". ");
+  return (
+    <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl overflow-visible border border-slate-100">
+      <div className="bg-slate-900 p-6 text-white flex justify-between items-center">
+        <div>
+          <h3 className="text-xl font-bold">{formMeta.title}</h3>
+          <p className="text-slate-400 text-sm">Step {step} of 4</p>
+        </div>
+
+        <div className="flex gap-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className={`h-2 w-8 rounded-full ${
+                i <= step ? "bg-blue-500" : "bg-slate-700"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="p-8">
+        {step === 1 && (
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Globe className="text-blue-600" size={32} />
+            </div>
+            {/* <h4 className="text-2xl font-bold mb-2">{formMeta.description}</h4> */}
+            <h2 className="text-3xl font-bold text-slate-800">
+              {descriptionParts[0]}.
+            </h2>
+
+            <p className="mt-4 text-lg text-slate-600">{descriptionParts[1]}</p>
+          </div>
+        )}
+
+        {fieldsForStep[0]?.group && (
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-4 h-4 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <ellipse cx="12" cy="5" rx="7" ry="3" />
+                  <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" />
+                  <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" />
+                </svg>
+              </div>
+
+              <h4 className="text-xl font-bold text-slate-900">
+                {fieldsForStep[0].group}
+              </h4>
+            </div>
+          </div>
+        )}
+
+        {step === 4 ? (
+          <>
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+              {fieldsForStep.slice(0, 2).map((field: any) => (
+                <div key={field.id}>
+                  <label className="block text-sm font-bold mb-2">
+                    {field.label}
+                  </label>
+
+                  {field.type === "tel" ? (
+                    <PhoneInput
+                      country="in"
+                      value={formData[field.id]}
+                      onChange={(phone) => handleChange(field.id, phone)}
+                      enableSearch
+                      inputClass="!w-full !h-12 !border !rounded-lg"
+                    />
+                  ) : (
+                    <input
+                      type={field.type}
+                      value={formData[field.id]}
+                      onChange={(e) => handleChange(field.id, e.target.value)}
+                      placeholder={field.placeholder}
+                      className="w-full p-3 border rounded-lg"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {fieldsForStep.slice(2).map((field: any) => (
+              <div key={field.id} className="mb-6">
+                <label className="block text-sm font-bold mb-2">
+                  {field.label}
+                </label>
+
+                {field.type === "tel" ? (
+                  <PhoneInput
+                    country="in"
+                    value={formData[field.id]}
+                    onChange={(phone) => handleChange(field.id, phone)}
+                    enableSearch
+                    inputClass="!w-full !h-12 !border !rounded-lg"
+                  />
+                ) : (
+                  <input
+                    type={field.type}
+                    value={formData[field.id]}
+                    onChange={(e) => handleChange(field.id, e.target.value)}
+                    placeholder={field.placeholder}
+                    className="w-full p-3 border rounded-lg"
+                  />
+                )}
+              </div>
+            ))}
+          </>
+        ) : (
+          fieldsForStep.map((field: any) => (
+            <div key={field.id} className="mb-6">
+              <label className="block text-sm font-bold mb-2">
+                {field.label}
+              </label>
+
+              {field.type === "select" && (
+                <select
+                  value={formData[field.id]}
+                  onChange={(e) => handleChange(field.id, e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                >
+                  <option value="">Select...</option>
+                  {field.options?.map((opt: string) => (
+                    <option key={opt}>{opt}</option>
+                  ))}
+                </select>
+              )}
+
+              {field.type === "radio" && (
+                <div className="space-y-3">
+                  {field.options.map((opt: string) => (
+                    <label
+                      key={opt}
+                      className={`
+          flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all
+          ${
+            formData[field.id] === opt
+              ? "border-blue-500 bg-blue-50"
+              : "border-slate-200 hover:border-blue-300"
+          }
+        `}
+                    >
+                      <input
+                        type="radio"
+                        value={opt}
+                        checked={formData[field.id] === opt}
+                        onChange={() => handleChange(field.id, opt)}
+                        className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                      />
+
+                      <span className="ml-3 font-medium text-slate-700">
+                        {opt}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {field.type !== "select" &&
+                field.type !== "radio" &&
+                field.type !== "tel" && (
+                  <input
+                    type={field.type}
+                    value={formData[field.id]}
+                    onChange={(e) => handleChange(field.id, e.target.value)}
+                    placeholder={field.placeholder}
+                    className="w-full p-3 border rounded-lg"
+                  />
+                )}
+            </div>
+          ))
+        )}
+
+        {step < 4 ? (
+          <button
+            onClick={handleNext}
+            disabled={step === 1 && !formData.company_url}
+            className={`w-full py-4 rounded-xl font-bold text-white ${
+              step === 1 && !formData.company_url
+                ? "bg-blue-300 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {step === 1 && isAnalyzing ? "Analyzing..." : "Analyze & Proceed"}
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className="w-full py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2"
+          >
+            {formMeta.submitButtonText}
+            <CheckCircle size={20} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default RealEstateAuditForm;

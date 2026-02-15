@@ -1,201 +1,332 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { TrendingUp, BarChart2 } from "lucide-react";
+import axios from "axios";
+import { Shield, DollarSign, GraduationCap, TrendingDown } from "lucide-react";
+import type { ReactNode } from "react";
 
-interface CallAnalyserFormProps {
-  formId: string;
-}
+import { toast } from "react-toastify";
 
-const CallAnalyserForm = ({ formId }: CallAnalyserFormProps) => {
+const goalIcons: Record<string, ReactNode> = {
+  "Compliance & Risk": <Shield size={14} className="text-blue-500" />,
+  "Sales Performance": <DollarSign size={14} className="text-orange-500" />,
+  "Agent Coaching": <GraduationCap size={14} className="text-purple-500" />,
+  "Churn Reduction": <TrendingDown size={14} className="text-pink-500" />,
+};
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "ngrok-skip-browser-warning": "true",
+    "Content-Type": "application/json",
+  },
+});
+
+const CallAnalyserForm = () => {
   const navigate = useNavigate();
-  const [callVolume, setCallVolume] = useState(1000);
-  const [qaCoverage, setQaCoverage] = useState("random");
-  const [primaryGoal, setPrimaryGoal] = useState("");
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  const handleTagClick = (text: string) => {
-    setPrimaryGoal(text);
+  const [formMeta, setFormMeta] = useState<any>(null);
+  const [formValues, setFormValues] = useState<Record<string, any>>({});
+  const [endpointId, setEndpointId] = useState<number>(0);
+  const [formIdState, setFormIdState] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      try {
+        const res = await api.get(`/api/form-endpoint?endpoint=${currentPath}`);
+
+        if (!res.data.success || !res.data.form) {
+          throw new Error("Invalid form data");
+        }
+
+        const form = res.data.form;
+
+        setFormMeta(form);
+        setEndpointId(form.endpointId);
+        setFormIdState(form.formId);
+
+        const initialValues: Record<string, any> = {};
+        form.schema.fields.forEach((field: any) => {
+          initialValues[field.id] = field.value ?? "";
+        });
+
+        setFormValues(initialValues);
+      } catch (error: any) {
+        console.log("Fetch form error:", error);
+        setServerError("SERVER_DOWN");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchForm();
+  }, [currentPath]);
+
+  const handleChange = (id: string, value: any) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const getField = (id: string) =>
+    formMeta?.schema?.fields?.find((f: any) => f.id === id);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    setServerError(null);
 
-    // In a real app, you would send this to your backend
-    console.log("Call Analyser Form Submitted:", {
-      formId,
-      name: formData.get("name"),
-      email: formData.get("email"),
-      company: formData.get("company"),
-      callVolume,
-      qaCoverage,
-      primaryGoal: primaryGoal || formData.get("otherGoal"),
-    });
+    const payload = {
+      endpointId,
+      formId: formIdState,
+      response: formValues,
+    };
 
-    // Navigate to Thank You page
-    navigate("/products/call-analyser/thank-you");
+    try {
+      const res = await api.post("/api/form/submit", payload);
+
+      if (res.data.success) {
+        toast.success("Form submitted successfully 🎉");
+        navigate("/products/call-analyser/thank-you");
+      } else {
+        toast.error(res.data.message || "Submission failed");
+      }
+    } catch (error: any) {
+      console.log("Submit error:", error);
+
+      if (error.code === "ERR_NETWORK" || !error.response) {
+        setServerError(
+          "Server is temporarily unavailable. Please contact support@yourcompany.com or call +1 234 567 8900. Our team will reach out shortly.",
+        );
+        return;
+      }
+
+      if (error.response.status >= 500) {
+        setServerError(
+          "Server is temporarily unavailable. Please contact support@yourcompany.com or call +1 234 567 8900. Our team will reach out shortly.",
+        );
+        return;
+      }
+
+      toast.error("Something went wrong. Please try again.");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-slate-50 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-200 animate-pulse space-y-6">
+        <div className="h-8 bg-slate-200 rounded w-1/2 mx-auto" />
+        <div className="h-4 bg-slate-200 rounded w-2/3 mx-auto" />
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="h-11 bg-slate-200 rounded-xl" />
+          <div className="h-11 bg-slate-200 rounded-xl" />
+        </div>
+        <div className="h-11 bg-slate-200 rounded-xl" />
+        <div className="h-40 bg-slate-200 rounded-2xl" />
+        <div className="h-14 bg-slate-200 rounded-full" />
+      </div>
+    );
+  }
+
+  if (serverError && !formMeta) {
+    return (
+      <div className="max-w-3xl mx-auto mt-20 px-6">
+        <div className="bg-white rounded-3xl p-12 text-center shadow-lg border border-slate-200">
+          <h3 className="text-3xl font-bold text-slate-900 mb-4">
+            Kindly contact our sales team
+          </h3>
+
+          <p className="text-slate-600 mb-8">
+            Please reach out using the details below.
+          </p>
+
+          <div className="space-y-4 text-lg text-slate-800">
+            <p>
+              📧 Email:{" "}
+              <a
+                href="mailto:hello@nexby.ai"
+                className="font-semibold underline hover:text-black transition"
+              >
+                hello@nexby.ai
+              </a>
+            </p>
+
+            <p>
+              📞 Phone:{" "}
+              <a
+                href="tel:+919892048816"
+                className="font-semibold underline hover:text-black transition"
+              >
+                +91 98920 48816
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const fullName = getField("full_name");
+  const email = getField("work_email");
+  const company = getField("company_name");
+  const callVolume = getField("call_volume");
+  const qaProcess = getField("current_qa_process");
+  const goal = getField("goal");
 
   return (
     <div className="bg-slate-50 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-200">
       <div className="mb-8 text-center max-w-2xl mx-auto">
         <h3 className="text-3xl font-bold text-slate-900 mb-3">
-          Get Your Free Audit
+          {formMeta.title}
         </h3>
-        <p className="text-slate-600">
-          See what your current QA process is missing. We'll analyze a sample of
-          your calls and show you the hidden risks and opportunities.
-        </p>
+        <p className="text-slate-600">{formMeta.description}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
-        {/* Basic Info */}
         <div className="grid gap-5 md:grid-cols-2">
           <div>
-            <label className="text-sm font-semibold text-slate-900 mb-2 block">
-              Your Name *
+            <label className="text-sm font-semibold mb-2 block">
+              {fullName?.label}
             </label>
             <input
               type="text"
-              name="name"
-              className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4 text-slate-900 placeholder-slate-400 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-              placeholder="Jane Doe"
-              required
+              placeholder={fullName?.placeholder}
+              required={fullName?.required}
+              disabled={fullName?.disabled}
+              value={formValues.full_name}
+              onChange={(e) => handleChange("full_name", e.target.value)}
+              className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4"
             />
           </div>
+
           <div>
-            <label className="text-sm font-semibold text-slate-900 mb-2 block">
-              Work Email *
+            <label className="text-sm font-semibold mb-2 block">
+              {email?.label}
             </label>
             <input
               type="email"
-              name="email"
-              className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4 text-slate-900 placeholder-slate-400 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-              placeholder="jane@company.com"
-              required
+              placeholder={email?.placeholder}
+              required={email?.required}
+              disabled={email?.disabled}
+              value={formValues.work_email}
+              onChange={(e) => handleChange("work_email", e.target.value)}
+              className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4"
             />
           </div>
         </div>
 
         <div>
-          <label className="text-sm font-semibold text-slate-900 mb-2 block">
-            Company Name *
+          <label className="text-sm font-semibold mb-2 block">
+            {company?.label}
           </label>
           <input
             type="text"
-            name="company"
-            className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4 text-slate-900 placeholder-slate-400 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-            placeholder="Acme Inc."
-            required
+            placeholder={company?.placeholder}
+            required={company?.required}
+            disabled={company?.disabled}
+            value={formValues.company_name}
+            onChange={(e) => handleChange("company_name", e.target.value)}
+            className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4"
           />
         </div>
 
-        {/* Call Metrics */}
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
           <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
             <BarChart2 size={20} className="text-purple-600" />
-            Call Volume & QA
+            {callVolume?.group}
           </h4>
 
-          <div className="space-y-6">
-            {/* Monthly Call Volume */}
-            <div>
-              <label className="text-sm font-semibold text-slate-900 mb-3 block">
-                Est. Monthly Call Volume:{" "}
-                <span className="text-purple-600 font-bold">
-                  {callVolume.toLocaleString()}
-                  {callVolume >= 50000 ? "+" : ""}
-                </span>
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="50000"
-                step="1000"
-                value={callVolume}
-                onChange={(e) => setCallVolume(parseInt(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-600 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg hover:[&::-webkit-slider-thumb]:shadow-purple-500/30 transition-all"
-              />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
-                <span>0</span>
-                <span>25k</span>
-                <span>50k+</span>
-              </div>
-            </div>
+          <div>
+            <label className="text-sm font-semibold mb-3 block">
+              {callVolume?.label}:{" "}
+              <span className="text-purple-600 font-bold">
+                {Number(formValues.call_volume || 0).toLocaleString()}
+                {Number(formValues.call_volume) >= callVolume?.max ? "+" : ""}
+              </span>
+            </label>
 
-            {/* Current QA Coverage */}
-            <div>
-              <label className="text-sm font-semibold text-slate-900 mb-2 block">
-                Current QA Process
-              </label>
-              <select
-                value={qaCoverage}
-                onChange={(e) => setQaCoverage(e.target.value)}
-                className="w-full h-11 rounded-xl border border-slate-300 bg-white px-4 text-slate-900 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-              >
-                <option value="none">No formal QA / Ad-hoc only</option>
-                <option value="random">Random Sampling (1-2% of calls)</option>
-                <option value="dedicated">
-                  Dedicated QA Team (5-10% coverage)
-                </option>
-                <option value="automated">Using Legacy Keyword Spotting</option>
-              </select>
+            <input
+              type="range"
+              min={callVolume?.min}
+              max={callVolume?.max}
+              step={callVolume?.step}
+              value={formValues.call_volume || 0}
+              onChange={(e) =>
+                handleChange("call_volume", Number(e.target.value))
+              }
+              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none
+              [&::-webkit-slider-thumb]:w-5
+              [&::-webkit-slider-thumb]:h-5
+              [&::-webkit-slider-thumb]:rounded-full
+              [&::-webkit-slider-thumb]:bg-purple-600
+              [&::-webkit-slider-thumb]:shadow-lg"
+            />
+
+            <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <span>{callVolume?.min}</span>
+              <span>{callVolume?.max / 2 / 1000}k</span>
+              <span>{callVolume?.max}+</span>
             </div>
+          </div>
+
+          <div className="mt-6">
+            <label className="text-sm font-semibold mb-2 block">
+              {qaProcess?.label}
+            </label>
+            <select
+              value={formValues.current_qa_process}
+              onChange={(e) =>
+                handleChange("current_qa_process", e.target.value)
+              }
+              className="w-full h-11 rounded-xl border px-4"
+            >
+              <option value="">{qaProcess?.placeholder}</option>
+              {qaProcess?.options?.map((opt: string) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
-        {/* Primary Evaluation Goal */}
         <div>
-          <label className="text-sm font-semibold text-slate-900 mb-3 block flex items-center gap-2">
+          <label className="text-sm font-semibold mb-3 block flex items-center gap-2">
             <TrendingUp size={18} className="text-purple-600" />
-            What is your primary goal with AI Analysis?
+            {goal?.label}
           </label>
 
-          <div className="flex flex-wrap gap-2 mb-3">
-            <button
-              type="button"
-              onClick={() =>
-                handleTagClick("Automating compliance scores to reduce risk.")
-              }
-              className={`text-xs border rounded-full px-3 py-1.5 transition-all font-medium ${primaryGoal.includes("compliance") ? "bg-purple-100 border-purple-400 text-purple-700" : "bg-white border-slate-300 text-slate-600 hover:border-purple-400"}`}
-            >
-              🛡️ Compliance & Risk
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                handleTagClick("Improving sales conversion rates.")
-              }
-              className={`text-xs border rounded-full px-3 py-1.5 transition-all font-medium ${primaryGoal.includes("sales") ? "bg-purple-100 border-purple-400 text-purple-700" : "bg-white border-slate-300 text-slate-600 hover:border-purple-400"}`}
-            >
-              💰 Sales Performance
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                handleTagClick("Reducing agent training time and ramp-up.")
-              }
-              className={`text-xs border rounded-full px-3 py-1.5 transition-all font-medium ${primaryGoal.includes("training") ? "bg-purple-100 border-purple-400 text-purple-700" : "bg-white border-slate-300 text-slate-600 hover:border-purple-400"}`}
-            >
-              🎓 Agent Coaching
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                handleTagClick("Understanding customer churn reasons.")
-              }
-              className={`text-xs border rounded-full px-3 py-1.5 transition-all font-medium ${primaryGoal.includes("churn") ? "bg-purple-100 border-purple-400 text-purple-700" : "bg-white border-slate-300 text-slate-600 hover:border-purple-400"}`}
-            >
-              📉 Churn Reduction
-            </button>
+          <div className="flex flex-wrap gap-2">
+            {goal?.options?.map((opt: string) => (
+              <button
+                type="button"
+                key={opt}
+                onClick={() => handleChange("goal", opt)}
+                className={`flex items-center gap-2 text-xs border rounded-full px-3 py-1.5 font-medium transition-all ${
+                  formValues.goal === opt
+                    ? "bg-purple-100 border-purple-400 text-purple-700"
+                    : "bg-white border-slate-300 text-slate-600 hover:border-purple-400"
+                }`}
+              >
+                {goalIcons[opt]}
+                {opt}
+              </button>
+            ))}
           </div>
         </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full h-14 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-full text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full h-14 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-full text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"
         >
-          Request Forensic Audit
+          {formMeta.submitButtonText}
         </button>
 
         <p className="text-center text-xs text-slate-500 mt-4">
