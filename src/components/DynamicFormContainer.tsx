@@ -5,6 +5,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Form from "./Form";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type FieldType = "text" | "email" | "phone" | "select" | "textarea";
 
@@ -25,6 +26,14 @@ const mapBackendTypeToFrontend = (type: string): FieldType => {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "ngrok-skip-browser-warning": "true",
+    "Content-Type": "application/json",
+  },
+});
+
 const DynamicFormContainer: React.FC = () => {
   const [fields, setFields] = useState<any[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -44,12 +53,10 @@ const DynamicFormContainer: React.FC = () => {
     setLoading(true);
     setError(false);
 
-    fetch(`${API_BASE_URL}/api/form-endpoint?endpoint=${currentPath}`)
+    api
+      .get(`/api/form-endpoint?endpoint=${currentPath}`)
       .then((res) => {
-        if (!res.ok) throw new Error("Backend error");
-        return res.json();
-      })
-      .then((data) => {
+        const data = res.data;
         const backendFields = data.form.schema.fields;
 
         setFormId(data.form.formId);
@@ -92,13 +99,9 @@ const DynamicFormContainer: React.FC = () => {
       },
     };
 
-    const res = await fetch(`${API_BASE_URL}/api/form/submit`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const res = await api.post(`/api/form/submit`, payload);
 
-    if (!res.ok) {
+    if (!res.data.success) {
       let message = "Something went wrong. Please try again.";
 
       if (res.status >= 500) {

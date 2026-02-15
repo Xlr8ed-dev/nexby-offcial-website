@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { BarChart3, TrendingUp, Shield, Users, Zap, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import CallAnalyserForm from "../components/CallAnalyserForm";
 
 const CallAnalyserPage: React.FC = () => {
+  const formRef = useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-white pt-20">
@@ -60,7 +65,10 @@ const CallAnalyserPage: React.FC = () => {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <button className="inline-flex items-center gap-2 h-14 bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 font-bold text-lg shadow-lg transition-all transform hover:scale-105">
+                <button
+                  onClick={scrollToForm}
+                  className="inline-flex items-center gap-2 h-14 bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 font-bold text-lg shadow-lg transition-all transform hover:scale-105"
+                >
                   Request a Forensic Audit
                   <Shield size={20} />
                 </button>
@@ -515,8 +523,9 @@ const CallAnalyserPage: React.FC = () => {
               Let us run a sample audit on 50 of your past recordings.
             </p>
           </div>
-
-          <CallAnalyserForm formId="call_analyser_audit_form" />
+          <div ref={formRef}>
+            <CallAnalyserForm />
+          </div>
         </div>
       </section>
     </div>

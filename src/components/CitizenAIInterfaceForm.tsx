@@ -1,231 +1,254 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Building2,
+  ShieldAlert,
   User,
+  Building2,
   Mail,
   Users,
-  ShieldAlert,
-  Loader2,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
+  },
+});
 
 const CitizenAIInterfaceForm = () => {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    designation: "",
-    department: "",
-    audenceSize: "",
-    email: "",
-  });
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [serverError, setServerError] = useState(false);
+
+  const [formMeta, setFormMeta] = useState<any>(null);
+  const [endpointId, setEndpointId] = useState<number | null>(null);
+  const [formId, setFormId] = useState<number | null>(null);
+  const [formData, setFormData] = useState<any>({});
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      try {
+        const res = await api.get(`/api/form-endpoint?endpoint=${currentPath}`);
+
+        if (!res.data.success) throw new Error();
+
+        const form = res.data.form;
+
+        setFormMeta(form);
+        setEndpointId(form.endpointId);
+        setFormId(form.formId);
+
+        const initial: any = {};
+        form.schema.fields.forEach((field: any) => {
+          initial[field.id] = "";
+        });
+
+        setFormData(initial);
+      } catch {
+        setServerError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchForm();
+  }, [currentPath]);
+
+  const handleChange = (id: string, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!endpointId || !formId) {
+      toast.error("Form configuration missing.");
+      return;
+    }
+
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Citizen AI Form Submitted:", formData);
-    navigate("/solutions/government/thank-you");
+
+    const payload = {
+      endpointId,
+      formId,
+      response: formData,
+    };
+
+    try {
+      const res = await api.post("/api/form/submit", payload);
+
+      if (res.data.success) {
+        toast.success("Form submitted successfully 🎉");
+        navigate("/solutions/government/thank-you");
+      } else {
+        toast.error(res.data.message || "Submission failed.");
+      }
+    } catch (error: any) {
+      if (!error.response || error.response.status >= 500) {
+        toast.error("Server error. Please try again later.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // 🔥 Skeleton
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-10 animate-pulse">
+        <div className="h-6 w-60 bg-slate-200 rounded mb-6"></div>
+        <div className="h-12 bg-slate-200 rounded mb-4"></div>
+        <div className="h-12 bg-slate-200 rounded mb-4"></div>
+        <div className="h-12 bg-slate-200 rounded"></div>
+      </div>
+    );
+  }
+
+  if (serverError) {
+    return (
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl p-12 text-center">
+        <h3 className="text-2xl font-bold mb-4">
+          Kindly contact our sales team
+        </h3>
+        <p className="text-slate-600 mb-4">
+          Please reach out using the details below.
+        </p>
+        <p>📧 hello@nexby.ai</p>
+        <p>📞 +91 98920 48816</p>
+      </div>
+    );
+  }
+
+  const fields = formMeta.schema.fields;
+
+  const getIcon = (id: string) => {
+    switch (id) {
+      case "full_name":
+        return (
+          <User className="absolute left-3 top-3.5 text-slate-400" size={18} />
+        );
+      case "designation":
+        return (
+          <User className="absolute left-3 top-3.5 text-slate-400" size={18} />
+        );
+      case "department":
+        return (
+          <Building2
+            className="absolute left-3 top-3.5 text-slate-400"
+            size={18}
+          />
+        );
+      case "official_email":
+        return (
+          <Mail className="absolute left-3 top-3.5 text-slate-400" size={18} />
+        );
+      case "target_audience_size":
+        return (
+          <Users className="absolute left-3 top-3.5 text-slate-400" size={18} />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+    <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200">
       <div className="bg-slate-900 p-6 text-white border-b border-slate-800">
         <div className="flex items-center gap-3 mb-2">
           <ShieldAlert className="text-blue-500" size={24} />
-          <h3 className="text-xl font-bold tracking-tight">
-            Government Inquiry
-          </h3>
+          <h3 className="text-xl font-bold tracking-tight">{formMeta.title}</h3>
         </div>
-        <p className="text-slate-400 text-sm">
-          Request a roadmap for your department.
-        </p>
+        <p className="text-slate-400 text-sm">{formMeta.description}</p>
       </div>
 
       <div className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Name
-              </label>
-              <div className="relative">
-                <User
-                  className="absolute left-3 top-3.5 text-slate-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Full Name"
-                  className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none transition-all"
-                  required
-                />
-              </div>
-            </div>
+            {fields.map((field: any) => {
+              const isFullWidth =
+                field.id === "department" ||
+                field.id === "official_email" ||
+                field.id === "target_audience_size";
 
-            {/* Designation */}
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Designation
-              </label>
-              <div className="relative">
-                <User
-                  className="absolute left-3 top-3.5 text-slate-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  name="designation"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Secretary, Director"
-                  className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Department */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Department / Municipal Corporation
-              </label>
-              <div className="relative">
-                <Building2
-                  className="absolute left-3 top-3.5 text-slate-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Urban Development Department"
-                  className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Official Gov Email */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Official Gov Email (.gov / .nic)
-              </label>
-              <div className="relative">
-                <Mail
-                  className="absolute left-3 top-3.5 text-slate-400"
-                  size={18}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="name@dept.gov.in"
-                  className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Target Audience Size */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Target Audience Size
-              </label>
-              <div className="relative">
-                <Users
-                  className="absolute left-3 top-3.5 text-slate-400"
-                  size={18}
-                />
-                <select
-                  name="audenceSize"
-                  value={formData.audenceSize}
-                  onChange={handleInputChange}
-                  className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none bg-white transition-all appearance-none"
-                  required
+              return (
+                <div
+                  key={field.id}
+                  className={isFullWidth ? "md:col-span-2" : ""}
                 >
-                  <option value="">Select Scale...</option>
-                  <option value="District">District Level</option>
-                  <option value="State">State Level</option>
-                  <option value="National">National Level</option>
-                </select>
-              </div>
-            </div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    {field.label}
+                  </label>
+
+                  {field.type === "select" ? (
+                    <div className="relative">
+                      {getIcon(field.id)}
+                      <select
+                        required={field.required}
+                        value={formData[field.id]}
+                        onChange={(e) => handleChange(field.id, e.target.value)}
+                        className="w-full p-3 pl-10 rounded-lg border border-slate-300 bg-white focus:border-blue-600 outline-none"
+                      >
+                        <option value="">{field.placeholder}</option>
+                        {field.options?.map((opt: string) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      {getIcon(field.id)}
+                      <input
+                        type={field.type}
+                        required={field.required}
+                        placeholder={field.placeholder}
+                        value={formData[field.id]}
+                        onChange={(e) => handleChange(field.id, e.target.value)}
+                        className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none transition-all"
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          <div className="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex gap-3">
-            <ShieldAlert className="text-blue-600 shrink-0" size={20} />
-            <p className="text-xs text-blue-800 leading-relaxed">
-              <strong>Security Protocol:</strong> Your details will be verified
-              against our Government Directory before access to technical
-              documentation is granted. This connection is encrypted.
-            </p>
-          </div>
-
-          {/* <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            disabled={isSubmitting}
-            type="submit"
-            className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="animate-spin" /> Processing Request...
-              </>
-            ) : (
-              <>
-                Request Digital Governance Roadmap <ArrowRight size={20} />
-              </>
-            )}
-          </motion.button> */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={isSubmitting}
             type="submit"
-            className="
-    relative w-full py-4 px-6
-    bg-slate-900 hover:bg-slate-800
-    text-white rounded-xl font-bold text-lg
-    transition-all flex items-center justify-center gap-2
-    shadow-lg disabled:opacity-70 disabled:cursor-not-allowed
-  "
+            className="relative w-full py-4 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-70"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="animate-spin max-sm:h-4 max-sm:w-4" />
-                <span className="max-sm:text-sm">Processing Request...</span>
+                <Loader2 className="animate-spin h-5 w-5" />
+                Processing Request...
               </>
             ) : (
               <>
-                {/* TEXT */}
-                <span className="max-sm:text-sm text-center pr-8 sm:pr-0">
-                  Request Digital Governance Roadmap
+                <span className="pr-8 sm:pr-0">
+                  {formMeta.submitButtonText}
                 </span>
-
-                {/* ICON */}
-                <ArrowRight
-                  className="
-          h-5 w-5
-          max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2
-        "
-                />
+                <ArrowRight className="h-5 w-5 max-sm:absolute max-sm:right-4 max-sm:top-1/2 max-sm:-translate-y-1/2" />
               </>
             )}
           </motion.button>

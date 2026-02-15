@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Check,
   Headphones,
@@ -18,7 +18,10 @@ const SupportAssistPage: React.FC = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const formRef = useRef<HTMLDivElement>(null);
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <div className="min-h-screen bg-white pt-20">
       {/* Breadcrumb Navigation */}
@@ -70,11 +73,12 @@ const SupportAssistPage: React.FC = () => {
 
               <div className="flex flex-wrap gap-4">
                 <button
-                  onClick={() =>
-                    document
-                      .getElementById("audit-form")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
+                  // onClick={() =>
+                  //   document
+                  //     .getElementById("audit-form")
+                  //     ?.scrollIntoView({ behavior: "smooth" })
+                  // }
+                  onClick={scrollToForm}
                   className="inline-flex items-center gap-2 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 font-bold text-lg shadow-lg transition-all transform hover:scale-105"
                 >
                   Automate Your Ops
@@ -554,7 +558,10 @@ const SupportAssistPage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-blue-900 to-slate-900">
         <div className="max-w-4xl mx-auto px-6">
-          <SupportAuditForm formId="support-page-bottom" />
+          {/* <SupportAuditForm formId="support-page-bottom" /> */}
+          <div ref={formRef}>
+            <SupportAuditForm />
+          </div>
         </div>
       </section>
     </div>

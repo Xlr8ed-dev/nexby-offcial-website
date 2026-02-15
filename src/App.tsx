@@ -4,6 +4,9 @@ import { Suspense, lazy } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageLoader from "./components/PageLoader";
+import ThankYouPage from "./components/ThankYouPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
@@ -89,7 +92,11 @@ function App() {
       <BrowserRouter>
         <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
           <Navbar />
-
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            theme="colored"
+          />
           {/* Page Loader */}
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -215,6 +222,10 @@ function App() {
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/partnerships" element={<PartnershipsPage />} />
+              <Route
+                path="/partnerships/thank-you"
+                element={<ThankYouPage />}
+              />
             </Routes>
           </Suspense>
 

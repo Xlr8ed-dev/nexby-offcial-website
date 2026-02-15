@@ -131,3 +131,23 @@
 .animate-loading {
   animation: loading 1.2s infinite ease-in-out;
 }
+
+.input-dark {
+  @apply w-full h-11 rounded-xl border-2 border-blue-400/30 bg-white/10 px-4 text-white placeholder-blue-300/50 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 transition-all;
+}
+
+.range-dark {
+  @apply w-full h-2 bg-blue-400/20 rounded-lg appearance-none cursor-pointer;
+}
+
+.pill-dark {
+  @apply text-sm bg-blue-500/20 border border-blue-400/40 text-blue-200 px-4 py-2 rounded-full hover:bg-blue-500/30 transition-all;
+}
+
+.contact-card {
+  @apply flex items-center gap-2 bg-white/5 border-2 border-blue-400/30 rounded-xl p-4 text-white cursor-pointer transition-all;
+}
+
+.contact-card.active {
+  @apply border-blue-400 bg-blue-500/10;
+}
