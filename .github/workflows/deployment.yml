@@ -1,0 +1,48 @@
+name: Deploy React Frontend (Production)
+
+on:
+  push:
+    branches:
+      - dev # Production branch
+
+env:
+  NODE_VERSION: 24.11.1
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout latest code from dev branch
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      # 2️⃣ Setup Node.js 24.11.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      # 3️⃣ Install Dependencies (force)
+      - name: Install Dependencies
+        run: npm i --force
+
+      # 4️⃣ Build Project
+      - name: Build Project
+        run: npm run build
+
+      # 5️⃣ Deploy to Production Server
+      - name: Deploy to Production Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.PROD_VPS_IP }}
+          username: ${{ secrets.PROD_VPS_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+          port: 22
+          source: "dist/*"
+          target: ${{ secrets.PROD_PROJECT_PATH }}
+          strip_components: 1
