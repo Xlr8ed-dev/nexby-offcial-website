@@ -73,6 +73,22 @@ const SupportAuditForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (
+      !formData.full_name?.trim() ||
+      !formData.work_email?.trim() ||
+      !formData.company_name?.trim() ||
+      !formData.support_pain_point ||
+      !formData.pain_point_details?.trim() ||
+      // ✅ Range validation
+      !formData.monthly_ticket_volume ||
+      !formData.avg_response_time ||
+      ((contactMethod === "Phone" || contactMethod === "WhatsApp") &&
+        !formData.phone_number)
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+
     try {
       const payload = {
         endpointId,
@@ -159,7 +175,11 @@ const SupportAuditForm = () => {
     <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-3xl p-10 shadow-2xl border border-blue-500/20 max-w-3xl mx-auto">
       <h3 className="text-3xl font-bold text-white mb-2">{formMeta.title}</h3>
       <p className="text-blue-200 mb-8">{formMeta.description}</p>
-
+      <div className="mb-8">
+        <span className="inline-block bg-red-500/10 text-red-300 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-400/30">
+          * All fields are mandatory
+        </span>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
           {formMeta.schema.fields
@@ -171,7 +191,7 @@ const SupportAuditForm = () => {
                 </label>
                 <input
                   type={field.type}
-                  required={field.required}
+                  // required={field.required}
                   placeholder={field.placeholder}
                   value={formData[field.id]}
                   onChange={(e) => handleChange(field.id, e.target.value)}
@@ -190,7 +210,7 @@ const SupportAuditForm = () => {
               </label>
               <input
                 type="text"
-                required={field.required}
+                // required={field.required}
                 placeholder={field.placeholder}
                 value={formData[field.id]}
                 onChange={(e) => handleChange(field.id, e.target.value)}

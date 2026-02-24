@@ -84,12 +84,12 @@ const SupportAssistPage: React.FC = () => {
                   Automate Your Ops
                   <Zap size={20} />
                 </button>
-                <Link
+                {/* <Link
                   to="#"
                   className="inline-flex items-center gap-2 h-14 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full px-8 font-bold text-lg backdrop-blur-sm transition-all"
                 >
                   See Live Deflection Demo
-                </Link>
+                </Link> */}
               </div>
             </div>
 

@@ -172,10 +172,10 @@ const AITeleCallerPage = () => {
                     Request a Voice Demo
                     <ArrowRight size={20} />
                   </button>
-                  <button className="inline-flex items-center gap-2 h-14 bg-white text-indigo-900 border-2 border-indigo-100 hover:border-indigo-300 rounded-full px-8 font-bold text-lg transition-all">
+                  {/* <button className="inline-flex items-center gap-2 h-14 bg-white text-indigo-900 border-2 border-indigo-100 hover:border-indigo-300 rounded-full px-8 font-bold text-lg transition-all">
                     <Play size={20} className="fill-current" />
                     Listen to Samples
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
@@ -899,10 +899,10 @@ const AITeleCallerPage = () => {
                 Request a Voice Demo
                 <ArrowRight size={20} />
               </button>
-              <button className="inline-flex items-center gap-2 h-14 bg-gray-100 text-gray-900 hover:bg-gray-200 rounded-full px-10 font-bold text-lg transition-all">
+              {/* <button className="inline-flex items-center gap-2 h-14 bg-gray-100 text-gray-900 hover:bg-gray-200 rounded-full px-10 font-bold text-lg transition-all">
                 <Play size={20} className="fill-current" />
                 Listen to Call Samples
-              </button>
+              </button> */}
             </div>
           </div>
         </section>

@@ -74,8 +74,20 @@ const GovernmentAuditForm = () => {
       return;
     }
 
-    if (!formData.mobile_number) {
-      toast.error("Direct Phone Line is required");
+    // if (!formData.mobile_number) {
+    //   toast.error("Direct Phone Line is required");
+    //   return;
+    // }
+    if (
+      !formData.full_name?.trim() ||
+      !formData.designation?.trim() ||
+      !formData.department?.trim() ||
+      !formData.country_state ||
+      !formData.use_case_category ||
+      !formData.official_email?.trim() ||
+      !formData.mobile_number
+    ) {
+      toast.error("All fields are required");
       return;
     }
 
@@ -147,6 +159,11 @@ const GovernmentAuditForm = () => {
           <h3 className="text-xl font-bold">{formMeta.title}</h3>
         </div>
         <p className="text-slate-400 text-sm">{formMeta.description}</p>
+        <div className="mt-3">
+          <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+            * All fields are mandatory
+          </span>
+        </div>
       </div>
 
       <div className="p-8">
@@ -163,7 +180,6 @@ const GovernmentAuditForm = () => {
                   </label>
                   <input
                     type={field.type}
-                    required={field.required}
                     placeholder={field.placeholder}
                     value={formData[field.id]}
                     onChange={(e) => handleChange(field.id, e.target.value)}
@@ -181,7 +197,6 @@ const GovernmentAuditForm = () => {
               </label>
               <input
                 type="text"
-                required={getField("department").required}
                 placeholder={getField("department").placeholder}
                 value={formData["department"]}
                 onChange={(e) => handleChange("department", e.target.value)}
@@ -203,7 +218,6 @@ const GovernmentAuditForm = () => {
 
                   {field.type === "select" ? (
                     <select
-                      required={field.required}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       className="w-full p-3 rounded-xl border border-slate-300 focus:border-blue-600 outline-none"
@@ -218,7 +232,6 @@ const GovernmentAuditForm = () => {
                   ) : (
                     <input
                       type={field.type}
-                      required={field.required}
                       placeholder={field.placeholder}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
@@ -238,7 +251,6 @@ const GovernmentAuditForm = () => {
                 </label>
                 <input
                   type="email"
-                  required={getField("official_email").required}
                   placeholder={getField("official_email").placeholder}
                   value={formData["official_email"]}
                   onChange={(e) =>

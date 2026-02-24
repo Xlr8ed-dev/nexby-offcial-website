@@ -75,13 +75,26 @@ const ManufacturingAuditForm = () => {
   const handleNext = async () => {
     const fields = formMeta.schema.fields.filter((f: any) => f.step === step);
 
-    for (let field of fields) {
-      if (field.required && !formData[field.id]) {
-        toast.error(`${field.label} is required`);
-        return;
-      }
-    }
+    // for (let field of fields) {
+    //   if (field.required && !formData[field.id]) {
+    //     toast.error(`${field.label} is required`);
+    //     return;
+    //   }
+    // }
+    const hasEmpty = fields.some((field: any) => {
+      const value = formData[field.id];
 
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+
+      return !value;
+    });
+
+    if (hasEmpty) {
+      toast.error("All fields are required");
+      return;
+    }
     if (step === 1) {
       setIsAnalyzing(true);
       await new Promise((r) => setTimeout(r, 1500));
@@ -92,6 +105,22 @@ const ManufacturingAuditForm = () => {
   };
 
   const handleSubmit = async () => {
+    const fields = formMeta.schema.fields.filter((f: any) => f.step === 4);
+
+    const hasEmpty = fields.some((field: any) => {
+      const value = formData[field.id];
+
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+
+      return !value;
+    });
+
+    if (hasEmpty) {
+      toast.error("All fields are required");
+      return;
+    }
     try {
       const payload = {
         endpointId,
@@ -196,6 +225,11 @@ const ManufacturingAuditForm = () => {
                 <p className="mt-4 text-lg text-slate-600">
                   {descriptionParts[1]}
                 </p>
+                <div className="mt-3">
+                  <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+                    * All fields are mandatory
+                  </span>
+                </div>
               </div>
             )}
 

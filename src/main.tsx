@@ -8,10 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
-    <ToastContainer
+    {/* <ToastContainer
       position="top-right"
       autoClose={4000}
       theme="dark"
+      closeOnClick
+      pauseOnHover
+      draggable
+    /> */}
+    <ToastContainer
+      position="top-right"
+      autoClose={4000}
+      theme="light"
+      toastClassName="bg-white text-slate-900 rounded-xl shadow-lg border border-slate-200"
+      progressClassName="bg-blue-600"
       closeOnClick
       pauseOnHover
       draggable

@@ -82,6 +82,18 @@ const CallAnalyserForm = () => {
     e.preventDefault();
     setServerError(null);
 
+    if (
+      !formValues.full_name?.trim() ||
+      !formValues.work_email?.trim() ||
+      !formValues.company_name?.trim() ||
+      !formValues.call_volume ||
+      !formValues.current_qa_process ||
+      !formValues.goal
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+
     const payload = {
       endpointId,
       formId: formIdState,
@@ -186,6 +198,9 @@ const CallAnalyserForm = () => {
           {formMeta.title}
         </h3>
         <p className="text-slate-600">{formMeta.description}</p>
+        <div className="mt-4 inline-block bg-red-50 text-red-600 text-sm font-medium px-4 py-1.5 rounded-full border border-red-200">
+          * All fields are mandatory
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
@@ -197,7 +212,7 @@ const CallAnalyserForm = () => {
             <input
               type="text"
               placeholder={fullName?.placeholder}
-              required={fullName?.required}
+              // required={fullName?.required}
               disabled={fullName?.disabled}
               value={formValues.full_name}
               onChange={(e) => handleChange("full_name", e.target.value)}
@@ -212,7 +227,7 @@ const CallAnalyserForm = () => {
             <input
               type="email"
               placeholder={email?.placeholder}
-              required={email?.required}
+              // required={email?.required}
               disabled={email?.disabled}
               value={formValues.work_email}
               onChange={(e) => handleChange("work_email", e.target.value)}
@@ -228,7 +243,7 @@ const CallAnalyserForm = () => {
           <input
             type="text"
             placeholder={company?.placeholder}
-            required={company?.required}
+            // required={company?.required}
             disabled={company?.disabled}
             value={formValues.company_name}
             onChange={(e) => handleChange("company_name", e.target.value)}

@@ -79,11 +79,19 @@ const SalesXAuditForm = () => {
   );
 
   const handleNext = () => {
-    if (isStepValid) setStep((prev) => prev + 1);
+    if (!isStepValid) {
+      toast.error("All fields are required");
+      return;
+    }
+
+    setStep((prev) => prev + 1);
   };
 
   const handleSubmit = async () => {
-    if (!isStepValid) return;
+    if (!isStepValid) {
+      toast.error("All fields are required");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -187,6 +195,11 @@ const SalesXAuditForm = () => {
                   <h4 className="text-2xl font-bold text-slate-900 mb-2">
                     {formMeta.description}
                   </h4>
+                  <div className="mt-3">
+                    <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+                      * All fields are mandatory
+                    </span>
+                  </div>
                 </div>
 
                 <div className="space-y-6">
@@ -236,7 +249,11 @@ const SalesXAuditForm = () => {
                 <h4 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
                   <User className="text-blue-600" /> Your Details
                 </h4>
-
+                {/* <div className="mb-3">
+                  <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-3 py-1 rounded-full border border-red-200">
+                    * All fields are mandatory
+                  </span>
+                </div> */}
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {fieldsForStep
@@ -367,7 +384,7 @@ const SalesXAuditForm = () => {
 
                 <button
                   onClick={handleSubmit}
-                  disabled={!isStepValid || isSubmitting}
+                  disabled={isSubmitting}
                   className="w-full mt-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
