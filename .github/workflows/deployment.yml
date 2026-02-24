@@ -3,7 +3,7 @@ name: Deploy React Frontend (Production)
 on:
   push:
     branches:
-      - dev # Production branch
+      - dev
 
 env:
   NODE_VERSION: 24.11.1
@@ -13,30 +13,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout latest code from dev branch
+      # 1️⃣ Checkout dev branch
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           ref: dev
           fetch-depth: 0
 
-      # 2️⃣ Setup Node.js 24.11.1
+      # 2️⃣ Setup Node
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: npm
 
-      # 3️⃣ Install Dependencies (force)
+      # 3️⃣ Clean Install (better than npm i --force in CI)
       - name: Install Dependencies
-        run: npm i --force
+        run: npm ci --force
 
-      # 4️⃣ Build Project
+      # 4️⃣ Build Production
       - name: Build Project
         run: npm run build
 
-      # 5️⃣ Deploy to Production Server
-      - name: Deploy to Production Server
+      # 5️⃣ Remove Old Production Files (clean deploy)
+      - name: Clean Production Folder
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_VPS_IP }}
+          username: ${{ secrets.PROD_VPS_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ${{ secrets.PROD_PROJECT_PATH }}
+            rm -rf dist
+            mkdir -p dist
+
+      # 6️⃣ Upload New Build
+      - name: Upload Build to Server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.PROD_VPS_IP }}
@@ -44,5 +57,16 @@ jobs:
           key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           port: 22
           source: "dist/*"
-          target: ${{ secrets.PROD_PROJECT_PATH }}
+          target: "${{ secrets.PROD_PROJECT_PATH }}/dist"
           strip_components: 1
+
+      # 7️⃣ Reload Nginx
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_VPS_IP }}
+          username: ${{ secrets.PROD_VPS_USER }}
+          key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            sudo systemctl reload nginx
