@@ -18,8 +18,11 @@ jobs:
           key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             cd ${{ secrets.PROD_PROJECT_PATH }}
             git checkout dev
+            git checkout -- package-lock.json
             git pull origin dev
             npm i --force
             npm run build
