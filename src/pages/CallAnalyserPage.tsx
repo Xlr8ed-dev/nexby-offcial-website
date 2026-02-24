@@ -72,12 +72,12 @@ const CallAnalyserPage: React.FC = () => {
                   Request a Forensic Audit
                   <Shield size={20} />
                 </button>
-                <Link
+                {/* <Link
                   to="#"
                   className="inline-flex items-center gap-2 h-14 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full px-8 font-bold text-lg backdrop-blur-sm transition-all"
                 >
                   See a Sample Scorecard
-                </Link>
+                </Link> */}
               </div>
             </div>
 

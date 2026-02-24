@@ -81,15 +81,14 @@ const ExamPilotForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const requiredFields = formMeta?.schema?.fields?.filter(
-      (f: any) => f.required,
-    );
-
-    for (const field of requiredFields) {
-      if (!formData[field.id]) {
-        toast.error(`${field.label} is required`);
-        return;
-      }
+    if (
+      !formData.university_name?.trim() ||
+      !formData.number_of_students ||
+      !formData.current_exam_mode ||
+      !formData.official_email?.trim()
+    ) {
+      toast.error("All fields are required");
+      return;
     }
 
     setIsSubmitting(true);
@@ -180,7 +179,11 @@ const ExamPilotForm = () => {
           </h3>
           <p className="text-gray-600">{formMeta.description}</p>
         </div>
-
+        <div className="mb-4">
+          <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+            * All fields are mandatory
+          </span>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -193,7 +196,7 @@ const ExamPilotForm = () => {
               </div>
               <input
                 type="text"
-                required={university?.required}
+                // required={university?.required}
                 disabled={university?.disabled}
                 placeholder={university?.placeholder}
                 value={formData.university_name}
@@ -216,7 +219,7 @@ const ExamPilotForm = () => {
               </div>
 
               <select
-                required={students?.required}
+                // required={students?.required}
                 disabled={students?.disabled}
                 value={formData.number_of_students}
                 onChange={(e) =>
@@ -269,7 +272,7 @@ const ExamPilotForm = () => {
 
               <input
                 type="email"
-                required={email?.required}
+                // required={email?.required}
                 disabled={email?.disabled}
                 placeholder={email?.placeholder}
                 value={formData.official_email}

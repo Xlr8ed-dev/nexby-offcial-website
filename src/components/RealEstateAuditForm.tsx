@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Globe, ArrowRight, CheckCircle } from "lucide-react";
+import { Globe, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -68,7 +68,7 @@ const RealEstateAuditForm = () => {
 
     for (let field of stepFields) {
       if (!formData[field.id]) {
-        toast.error("Please fill all required fields");
+        toast.error("All fields are required");
         return;
       }
     }
@@ -180,6 +180,11 @@ const RealEstateAuditForm = () => {
             </h2>
 
             <p className="mt-4 text-lg text-slate-600">{descriptionParts[1]}</p>
+            <div className="mt-3">
+              <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+                * All fields are mandatory
+              </span>
+            </div>
           </div>
         )}
 
@@ -332,13 +337,23 @@ const RealEstateAuditForm = () => {
           <button
             onClick={handleNext}
             disabled={step === 1 && !formData.company_url}
-            className={`w-full py-4 rounded-xl font-bold text-white ${
+            className={`w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2 ${
               step === 1 && !formData.company_url
                 ? "bg-blue-300 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
-            {step === 1 && isAnalyzing ? "Analyzing..." : "Analyze & Proceed"}
+            {step === 1 && isAnalyzing ? (
+              <>
+                <Loader2 className="animate-spin h-5 w-5" />
+                Analyzing...
+              </>
+            ) : (
+              <>
+                Analyze & Proceed
+                <ArrowRight size={20} />
+              </>
+            )}
           </button>
         ) : (
           <button

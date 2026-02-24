@@ -77,16 +77,43 @@ const PartnershipForm = () => {
   const fieldsForStep =
     formMeta?.schema.fields.filter((f: any) => f.step === step) || [];
 
-  const isStepValid = fieldsForStep.every(
-    (field: any) => !field.required || formData[field.id],
-  );
+  // const isStepValid = fieldsForStep.every(
+  //   (field: any) => !field.required || formData[field.id],
+  // );
 
   const handleNext = () => {
-    if (isStepValid) setStep((prev) => prev + 1);
-  };
+    const hasEmpty = fieldsForStep.some((field: any) => {
+      const value = formData[field.id];
 
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+
+      return !value;
+    });
+
+    if (hasEmpty) {
+      toast.error("All fields are required");
+      return;
+    }
+
+    setStep((prev) => prev + 1);
+  };
   const handleSubmit = async () => {
-    if (!isStepValid) return;
+    const hasEmpty = fieldsForStep.some((field: any) => {
+      const value = formData[field.id];
+
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+
+      return !value;
+    });
+
+    if (hasEmpty) {
+      toast.error("All fields are required");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -237,6 +264,11 @@ const PartnershipForm = () => {
                       ?.join(".")
                       ?.trim() || ""}
                   </p>
+                  <div className="mt-3">
+                    <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+                      * All fields are mandatory
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-3">
@@ -265,7 +297,6 @@ const PartnershipForm = () => {
 
                   {field.type === "select" && (
                     <select
-                      required={field.required}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       className="w-full p-3 rounded-xl border border-slate-300 bg-white"
@@ -290,7 +321,6 @@ const PartnershipForm = () => {
 
                   {field.type === "textarea" && (
                     <textarea
-                      required={field.required}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       placeholder={field.placeholder}
@@ -304,7 +334,6 @@ const PartnershipForm = () => {
                     field.type !== "textarea" && (
                       <input
                         type={field.type}
-                        required={field.required}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         placeholder={field.placeholder}
@@ -319,7 +348,7 @@ const PartnershipForm = () => {
               {step < 3 ? (
                 <button
                   onClick={handleNext}
-                  disabled={!isStepValid}
+                  // disabled={!isStepValid}
                   className="w-full py-4 bg-cyan-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 disabled:opacity-40"
                 >
                   Next Step <ArrowRight size={20} />
@@ -327,7 +356,7 @@ const PartnershipForm = () => {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  disabled={!isStepValid || isSubmitting}
+                  // disabled={!isStepValid || isSubmitting}
                   className="w-full py-4 bg-green-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 disabled:opacity-40"
                 >
                   {isSubmitting ? (

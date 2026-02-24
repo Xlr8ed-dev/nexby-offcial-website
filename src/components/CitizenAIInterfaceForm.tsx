@@ -80,6 +80,21 @@ const CitizenAIInterfaceForm = () => {
       return;
     }
 
+    const hasEmpty = formMeta.schema.fields.some((field: any) => {
+      const value = formData[field.id];
+
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+
+      return !value;
+    });
+
+    if (hasEmpty) {
+      toast.error("All fields are required");
+      return;
+    }
+
     setIsSubmitting(true);
 
     const payload = {
@@ -175,6 +190,11 @@ const CitizenAIInterfaceForm = () => {
           <h3 className="text-xl font-bold tracking-tight">{formMeta.title}</h3>
         </div>
         <p className="text-slate-400 text-sm">{formMeta.description}</p>
+        <div className="mt-3">
+          <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-4 py-1.5 rounded-full border border-red-200">
+            * All fields are mandatory
+          </span>
+        </div>
       </div>
 
       <div className="p-8">
@@ -199,7 +219,6 @@ const CitizenAIInterfaceForm = () => {
                     <div className="relative">
                       {getIcon(field.id)}
                       <select
-                        required={field.required}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         className="w-full p-3 pl-10 rounded-lg border border-slate-300 bg-white focus:border-blue-600 outline-none"
@@ -217,7 +236,6 @@ const CitizenAIInterfaceForm = () => {
                       {getIcon(field.id)}
                       <input
                         type={field.type}
-                        required={field.required}
                         placeholder={field.placeholder}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
