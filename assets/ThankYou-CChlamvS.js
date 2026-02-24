@@ -1,0 +1,3 @@
+import{x as l,O as r,q as e}from"./index-Dks9Upqq.js";const n=()=>{const{state:t}=l(),s=r();return t?.formId,e.jsx("div",{className:"min-h-[60vh] flex items-center justify-center px-4",children:e.jsxs("div",{className:`max-w-xl w-full rounded-3xl border border-purple-400/30 
+        bg-slate-900/90 backdrop-blur-xl p-10 text-center shadow-2xl`,children:[e.jsx("h2",{className:"text-3xl font-bold text-white mb-4",children:"Thank You 🎉"}),e.jsxs("p",{className:"text-purple-300 text-lg",children:["Your request has been submitted successfully","."]}),e.jsx("button",{onClick:()=>s("/"),className:`mt-8 px-8 py-3 rounded-full 
+            bg-purple-600 hover:bg-purple-700 text-white font-semibold transition`,children:"Go Home"})]})})};export{n as default};

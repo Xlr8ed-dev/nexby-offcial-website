@@ -1,0 +1,13 @@
+User-agent: GPTBot
+Allow: /
+
+User-agent: Googlebot
+Disallow: /private/     
+Allow: /private/public-image.jpg
+
+User-agent: *
+Disallow: /admin/        # Block admin area
+Disallow: /tmp/         # Block temp files
+
+# Sitemap Location (Global)
+Sitemap: https://www.example.com/sitemap.xml
