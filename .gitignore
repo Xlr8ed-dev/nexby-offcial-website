@@ -29,3 +29,6 @@ dist-ssr
 .env.production
 .env.local
 .env.*.local
+
+# Ignore package-lock.json and yarn.lock if you don't want to commit them
+package-lock.json
