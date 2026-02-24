@@ -1,3 +1,4 @@
+# deployment.yml
 name: Deploy React Frontend (Production)
 
 on:
@@ -8,9 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy via SSH
+      - name: Deploy on Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.PROD_VPS_IP }}
@@ -18,19 +18,9 @@ jobs:
           key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /home/ubuntu/nexby-offcial-website
-
-            echo "Switching to dev branch..."
+            cd ${{ secrets.PROD_PROJECT_PATH }}
             git checkout dev
-
-            echo "Pulling latest code..."
             git pull origin dev
-
-            echo "Installing dependencies..."
             npm i --force
-
-            echo "Building project..."
             npm run build
-
-            echo "Reloading nginx..."
-            sudo systemctl reload nginx.service
+            sudo systemctl reload nginx
