@@ -21,6 +21,9 @@ import {
 import AIRecruiterDemoForm from "../components/AIRecruiterDemoForm";
 import { stackingCardsData } from "./StackingCard";
 
+const videoUrl = import.meta.env.VITE_HERO_VIDEO_URL;
+const youtubeFallback = import.meta.env.VITE_YOUTUBE_FALLBACK;
+
 const AIRecruiterPage = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -176,7 +179,7 @@ const AIRecruiterPage = () => {
                     <video
                       ref={videoRef}
                       className="w-full h-full object-cover"
-                      src="https://nexby-document-storage.s3.ap-south-1.amazonaws.com/static-assests/The-Future-of-Hiring-in-seconds-Meet-the-all-new-AI-Powered-Recruiter.mp4"
+                      src={videoUrl}
                       autoPlay
                       muted
                       loop
@@ -188,7 +191,7 @@ const AIRecruiterPage = () => {
                   ) : (
                     <iframe
                       className="w-full h-full"
-                      src="https://www.youtube.com/embed/gx1KdyLB2LM?autoplay=1&mute=1&loop=1&playlist=gx1KdyLB2LM"
+                      src={youtubeFallback}
                       title="AI Recruiter Video"
                       allow="autoplay; encrypted-media"
                       allowFullScreen
