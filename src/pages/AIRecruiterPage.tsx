@@ -24,6 +24,7 @@ import { stackingCardsData } from "./StackingCard";
 const AIRecruiterPage = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -169,19 +170,30 @@ const AIRecruiterPage = () => {
                   </button>
                 </div>
               </div>
-
-              {/* HR Product video */}
               <div className="relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video">
-                  <video
-                    ref={videoRef}
-                    className="w-full h-full object-cover"
-                    src="/Videos/AIRecruiter.mp4"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  />
+                  {!videoError ? (
+                    <video
+                      ref={videoRef}
+                      className="w-full h-full object-cover"
+                      src="https://nexby-document-storage.s3.ap-south-1.amazonaws.com/static-assests/The-Future-of-Hiring-in-seconds-Meet-the-all-new-AI-Powered-Recruiter.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      controlsList="nodownload noplaybackrate noremoteplayback"
+                      disablePictureInPicture
+                      onError={() => setVideoError(true)}
+                    />
+                  ) : (
+                    <iframe
+                      className="w-full h-full"
+                      src="https://www.youtube.com/embed/gx1KdyLB2LM?autoplay=1&mute=1&loop=1&playlist=gx1KdyLB2LM"
+                      title="AI Recruiter Video"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                    />
+                  )}
                 </div>
 
                 {/* Controls */}
