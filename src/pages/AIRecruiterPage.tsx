@@ -176,7 +176,7 @@ const AIRecruiterPage = () => {
                   <video
                     ref={videoRef}
                     className="w-full h-full object-cover"
-                    src="https://nexby-document-storage.s3.ap-south-1.amazonaws.com/static-assests/the-future-of-hiring-in-seconds-meet-the-all-new-AI-Powered-Recruiter.mp4"
+                    src="/Videos/AIRecruiter.mp4"
                     autoPlay
                     muted
                     loop
