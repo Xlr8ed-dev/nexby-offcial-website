@@ -32,3 +32,5 @@ dist-ssr
 
 # Ignore package-lock.json and yarn.lock if you don't want to commit them
 package-lock.json
+./package-lock.json
+*.docx
