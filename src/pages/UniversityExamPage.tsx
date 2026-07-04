@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   Shield,
   ScanFace,
@@ -24,15 +24,9 @@ const UniversityExamPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>University Exam Portal - Secure AI Proctoring | Nexby AI</title>
-        <meta
-          name="description"
-          content="Conduct massive-scale university examinations with AI-grade security. Biometric verification, 360° scanning, and forensic handwriting analysis."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -654,7 +648,7 @@ const UniversityExamPage = () => {
             <ExamPilotForm />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

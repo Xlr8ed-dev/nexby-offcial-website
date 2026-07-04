@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+
 import { motion } from "framer-motion";
 import { CheckCircle, Shield, Zap, Layers } from "lucide-react";
 import Sir from "../assets/Sir.jpg";
@@ -11,15 +11,9 @@ const AboutUsPage = () => {
   }, []);
   return (
     <>
-      <Helmet>
-        <title>About Us | Nexby AI</title>
-        <meta
-          name="description"
-          content="Empowering Business with Intelligent Automation. Nexby engineers the digital workforce that will power the next decade of business."
-        />
-      </Helmet>
+      
 
-      <div className="pt-24 pb-12 bg-white min-h-screen">
+      <main className="pt-24 pb-12 bg-white min-h-screen">
         {/* Hero */}
         <section className="max-w-7xl mx-auto px-6 mb-20">
           <motion.div
@@ -91,10 +85,10 @@ const AboutUsPage = () => {
             </div>
             <div className="h-80 bg-gray-200 rounded-2xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop"
                 alt="Vision of future workforce"
                 className="w-full h-full object-cover"
-              />
+              loading="lazy" />
             </div>
           </div>
         </section>
@@ -177,13 +171,13 @@ const AboutUsPage = () => {
                     src="/certificates/bg-lines.svg"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover opacity-40"
-                  />
+                  loading="lazy" />
 
                   <img
                     src="/certificates/NexbyISOIEC2000012018Certificatepage-0001.jpg"
                     alt="Information Technology – Service Management"
                     className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
-                  />
+                  loading="lazy" />
                 </div>
 
                 <div className="px-6 py-5 text-center">
@@ -208,13 +202,13 @@ const AboutUsPage = () => {
                     src="/certificates/bg-lines.svg"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover opacity-40"
-                  />
+                  loading="lazy" />
 
                   <img
                     src="/certificates/card10033page0001.jpg"
                     alt="Information Technology – Service Management"
                     className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
-                  />
+                  loading="lazy" />
                 </div>
 
                 <div className="px-6 py-5 text-center">
@@ -240,13 +234,13 @@ const AboutUsPage = () => {
                     src="/certificates/bg-lines.svg"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover opacity-40"
-                  />
+                  loading="lazy" />
 
                   <img
                     src="/certificates/NexbyISO90012015Certificatepage-0001.jpg"
                     alt="Information Technology – Service Management"
                     className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
-                  />
+                  loading="lazy" />
                 </div>
 
                 <div className="px-6 py-5 text-center">
@@ -267,13 +261,13 @@ const AboutUsPage = () => {
                     src="/certificates/bg-lines.svg"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover opacity-40"
-                  />
+                  loading="lazy" />
 
                   <img
                     src="/certificates/NexbyISOIEC270012022Certificatepage0001.jpg"
                     alt="Information Technology – Service Management"
                     className="relative z-10 max-h-[360px] w-auto object-contain bg-white"
-                  />
+                  loading="lazy" />
                 </div>
 
                 <div className="px-6 py-5 text-center">
@@ -298,7 +292,7 @@ const AboutUsPage = () => {
                     src={Sir}
                     alt="Archit Jain"
                     className="w-full h-full object-cover"
-                  />
+                  loading="lazy" />
                 </div>
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -373,7 +367,7 @@ const AboutUsPage = () => {
             </div>
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

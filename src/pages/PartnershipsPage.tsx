@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+
 import { motion } from "framer-motion";
 import {
   Handshake,
@@ -116,22 +116,9 @@ const PartnershipsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          Partnerships | You Sell the Vision. We Build the Intelligence | Nexby
-          AI
-        </title>
-        <meta
-          name="description"
-          content="Partner with Nexby to offer end-to-end AI automation to your clients. Revenue share, OEM licensing, and white-label solutions for agencies, integrators, and consultants."
-        />
-        <meta
-          name="keywords"
-          content="AI partnership, technology partner, reseller program, system integrator partnership, government AI solutions, recruitment automation partner"
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -578,7 +565,7 @@ const PartnershipsPage = () => {
             <PartnershipForm />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

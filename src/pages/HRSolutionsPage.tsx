@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import {
   Sparkles,
   Brain,
@@ -67,64 +67,9 @@ const HRSolutionsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          AI for Recruitment - Autonomous Hiring Agents | Nexby Solutions
-        </title>
-        <meta
-          name="description"
-          content="Hire the top 1% automatically. Nexby's Recruiter AI Agent screens, interviews, and ranks talent with human-level nuance and machine-level speed."
-        />
-        <meta
-          name="keywords"
-          content="AI recruitment, autonomous hiring, AI interviewer, resume screening AI, automated talent intelligence, proctored interviews, technical screening AI"
-        />
+      
 
-        {/* Open Graph Tags */}
-        <meta
-          property="og:title"
-          content="AI for Recruitment - Autonomous Hiring Agents | Nexby"
-        />
-        <meta
-          property="og:description"
-          content="Hire the top 1% automatically. Screen, interview, and rank talent with human-level nuance."
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://nexby.ai/solutions/recruitment"
-        />
-
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://nexby.ai/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Solutions",
-                item: "https://nexby.ai/solutions",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "AI for Recruitment",
-                item: "https://nexby.ai/solutions/recruitment",
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
-
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -713,7 +658,7 @@ const HRSolutionsPage = () => {
             </div>
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import { Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
 import {
   Bot,
@@ -118,15 +118,9 @@ const AIRecruiterPage = () => {
   };
   return (
     <>
-      <Helmet>
-        <title>AI Recruiter - Autonomous Hiring Platform | Nexby</title>
-        <meta
-          name="description"
-          content="The World’s Most Ruthless (and Fair) Interviewer. An autonomous hiring platform that screens, interviews, and ranks talent at infinite scale."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -326,7 +320,7 @@ const AIRecruiterPage = () => {
                 src="/images/ai-recruiter-dashboard.png"
                 alt="Command Dashboard"
                 className="w-full h-full object-cover"
-              />
+              loading="lazy" />
             </div>
           </div>
         </section>
@@ -376,7 +370,7 @@ const AIRecruiterPage = () => {
                       className={`w-full h-full object-cover object-[50%_80%] ${
                         card.imageObject ?? ""
                       }`}
-                    />
+                    loading="lazy" />
                   </div>
 
                   <div className="p-8 md:p-6">
@@ -652,7 +646,7 @@ const AIRecruiterPage = () => {
         <div ref={formRef}>
           <AIRecruiterDemoForm />
         </div>
-      </div>
+      </main>
     </>
   );
 };

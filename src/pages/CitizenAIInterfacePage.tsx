@@ -18,7 +18,7 @@ import CitizenAIInterfaceForm from "../components/CitizenAIInterfaceForm";
 
 const CitizenAIInterfacePage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-white font-sans text-slate-900">
+    <main className="min-h-screen pt-20 bg-white font-sans text-slate-900">
       {/* Breadcrumb Navigation */}
       <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -40,7 +40,7 @@ const CitizenAIInterfacePage = () => {
       </nav>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 bg-slate-900 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=2400&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -504,7 +504,7 @@ const CitizenAIInterfacePage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

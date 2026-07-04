@@ -12,7 +12,7 @@ const CardImage = ({ image, alt, objectClass }: CardImageProps) => {
         src={image}
         alt={alt}
         className={`w-full h-full object-cover ${objectClass ?? ""}`}
-      />
+      loading="lazy" />
     </div>
   );
 };

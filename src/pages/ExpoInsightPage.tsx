@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import ExpoDemoForm from "../components/ExpoDemoForm";
 import {
   Sparkles,
@@ -109,81 +109,9 @@ const ExpoInsightPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Expo Insight - Trade Show Lead Management | Nexby</title>
-        <meta
-          name="description"
-          content="The Operating System for Trade Shows. Offline-first mobile app and powerful analytics dashboard. Stop collecting business cards; start collecting data."
-        />
-        <meta
-          name="keywords"
-          content="trade show app, expo management, lead capture, OCR business cards, offline mobile app, event analytics, exhibition software"
-        />
+      
 
-        {/* Open Graph Tags */}
-        <meta
-          property="og:title"
-          content="Expo Insight - Trade Show Lead Management | Nexby"
-        />
-        <meta
-          property="og:description"
-          content="The Operating System for Trade Shows. Offline-first mobile app and powerful analytics dashboard."
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://nexby.ai/products/expo-insight"
-        />
-
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://nexby.ai/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Products",
-                item: "https://nexby.ai/products",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "Expo Insight",
-                item: "https://nexby.ai/products/expo-insight",
-              },
-            ],
-          })}
-        </script>
-
-        {/* Product Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Nexby Expo Insight",
-            applicationCategory: "BusinessApplication",
-            operatingSystem: "iOS 15.0+, Android 10.0+",
-            description:
-              "Dual-platform solution for trade show lead management with offline-first mobile app and web analytics dashboard",
-            offers: {
-              "@type": "Offer",
-              availability: "https://schema.org/InStock",
-              price: "Contact for pricing",
-              priceCurrency: "USD",
-            },
-          })}
-        </script>
-      </Helmet>
-
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -762,7 +690,7 @@ const ExpoInsightPage = () => {
         <div ref={formRef}>
           <ExpoDemoForm />
         </div>
-      </div>
+      </main>
     </>
   );
 };
