@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+
 import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -6,10 +6,7 @@ import { motion } from 'framer-motion';
 const ExpoThankYouPage = () => {
     return (
         <>
-            <Helmet>
-                <title>Thank You | Nexby Expo Insight</title>
-                <meta name="robots" content="noindex, nofollow" />
-            </Helmet>
+            
 
             <div className="min-h-screen bg-white flex items-center justify-center px-6">
                 <div className="max-w-2xl w-full text-center">

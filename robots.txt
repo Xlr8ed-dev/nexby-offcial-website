@@ -1,13 +1,28 @@
+User-agent: *
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
-User-agent: Googlebot
-Disallow: /private/     
-Allow: /private/public-image.jpg
+User-agent: OAI-SearchBot
+Allow: /
 
-User-agent: *
-Disallow: /admin/        # Block admin area
-Disallow: /tmp/         # Block temp files
+User-agent: ChatGPT-User
+Allow: /
 
-# Sitemap Location (Global)
-Sitemap: https://www.example.com/sitemap.xml
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://nexby.ai/sitemap.xml

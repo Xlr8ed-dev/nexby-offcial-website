@@ -14,7 +14,7 @@ import GovernmentAuditForm from "../components/GovernmentAuditForm";
 
 const GovernmentAICallAssistantPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-white font-sans text-slate-900">
+    <main className="min-h-screen pt-20 bg-white font-sans text-slate-900">
       {/* Breadcrumb Navigation */}
       <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -36,7 +36,7 @@ const GovernmentAICallAssistantPage = () => {
       </nav>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 bg-slate-900 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558494949-efc535b5fa12?q=80&w=2600&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558494949-efc535b5fa12?q=80&w=2400&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -83,7 +83,7 @@ const GovernmentAICallAssistantPage = () => {
                   src="/images/sovereign-server.png"
                   alt="Sovereign AI Server Rack"
                   className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-                />
+                loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20 bg-slate-900/90 backdrop-blur-sm border-t border-slate-700">
                   <div className="flex items-center justify-between">
@@ -488,7 +488,7 @@ const GovernmentAICallAssistantPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

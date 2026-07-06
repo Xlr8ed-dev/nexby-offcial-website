@@ -42,7 +42,7 @@ const Chatbot = () => {
             src="/images/robot.png"
             alt="Chat"
             className="w-7 h-7 sm:w-8 sm:h-8"
-          />
+          loading="lazy" />
         )}
 
         {!isChatOpen && (

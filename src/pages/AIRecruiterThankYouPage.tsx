@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+
 
 const AIRecruiterThankYouPage = () => {
     return (
         <>
-            <Helmet>
-                <title>Thank You - AI Recruiter Demo Request | Nexby</title>
-                <meta name="robots" content="noindex, nofollow" />
-            </Helmet>
+            
 
             <div className="min-h-screen bg-white flex items-center justify-center px-6">
                 <div className="max-w-lg w-full text-center">

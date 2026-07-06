@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   FlaskConical,
   FileText,
@@ -204,15 +204,9 @@ const PharmaPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>AI for Pharma & Life Sciences - Nexby Solutions</title>
-        <meta
-          name="description"
-          content="The world’s first AI Operating System for the Life Sciences supply chain. Automate tenders, stockist calls, export sales, and scientific hiring."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -246,7 +240,7 @@ const PharmaPage = () => {
               src="/images/pharma-hero.png"
               alt="Pharmaceutical supply chain and laboratory abstract"
               className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
-            />
+            loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-teal-950 via-transparent to-transparent"></div>
           </div>
 
@@ -572,7 +566,7 @@ const PharmaPage = () => {
             <PharmaAuditForm />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

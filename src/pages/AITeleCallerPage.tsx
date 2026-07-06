@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import {
   Mic,
   Activity,
@@ -92,15 +92,9 @@ const AITeleCallerPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>AI TeleCaller - Enterprise Voice Agents | Nexby</title>
-        <meta
-          name="description"
-          content="Deploy enterprise-grade voice agents that handle millions of calls with sub-second latency and perfect context. Indistinguishable from human."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -911,7 +905,7 @@ const AITeleCallerPage = () => {
         <div ref={formRef}>
           <AITeleCallerDemoForm />
         </div>
-      </div>
+      </main>
     </>
   );
 };

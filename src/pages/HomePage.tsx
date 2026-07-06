@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   motion,
   useInView,
@@ -62,10 +62,11 @@ const HeroSection = () => {
         <div className="relative w-full md:w-[70%] min-h-[70vh] md:h-[calc(100vh-6rem)] bg-gray-900 overflow-hidden rounded-2xl md:rounded-3xl">
           {/* Background */}
           <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop"
             alt="AI Network"
             className="absolute inset-0 w-full h-full object-cover opacity-60"
-          />
+          loading="eager"
+          fetchPriority="high" />
 
           {/* Content */}
           <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-16">
@@ -88,10 +89,10 @@ const HeroSection = () => {
             className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
           >
             <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
               alt="Sales"
               className="absolute inset-0 w-full h-full object-cover opacity-60"
-            />
+            loading="lazy" />
             <div className="absolute inset-0 bg-blue-50/80" />
             <div className="relative z-10">
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
@@ -111,10 +112,10 @@ const HeroSection = () => {
             className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
           >
             <img
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1000&auto=format&fit=crop"
               alt="HR"
               className="absolute inset-0 w-full h-full object-cover opacity-60"
-            />
+            loading="lazy" />
             <div className="absolute inset-0 bg-purple-50/80" />
             <div className="relative z-10">
               <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
@@ -733,7 +734,7 @@ const ProductsShowcase = () => {
               href="/products/ai-recruiter"
               className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:gap-4 transition-all"
             >
-              Learn More <ArrowRight size={18} />
+              Explore AI Recruiter <ArrowRight size={18} />
             </a>
           </div>
 
@@ -771,7 +772,7 @@ const ProductsShowcase = () => {
               href="/products/ai-telecaller"
               className="inline-flex items-center gap-2 text-purple-600 font-semibold hover:gap-4 transition-all"
             >
-              Learn More <ArrowRight size={18} />
+              Explore AI TeleCaller <ArrowRight size={18} />
             </a>
           </div>
 
@@ -807,7 +808,7 @@ const ProductsShowcase = () => {
               href="/products/expo-insight"
               className="inline-flex items-center gap-2 text-green-600 font-semibold hover:gap-4 transition-all"
             >
-              Learn More <ArrowRight size={18} />
+              Explore Expo Insight <ArrowRight size={18} />
             </a>
           </div>
         </div>
@@ -1090,65 +1091,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <Helmet>
-        <title>
-          Nexby AI Solutions - Automate Your Growth with AI Agents for Sales &
-          Recruitment
-        </title>
-        <meta
-          name="description"
-          content="Deploy custom AI agents for Sales and Recruitment. Nexby AI delivers practical, profitable automation solutions live in weeks. Transform your business efficiency with cutting-edge AI technology."
-        />
-        <meta
-          name="keywords"
-          content="AI automation, AI sales agents, AI recruitment, business automation, AI solutions, TalentScout, SalesFlow, enterprise AI, Mumbai AI company"
-        />
+    <main>
 
-        {/* Open Graph Tags */}
-        <meta
-          property="og:title"
-          content="Nexby AI Solutions - Automate Your Growth"
-        />
-        <meta
-          property="og:description"
-          content="Deploy custom AI agents for Sales and Recruitment. Practical, profitable, and live in weeks."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nexby.ai/" />
-
-        {/* Organization Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Nexby AI Solutions Private Limited",
-            url: "https://nexby.ai",
-            logo: "https://nexby.ai/logo.png",
-            description:
-              "Leading AI automation solutions for recruitment, sales, and business operations",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "15, Khatau Building, 44 Bank Street",
-              addressLocality: "Mumbai",
-              addressRegion: "Maharashtra",
-              postalCode: "400001",
-              addressCountry: "IN",
-            },
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "+91-98920-48816",
-              contactType: "Customer Service",
-              email: "hello@nexby.ai",
-            },
-            sameAs: [
-              "https://linkedin.com/company/nexby-ai/",
-              "https://www.youtube.com/@NexbyAISolutions",
-              "https://www.instagram.com/nexby.ai/",
-            ],
-          })}
-        </script>
-      </Helmet>
       <HeroSection />
       <ScrollAnimationSection />
       <SolutionsOverview />
@@ -1159,7 +1103,7 @@ const HomePage = () => {
       <TechnologyStack />
       <WhyChooseNexby />
       <ContactForm formId="home_page_contact_form" />
-    </>
+    </main>
   );
 };
 

@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle, Home, ArrowRight } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+
 
 const ExamPilotThankYouPage = () => {
   return (
     <>
-      <Helmet>
-        <title>Request Received - University Exam Portal | Nexby AI</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      
 
       <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6 py-20">
         <div className="max-w-lg w-full bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center relative overflow-hidden">

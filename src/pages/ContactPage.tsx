@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+
 import { Mail, MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 import DynamicFormContainer from "@/components/DynamicFormContainer";
 import { useLocation } from "react-router-dom";
@@ -36,95 +36,9 @@ const ContactPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          Contact Us - Nexby AI Solutions | Get in Touch with Our AI Experts
-        </title>
-        <meta
-          name="description"
-          content="Contact Nexby AI Solutions for AI-powered recruitment, sales, and exhibition management solutions. Reach out via email, phone, or visit our Mumbai office."
-        />
-        <meta
-          name="keywords"
-          content="contact nexby, AI solutions contact, Mumbai AI company, AI consultation, business automation support"
-        />
+      
 
-        {/* Open Graph Tags */}
-        <meta property="og:title" content="Contact Us - Nexby AI Solutions" />
-        <meta
-          property="og:description"
-          content="Get in touch with Nexby AI Solutions for cutting-edge AI automation solutions."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nexby.ai/contact-us" />
-
-        {/* Structured Data - LocalBusiness */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "Nexby AI Solutions Private Limited",
-            image: "https://nexby.ai/logo.png",
-            description:
-              "Leading AI automation solutions for recruitment, sales, and business operations",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "15, Khatau Building, 44 Bank Street",
-              addressLocality: "Mumbai",
-              addressRegion: "Maharashtra",
-              postalCode: "400001",
-              addressCountry: "IN",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: "18.93279",
-              longitude: "72.83123",
-            },
-            telephone: "+919892048816",
-            email: "hello@nexby.ai",
-            url: "https://nexby.ai",
-            openingHoursSpecification: [
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                ],
-                opens: "09:00",
-                closes: "18:00",
-              },
-            ],
-            priceRange: "$$",
-          })}
-        </script>
-
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://nexby.ai/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Contact Us",
-                item: "https://nexby.ai/contact-us",
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
-
-      <div className="min-h-screen bg-white pt-24">
+      <main className="min-h-screen bg-white pt-24">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -384,7 +298,7 @@ const ContactPage = () => {
             </div>
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };
