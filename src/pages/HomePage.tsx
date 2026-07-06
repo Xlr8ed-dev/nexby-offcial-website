@@ -47,9 +47,12 @@ const TypewriterText = ({ text }: { text: string }) => {
   }, [text]);
 
   return (
-    <span className="inline-block font-light text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded leading-normal">
-      {displayedText}
-      <span className="animate-pulse">|</span>
+    <span className="inline-grid grid-cols-1 grid-rows-1 font-light text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded leading-normal text-left">
+      <span className="invisible col-start-1 row-start-1">{text}</span>
+      <span className="col-start-1 row-start-1">
+        {displayedText}
+        <span className="animate-pulse">|</span>
+      </span>
     </span>
   );
 };
@@ -62,8 +65,10 @@ const HeroSection = () => {
         <div className="relative w-full md:w-[70%] min-h-[70vh] md:h-[calc(100vh-6rem)] bg-gray-900 overflow-hidden rounded-2xl md:rounded-3xl">
           {/* Background */}
           <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=60&w=2000&auto=format&fit=crop&fm=webp"
             alt="AI Network"
+            width={2000}
+            height={1333}
             className="absolute inset-0 w-full h-full object-cover opacity-60"
           loading="eager"
           fetchPriority="high" />
@@ -89,8 +94,10 @@ const HeroSection = () => {
             className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
           >
             <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=60&w=1000&auto=format&fit=crop&fm=webp"
               alt="Sales"
+              width={1000}
+              height={667}
               className="absolute inset-0 w-full h-full object-cover opacity-60"
             loading="lazy" />
             <div className="absolute inset-0 bg-blue-50/80" />
@@ -112,8 +119,10 @@ const HeroSection = () => {
             className="relative min-h-[220px] md:flex-1 p-6 rounded-2xl overflow-hidden bg-white shadow-lg"
           >
             <img
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1000&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=60&w=1000&auto=format&fit=crop&fm=webp"
               alt="HR"
+              width={1000}
+              height={667}
               className="absolute inset-0 w-full h-full object-cover opacity-60"
             loading="lazy" />
             <div className="absolute inset-0 bg-purple-50/80" />
