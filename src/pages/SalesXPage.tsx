@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   Clock,
   Zap,
@@ -30,15 +30,9 @@ const SalesXPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>SalesX - Autonomous AI Sales Agents | Nexby</title>
-        <meta
-          name="description"
-          content="Stop losing revenue to slow follow-ups. Nexby SalesX contacts every lead within 10 seconds, nurtures them with human-like empathy, and books meetings 24/7."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -830,7 +824,7 @@ const SalesXPage = () => {
         </section>
 
         {/* Demo Form Section */}
-      </div>
+      </main>
     </>
   );
 };

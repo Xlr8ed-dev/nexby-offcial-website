@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   Building2,
   Users,
@@ -141,15 +141,9 @@ const RealEstatePage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>AI for Real Estate - Nexby Solutions</title>
-        <meta
-          name="description"
-          content="The only AI platform built by a family of builders, for builders. Automate hiring, sales, and operations for your real estate business."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -387,7 +381,7 @@ const RealEstatePage = () => {
             <RealEstateAuditForm />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

@@ -1,0 +1,40 @@
+# Nexby AI Solutions
+
+> Nexby AI is a service-based AI automation company for Indian SMEs. It builds and manages done-for-you omnichannel lead follow-up systems across AI telecalling, WhatsApp, and email. Pricing starts at ₹6 per connected call, billed only when a call connects.
+
+## Products
+
+- [AI TeleCaller](https://nexby.ai/products/ai-telecaller): AI voice agents that qualify and follow up on leads, multilingual, 24/7. Billed only on connected calls starting ₹6.
+- [AI Recruiter](https://nexby.ai/products/ai-recruiter): Automated candidate screening via AI voice and video interviews with proctoring. Screen 1,000+ candidates per day.
+- [SalesX](https://nexby.ai/products/salesx): AI sales intelligence platform with call analysis, lead scoring, and pipeline visibility.
+- [Expo Insight](https://nexby.ai/products/expo-insight): Offline-capable trade show booth app for capturing and qualifying visitors, with automatic follow-up.
+- [Call Analyser](https://nexby.ai/products/call-analyser): AI transcription and scoring of every sales call for coaching and compliance.
+- [SupportAssist](https://nexby.ai/products/support-assist): AI voice and chat for customer support with smart escalation to human agents.
+
+## Solutions by Use Case
+
+- [AI for Sales](https://nexby.ai/solutions/sales): Automated lead follow-up across calls, WhatsApp, and email. 40% better conversion.
+- [AI for Recruitment](https://nexby.ai/solutions/recruitment): AI screening and scheduling. Cut hiring time by 90%.
+- [AI for Operations](https://nexby.ai/solutions/operations): Automate reminders, escalations, and status updates across channels.
+- [AI for Exhibitions](https://nexby.ai/solutions/exhibitions): Lead capture and follow-up for B2B trade show exhibitors.
+- [AI Exam Portal](https://nexby.ai/solutions/university-exam-portal): Secure AI-proctored online examinations for universities.
+
+## Solutions by Industry
+
+- [Real Estate](https://nexby.ai/solutions/industry/real-estate): AI lead qualification and site visit booking for builders and brokers.
+- [Manufacturing](https://nexby.ai/solutions/industry/manufacturing): Customer follow-up and vendor communication automation.
+- [Pharma](https://nexby.ai/solutions/industry/pharma): MR follow-up and doctor outreach automation. Compliant, multilingual.
+
+## Government Solutions
+
+- [AI Call Assistant](https://nexby.ai/solutions/government/ai-call-assistant): Citizen query handling and call routing for government departments.
+- [Tender Query Automation](https://nexby.ai/solutions/government/tender-query-automation): AI-powered tender clarification handling for procurement teams.
+- [Citizen AI Interface](https://nexby.ai/solutions/government/citizen-ai-interface): Multilingual 24/7 AI for citizen-facing government services.
+
+## Key Pages
+
+- [Home](https://nexby.ai/): Overview of Nexby AI and all products.
+- [About Us](https://nexby.ai/about-us): Company background, team, and mission. 300+ businesses onboarded. Based in Mumbai.
+- [Contact](https://nexby.ai/contact-us): Phone +91 98920 48816, email hello@nexby.ai. 15, Khatau Building, 44 Bank Street, Mumbai – 400001.
+- [Partnerships](https://nexby.ai/partnerships): Reseller and integration partner programme.
+- [Careers](https://nexby.ai/careers): Open roles at Nexby AI.

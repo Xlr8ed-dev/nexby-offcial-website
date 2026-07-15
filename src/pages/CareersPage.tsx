@@ -1,4 +1,4 @@
-// import { Helmet } from 'react-helmet-async';
+// 
 // import { motion } from 'framer-motion';
 // import { Briefcase, MapPin, Clock } from 'lucide-react';
 
@@ -29,10 +29,7 @@
 
 //     return (
 //         <>
-//             <Helmet>
-//                 <title>Careers | Nexby AI</title>
-//                 <meta name="description" content="Join the Nexby AI team and help shape the future of business automation." />
-//             </Helmet>
+//             
 
 //             <div className="pt-24 pb-12 bg-gray-50 min-h-screen">
 //                 <div className="max-w-7xl mx-auto px-6">
@@ -86,7 +83,7 @@
 // export default CareersPage;
 
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+
 import { motion } from "framer-motion";
 import { Sparkles, Users, Rocket } from "lucide-react";
 import JobCard from "../components/careers/JobCard";
@@ -162,15 +159,9 @@ const CareersPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Careers at Nexby | Build the Future of AI</title>
-        <meta
-          name="description"
-          content="Join Nexby and help us build the next generation of autonomous AI agents. We're looking for passionate problem solvers."
-        />
-      </Helmet>
+      
 
-      <div className="bg-white min-h-screen font-sans selection:bg-black selection:text-white">
+      <main className="bg-white min-h-screen font-sans selection:bg-black selection:text-white">
         {/* Hero Section */}
         <div className="relative pt-32 pb-20 overflow-hidden">
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50" />
@@ -398,7 +389,7 @@ const CareersPage = () => {
             </motion.div>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 };

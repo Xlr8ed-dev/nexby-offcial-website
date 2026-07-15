@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Helmet } from "react-helmet-async";
+
 import {
   Factory,
   FileText,
@@ -204,15 +204,9 @@ const ManufacturingPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>AI for Manufacturing - Nexby Solutions</title>
-        <meta
-          name="description"
-          content="Automate your manufacturing operations. From RFP analysis and export sales to hiring skilled engineers. The first AI designed for the shop floor."
-        />
-      </Helmet>
+      
 
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -236,7 +230,7 @@ const ManufacturingPage = () => {
               src="/images/manufacturing-hero.png"
               alt="Robotic arm and digital dashboard"
               className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
-            />
+            loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
           </div>
 
@@ -563,7 +557,7 @@ const ManufacturingPage = () => {
             <ManufacturingAuditForm />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

@@ -116,7 +116,7 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <header>
       {/* NAVBAR */}
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -126,7 +126,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* LOGO */}
           <Link to="/" onClick={handleLogoClick}>
-            <img src={HeaderLogo} alt="Nexby" className="h-9" />
+            <img src={HeaderLogo} alt="Nexby" className="h-9" loading="lazy" />
           </Link>
 
           {/* DESKTOP MENU */}
@@ -292,7 +292,7 @@ const Navbar = () => {
           >
             {/* HEADER */}
             <div className="flex items-center justify-between px-6 py-4 border-b">
-              <img src={HeaderLogo} alt="logo" className="h-8" />
+              <img src={HeaderLogo} alt="logo" className="h-8" loading="lazy" />
               <button onClick={() => setMobileMenuOpen(false)}>
                 <X size={26} />
               </button>
@@ -470,7 +470,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 

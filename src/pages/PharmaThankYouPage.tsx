@@ -1,14 +1,11 @@
-import { Helmet } from "react-helmet-async";
+
 import { CheckCircle, ArrowLeft, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const PharmaThankYouPage = () => {
   return (
     <>
-      <Helmet>
-        <title>Audit Request Received - Nexby Pharma</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      
 
       <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
         <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-8 animate-bounce-short">

@@ -16,7 +16,7 @@ import TenderQueryAuditForm from "../components/TenderQueryAuditForm";
 
 const TenderQueryAutomationPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-white font-sans text-slate-900">
+    <main className="min-h-screen pt-20 bg-white font-sans text-slate-900">
       {/* Breadcrumb Navigation */}
       <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -38,7 +38,7 @@ const TenderQueryAutomationPage = () => {
       </nav>
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -541,7 +541,7 @@ const TenderQueryAutomationPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

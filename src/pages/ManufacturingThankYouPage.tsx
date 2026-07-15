@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+
 import { Link } from "react-router-dom";
 import { CheckCircle, ArrowRight, Factory } from "lucide-react";
 
@@ -10,10 +10,7 @@ const ManufacturingThankYouPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Thank You - Nexby Manufacturing Solutions</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      
 
       <div className="min-h-screen bg-white pt-20 flex items-center justify-center">
         <div className="max-w-2xl mx-auto px-6 py-20 text-center">
