@@ -126,7 +126,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* LOGO */}
           <Link to="/" onClick={handleLogoClick}>
-            <img src={HeaderLogo} alt="Nexby" className="h-9" loading="lazy" />
+            <img src={HeaderLogo} alt="Nexby" className="h-9 w-auto" width={200} height={50} loading="eager" />
           </Link>
 
           {/* DESKTOP MENU */}
@@ -292,7 +292,7 @@ const Navbar = () => {
           >
             {/* HEADER */}
             <div className="flex items-center justify-between px-6 py-4 border-b">
-              <img src={HeaderLogo} alt="logo" className="h-8" loading="lazy" />
+              <img src={HeaderLogo} alt="logo" className="h-8 w-auto" width={200} height={50} loading="eager" />
               <button onClick={() => setMobileMenuOpen(false)}>
                 <X size={26} />
               </button>
