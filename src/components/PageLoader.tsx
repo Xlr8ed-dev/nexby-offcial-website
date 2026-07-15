@@ -19,7 +19,7 @@ const PageLoader: React.FC = () => {
       "
     >
       <div className="flex flex-col items-center gap-4">
-        <img src={logo} alt="Logo" className="h-12 sm:h-14 animate-pulse" loading="lazy" />
+        <img src={logo} alt="Logo" className="h-12 sm:h-14 w-auto animate-pulse" width={200} height={50} loading="eager" />
 
         <div className="h-1 w-32 sm:w-40 overflow-hidden rounded bg-gray-200">
           <div className="h-full w-1/3 animate-loading bg-black" />
