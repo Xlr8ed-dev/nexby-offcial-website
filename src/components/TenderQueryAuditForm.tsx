@@ -177,7 +177,7 @@ const TenderQueryAuditForm = () => {
                   key={field.id}
                   className={isFullWidth ? "md:col-span-2" : ""}
                 >
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                  <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
                     {field.label}
                   </label>
 
@@ -188,7 +188,7 @@ const TenderQueryAuditForm = () => {
                         size={18}
                       />
                       <select
-                        value={formData[field.id]}
+                        id={field.id} value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         className="w-full p-3 pl-10 rounded-lg border border-slate-300 focus:border-blue-600 outline-none bg-white"
                       >
@@ -228,7 +228,7 @@ const TenderQueryAuditForm = () => {
                       )}
 
                       <input
-                        type={field.type}
+                        id={field.id} type={field.type}
                         placeholder={field.placeholder}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}

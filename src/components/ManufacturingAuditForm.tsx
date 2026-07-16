@@ -270,11 +270,10 @@ const ManufacturingAuditForm = () => {
 
                     return (
                       <div key={field.id}>
-                        <label className="block text-sm font-bold mb-2">
-                          {field.label}
+                        <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                         </label>
-                        <input
-                          type={field.type}
+                        <input id={field.id} type={field.type}
                           value={formData[field.id]}
                           onChange={(e) =>
                             handleChange(field.id, e.target.value)
@@ -291,8 +290,8 @@ const ManufacturingAuditForm = () => {
                   )
                   .map((field: any) => (
                     <div key={field.id} className="mb-6">
-                      <label className="block text-sm font-bold mb-2">
-                        {field.label}
+                      <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                       </label>
 
                       {field.type === "tel" ? (
@@ -304,8 +303,7 @@ const ManufacturingAuditForm = () => {
                           inputClass="!w-full !h-12 !border !rounded-lg"
                         />
                       ) : (
-                        <input
-                          type={field.type}
+                        <input id={field.id} type={field.type}
                           value={formData[field.id]}
                           onChange={(e) =>
                             handleChange(field.id, e.target.value)
@@ -320,13 +318,12 @@ const ManufacturingAuditForm = () => {
             ) : (
               fieldsForStep.map((field: any) => (
                 <div key={field.id} className="mb-6">
-                  <label className="block text-sm font-bold mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                   </label>
 
                   {field.type === "select" && (
-                    <select
-                      value={formData[field.id]}
+                    <select id={field.id} value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     >
@@ -381,8 +378,7 @@ const ManufacturingAuditForm = () => {
                   {field.type !== "select" &&
                     field.type !== "radio" &&
                     field.type !== "tel" && (
-                      <input
-                        type={field.type}
+                      <input id={field.id} type={field.type}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         placeholder={field.placeholder}

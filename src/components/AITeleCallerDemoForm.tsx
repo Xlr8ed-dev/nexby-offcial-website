@@ -116,8 +116,7 @@ const AITeleCallerDemoForm = () => {
                                 <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                     Full Name
                                 </label>
-                                <input
-                                    type="text"
+                                <input id={field.id} type="text"
                                     required
                                     className="w-full h-12 rounded-xl border-2 border-indigo-400/20 bg-white/5 backdrop-blur-sm px-4 text-white placeholder-indigo-300/30 outline-none focus:border-indigo-400 focus:bg-white/10 transition-all"
                                     placeholder="John Doe"
@@ -129,8 +128,7 @@ const AITeleCallerDemoForm = () => {
                                 <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                     Company Name
                                 </label>
-                                <input
-                                    type="text"
+                                <input id={field.id} type="text"
                                     required
                                     className="w-full h-12 rounded-xl border-2 border-indigo-400/20 bg-white/5 backdrop-blur-sm px-4 text-white placeholder-indigo-300/30 outline-none focus:border-indigo-400 focus:bg-white/10 transition-all"
                                     placeholder="Acme Corp"
@@ -146,8 +144,7 @@ const AITeleCallerDemoForm = () => {
                                 <label className="block text-sm font-semibold text-indigo-100 mb-2">
                                     Business Email
                                 </label>
-                                <input
-                                    type="email"
+                                <input id={field.id} type="email"
                                     required
                                     className="w-full h-12 rounded-xl border-2 border-indigo-400/20 bg-white/5 backdrop-blur-sm px-4 text-white placeholder-indigo-300/30 outline-none focus:border-indigo-400 focus:bg-white/10 transition-all"
                                     placeholder="john@company.com"
