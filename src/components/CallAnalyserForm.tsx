@@ -206,11 +206,10 @@ const CallAnalyserForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
         <div className="grid gap-5 md:grid-cols-2">
           <div>
-            <label className="text-sm font-semibold mb-2 block">
+            <label htmlFor="full_name" className="text-sm font-semibold mb-2 block">
               {fullName?.label}
             </label>
-            <input
-              type="text"
+            <input id="full_name" type="text"
               placeholder={fullName?.placeholder}
               // required={fullName?.required}
               disabled={fullName?.disabled}
@@ -221,11 +220,10 @@ const CallAnalyserForm = () => {
           </div>
 
           <div>
-            <label className="text-sm font-semibold mb-2 block">
+            <label htmlFor="work_email" className="text-sm font-semibold mb-2 block">
               {email?.label}
             </label>
-            <input
-              type="email"
+            <input id="work_email" type="email"
               placeholder={email?.placeholder}
               // required={email?.required}
               disabled={email?.disabled}
@@ -237,11 +235,10 @@ const CallAnalyserForm = () => {
         </div>
 
         <div>
-          <label className="text-sm font-semibold mb-2 block">
+          <label htmlFor="company_name" className="text-sm font-semibold mb-2 block">
             {company?.label}
           </label>
-          <input
-            type="text"
+          <input id="company_name" type="text"
             placeholder={company?.placeholder}
             // required={company?.required}
             disabled={company?.disabled}

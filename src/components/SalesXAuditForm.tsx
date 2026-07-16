@@ -205,8 +205,8 @@ const SalesXAuditForm = () => {
                 <div className="space-y-6">
                   {fieldsForStep.map((field: any) => (
                     <div key={field.id}>
-                      <label className="block text-sm font-bold text-slate-700 mb-3">
-                        {field.label}
+                      <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-3">
+{field.label}
                       </label>
 
                       <div className="grid grid-cols-2 gap-3">
@@ -263,8 +263,8 @@ const SalesXAuditForm = () => {
                       )
                       .map((field: any) => (
                         <div key={field.id}>
-                          <label className="block text-sm font-bold text-slate-700 mb-2">
-                            {field.label}
+                          <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                           </label>
 
                           <div className="relative">
@@ -275,8 +275,7 @@ const SalesXAuditForm = () => {
                               />
                             )}
 
-                            <input
-                              type="text"
+                            <input id={field.id} type="text"
                               required={field.required}
                               value={formData[field.id]}
                               onChange={(e) =>
@@ -294,12 +293,11 @@ const SalesXAuditForm = () => {
                     .filter((f: any) => f.id === "company_name")
                     .map((field: any) => (
                       <div key={field.id}>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">
-                          {field.label}
+                        <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                         </label>
 
-                        <input
-                          type="text"
+                        <input id={field.id} type="text"
                           required={field.required}
                           value={formData[field.id]}
                           onChange={(e) =>
@@ -314,8 +312,8 @@ const SalesXAuditForm = () => {
                     .filter((f: any) => f.id === "work_email")
                     .map((field: any) => (
                       <div key={field.id}>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">
-                          {field.label}
+                        <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                         </label>
 
                         <div className="relative">
@@ -324,8 +322,7 @@ const SalesXAuditForm = () => {
                             size={18}
                           />
 
-                          <input
-                            type="email"
+                          <input id={field.id} type="email"
                             required={field.required}
                             value={formData[field.id]}
                             onChange={(e) =>
@@ -341,8 +338,8 @@ const SalesXAuditForm = () => {
                     .filter((f: any) => f.type === "tel")
                     .map((field: any) => (
                       <div key={field.id}>
-                        <label className="block text-sm font-bold text-slate-700 mb-2">
-                          {field.label}
+                        <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                         </label>
                         <style>
                           {`

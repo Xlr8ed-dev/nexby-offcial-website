@@ -186,7 +186,7 @@ const ExamPilotForm = () => {
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="university_name" className="block text-sm font-medium text-gray-700 mb-1">
               {university?.label}
               {university?.required && <span className="text-red-500"> *</span>}
             </label>
@@ -194,8 +194,7 @@ const ExamPilotForm = () => {
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                 <Building2 className="text-gray-400" size={18} />
               </div>
-              <input
-                type="text"
+              <input id="university_name" type="text"
                 // required={university?.required}
                 disabled={university?.disabled}
                 placeholder={university?.placeholder}
@@ -260,7 +259,7 @@ const ExamPilotForm = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="official_email" className="block text-sm font-medium text-gray-700 mb-1">
               {email?.label}
               {email?.required && <span className="text-red-500"> *</span>}
             </label>
@@ -270,8 +269,7 @@ const ExamPilotForm = () => {
                 <Mail className="text-gray-400" size={18} />
               </div>
 
-              <input
-                type="email"
+              <input id="official_email" type="email"
                 // required={email?.required}
                 disabled={email?.disabled}
                 placeholder={email?.placeholder}

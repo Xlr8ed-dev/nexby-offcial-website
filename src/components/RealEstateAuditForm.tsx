@@ -217,8 +217,8 @@ const RealEstateAuditForm = () => {
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               {fieldsForStep.slice(0, 2).map((field: any) => (
                 <div key={field.id}>
-                  <label className="block text-sm font-bold mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                   </label>
 
                   {field.type === "tel" ? (
@@ -230,8 +230,7 @@ const RealEstateAuditForm = () => {
                       inputClass="!w-full !h-12 !border !rounded-lg"
                     />
                   ) : (
-                    <input
-                      type={field.type}
+                    <input id={field.id} type={field.type}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       placeholder={field.placeholder}
@@ -244,8 +243,8 @@ const RealEstateAuditForm = () => {
 
             {fieldsForStep.slice(2).map((field: any) => (
               <div key={field.id} className="mb-6">
-                <label className="block text-sm font-bold mb-2">
-                  {field.label}
+                <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                 </label>
 
                 {field.type === "tel" ? (
@@ -257,8 +256,7 @@ const RealEstateAuditForm = () => {
                     inputClass="!w-full !h-12 !border !rounded-lg"
                   />
                 ) : (
-                  <input
-                    type={field.type}
+                  <input id={field.id} type={field.type}
                     value={formData[field.id]}
                     onChange={(e) => handleChange(field.id, e.target.value)}
                     placeholder={field.placeholder}
@@ -271,13 +269,12 @@ const RealEstateAuditForm = () => {
         ) : (
           fieldsForStep.map((field: any) => (
             <div key={field.id} className="mb-6">
-              <label className="block text-sm font-bold mb-2">
-                {field.label}
+              <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
               </label>
 
               {field.type === "select" && (
-                <select
-                  value={formData[field.id]}
+                <select id={field.id} value={formData[field.id]}
                   onChange={(e) => handleChange(field.id, e.target.value)}
                   className="w-full p-3 border rounded-lg"
                 >
@@ -321,8 +318,7 @@ const RealEstateAuditForm = () => {
               {field.type !== "select" &&
                 field.type !== "radio" &&
                 field.type !== "tel" && (
-                  <input
-                    type={field.type}
+                  <input id={field.id} type={field.type}
                     value={formData[field.id]}
                     onChange={(e) => handleChange(field.id, e.target.value)}
                     placeholder={field.placeholder}

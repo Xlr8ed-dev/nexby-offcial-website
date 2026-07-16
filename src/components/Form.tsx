@@ -74,9 +74,8 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
           <span>{selectedCountry.dial_code}</span>
         </span>
         <ChevronDown
-          className={`w-4 h-4 text-purple-300 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`w-4 h-4 text-purple-300 transition-transform ${isOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -88,8 +87,8 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
           <div className="p-3 border-b border-purple-400/20">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-300" />
-              <input
-                type="text"
+              <input id={fieldId} type="text"
+                aria-label="Search country"
                 placeholder="Search country..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -109,8 +108,7 @@ const SearchableCountryDropdown: React.FC<SearchableCountryDropdownProps> = ({
                   type="button"
                   onClick={() => handleSelect(country)}
                   className={`w-full px-4 py-2.5 flex items-center gap-3 text-left 
-                    hover:bg-purple-500/20 transition-colors ${
-                      country.dial_code === value ? "bg-purple-500/10" : ""
+                    hover:bg-purple-500/20 transition-colors ${country.dial_code === value ? "bg-purple-500/10" : ""
                     }`}
                 >
                   <span className="text-2xl">{country.flag}</span>
@@ -283,9 +281,8 @@ const Form: React.FC<FormProps> = ({
           {
             field.type === "select" && (
               <select
-                className={`w-full h-11 rounded-xl border-2 ${
-                  errors[field.id] ? "border-red-500" : "border-purple-400/30"
-                } bg-slate-900 px-4 text-white outline-none`}
+                className={`w-full h-11 rounded-xl border-2 ${errors[field.id] ? "border-red-500" : "border-purple-400/30"
+                  } bg-slate-900 px-4 text-white outline-none`}
                 value={formData[field.id] || ""}
                 onChange={(e) => handleChange(field.id, e.target.value)}
               >
@@ -471,7 +468,7 @@ const Form: React.FC<FormProps> = ({
       <div className="grid gap-5">
         {fields.map((field) => (
           <div key={field.id}>
-            <label className="text-sm font-semibold text-white mb-2 block">
+            <label htmlFor={field.id} className="text-sm font-semibold text-white mb-2 block">
               {field.label}
               {/* <span className="text-red-500 ml-1">*</span> */}
               {field.required ? (
@@ -516,9 +513,8 @@ const Form: React.FC<FormProps> = ({
                   validateField(field.id, e164Phone);
                 }}
                 enableSearch
-                containerClass={`react-tel-input ${
-                  errors[field.id] ? "phone-error" : ""
-                }`}
+                containerClass={`react-tel-input ${errors[field.id] ? "phone-error" : ""
+                  }`}
                 inputProps={{
                   name: field.id,
                   required: field.required,
@@ -642,7 +638,7 @@ const Form: React.FC<FormProps> = ({
             {/* TEXTAREA */}
             {field.type === "textarea" && (
               <textarea
-                rows={4}
+                id={field.id} rows={4}
                 // className="w-full rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 py-3 text-white"
                 className={`w-full rounded-xl border-2 bg-white/10 px-4 py-3 text-white
     ${getBorderClass(field.id)}`}
@@ -654,7 +650,7 @@ const Form: React.FC<FormProps> = ({
             {/* DEFAULT INPUT → ONLY text & email */}
             {field.type === "text" || field.type === "email" ? (
               <input
-                type={field.type}
+                id={field.id} type={field.type}
                 // className="w-full h-11 rounded-xl border-2 border-purple-400/30 bg-white/10 px-4 text-white"
                 className={`w-full rounded-xl border-2 bg-white/10 px-4 py-3 text-white
     ${getBorderClass(field.id)}`}
@@ -741,11 +737,10 @@ const Form: React.FC<FormProps> = ({
         type="submit"
         disabled={!recaptchaToken || submitting}
         className={`w-full h-14 rounded-full font-bold uppercase tracking-wider transition-all
-    ${
-      !recaptchaToken || submitting
-        ? "bg-gray-600 cursor-not-allowed opacity-60"
-        : "bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:scale-[1.02]"
-    }`}
+    ${!recaptchaToken || submitting
+            ? "bg-gray-600 cursor-not-allowed opacity-60"
+            : "bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 hover:scale-[1.02]"
+          }`}
       >
         {submitting ? "Submitting..." : buttonName}
       </button>
