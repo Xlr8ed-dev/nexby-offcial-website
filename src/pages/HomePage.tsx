@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import {
   motion,
@@ -26,33 +26,43 @@ interface ChatMessage {
 
 // --- Components ---
 
+// TypewriterText: High-performance, zero-CLS implementation
+// - Uses vanilla JS DOM updates to avoid React re-render penalties during load
+// - Visible and invisible spans sit side-by-side so word wrapping is identical to final text
+// - Absolute cursor takes 0 width in flow, preventing word-break disruption
 const TypewriterText = ({ text }: { text: string }) => {
-  const [displayedText, setDisplayedText] = useState("");
+  const visibleRef = useRef<HTMLSpanElement>(null);
+  const invisibleRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    // Reset displayed text
-    setDisplayedText("");
     let i = 0;
+    // Initial state
+    if (visibleRef.current && invisibleRef.current) {
+      visibleRef.current.textContent = "";
+      invisibleRef.current.textContent = text;
+    }
 
     const timer = setInterval(() => {
-      if (i < text.length) {
-        setDisplayedText(text.substring(0, i + 1));
+      if (i <= text.length) {
+        if (visibleRef.current && invisibleRef.current) {
+          visibleRef.current.textContent = text.substring(0, i);
+          invisibleRef.current.textContent = text.substring(i);
+        }
         i++;
       } else {
         clearInterval(timer);
       }
-    }, 50); // Typing speed
+    }, 50);
 
     return () => clearInterval(timer);
   }, [text]);
 
   return (
-    <span className="inline-grid grid-cols-1 grid-rows-1 font-light text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded leading-normal text-left">
-      <span className="invisible col-start-1 row-start-1">{text}</span>
-      <span className="col-start-1 row-start-1">
-        {displayedText}
-        <span className="animate-pulse">|</span>
-      </span>
+    <span className="relative inline-block font-light text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded leading-normal text-left whitespace-pre-wrap">
+      <span ref={visibleRef}></span>
+      {/* Cursor flows naturally with the text but takes 0 width */}
+      <span className="absolute animate-pulse border-r-2 border-white h-[1.1em] mt-[0.1em]"></span>
+      <span ref={invisibleRef} className="invisible">{text}</span>
     </span>
   );
 };
@@ -61,8 +71,8 @@ const HeroSection = () => {
   return (
     <section className="relative pt-20 md:pt-24 px-4 md:px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 md:gap-4">
-        {/* LEFT: HERO */}
-        <div className="relative w-full md:w-[70%] min-h-[70vh] md:h-[calc(100vh-6rem)] bg-gray-900 overflow-hidden rounded-2xl md:rounded-3xl">
+        {/* LEFT: HERO — explicit height at every breakpoint to prevent CLS from content-driven size changes */}
+        <div className="relative w-full md:w-[70%] h-[70vh] md:h-[calc(100vh-6rem)] bg-gray-900 overflow-hidden rounded-2xl md:rounded-3xl">
           {/* Background */}
           <img
             src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=60&w=2000&auto=format&fit=crop&fm=webp"
@@ -70,11 +80,11 @@ const HeroSection = () => {
             width={2000}
             height={1333}
             className="absolute inset-0 w-full h-full object-cover opacity-60"
-          loading="eager"
-          fetchPriority="high" />
+            loading="eager"
+            fetchPriority="high" />
 
-          {/* Content */}
-          <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-6 md:px-16">
+          {/* Content — absolute so it doesn't drive container height */}
+          <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-6 md:px-16">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               <TypewriterText text="Automate Your Growth. Without the Headcount." />
             </h1>
@@ -99,7 +109,7 @@ const HeroSection = () => {
               width={1000}
               height={667}
               className="absolute inset-0 w-full h-full object-cover opacity-60"
-            loading="lazy" />
+              loading="lazy" />
             <div className="absolute inset-0 bg-blue-50/80" />
             <div className="relative z-10">
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4">
@@ -124,7 +134,7 @@ const HeroSection = () => {
               width={1000}
               height={667}
               className="absolute inset-0 w-full h-full object-cover opacity-60"
-            loading="lazy" />
+              loading="lazy" />
             <div className="absolute inset-0 bg-purple-50/80" />
             <div className="relative z-10">
               <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-4">
@@ -222,16 +232,19 @@ const ScrollAnimationSection = () => {
   return (
     <div
       ref={ref}
-      className="relative h-screen overflow-hidden flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50"
+      // contain:strict isolates this section's layout from the rest of the page —
+      // any spring overshoot or sticky anomaly cannot cause CLS on other elements.
+      style={{ contain: "strict", height: "100vh" }}
+      className="relative overflow-hidden flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50"
     >
-      {/* Background blobs (keep but lighter) */}
+      {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl" />
       </div>
 
-      {/* Sticky container */}
-      <div className="sticky top-1/4 h-96 w-full flex flex-col items-center justify-center">
+      {/* Center content — no sticky (sticky is broken inside overflow:hidden anyway) */}
+      <div className="relative h-96 w-full flex flex-col items-center justify-center">
         <motion.div
           style={{ scale, y }}
           className="z-20 text-[12rem] font-extrabold leading-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent will-change-transform"

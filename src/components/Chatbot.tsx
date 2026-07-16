@@ -107,6 +107,7 @@ const Chatbot = () => {
             <button
               onClick={() => setIsChatOpen(false)}
               className="text-white hover:bg-white/20 rounded-full p-2"
+              aria-label="Close chat"
             >
               <X className="w-5 h-5" />
             </button>
