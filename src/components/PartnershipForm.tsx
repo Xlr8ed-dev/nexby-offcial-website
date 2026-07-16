@@ -291,13 +291,12 @@ const PartnershipForm = () => {
             <div className="space-y-4">
               {fieldsForStep.map((field: any) => (
                 <div key={field.id}>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                   </label>
 
                   {field.type === "select" && (
-                    <select
-                      value={formData[field.id]}
+                    <select id={field.id} value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       className="w-full p-3 rounded-xl border border-slate-300 bg-white"
                     >
@@ -332,8 +331,7 @@ const PartnershipForm = () => {
                   {field.type !== "select" &&
                     field.type !== "tel" &&
                     field.type !== "textarea" && (
-                      <input
-                        type={field.type}
+                      <input id={field.id} type={field.type}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         placeholder={field.placeholder}

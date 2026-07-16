@@ -186,11 +186,11 @@ const SupportAuditForm = () => {
             .filter((f: any) => ["full_name", "work_email"].includes(f.id))
             .map((field: any) => (
               <div key={field.id}>
-                <label className="text-white text-sm font-semibold mb-2 block">
+                <label htmlFor={field.id} className="text-white text-sm font-semibold mb-2 block">
                   {field.label} {field.required && "*"}
                 </label>
                 <input
-                  type={field.type}
+                  id={field.id} type={field.type}
                   // required={field.required}
                   placeholder={field.placeholder}
                   value={formData[field.id]}
@@ -205,11 +205,11 @@ const SupportAuditForm = () => {
           .filter((f: any) => f.id === "company_name")
           .map((field: any) => (
             <div key={field.id}>
-              <label className="text-white text-sm font-semibold mb-2 block">
+              <label htmlFor={field.id} className="text-white text-sm font-semibold mb-2 block">
                 {field.label} {field.required && "*"}
               </label>
               <input
-                type="text"
+                id={field.id} type="text"
                 // required={field.required}
                 placeholder={field.placeholder}
                 value={formData[field.id]}
@@ -232,7 +232,7 @@ const SupportAuditForm = () => {
                   {field.group}
                 </h4>
               )}
-              <label className="text-blue-300 text-sm block mb-2">
+              <label htmlFor={field.id} className="text-blue-300 text-sm block mb-2">
                 {field.label}:{" "}
                 <span className="text-blue-400 font-semibold">
                   {formData[field.id] || field.min}
@@ -241,7 +241,7 @@ const SupportAuditForm = () => {
               </label>
 
               <input
-                type="range"
+                id={field.id} type="range"
                 min={field.min}
                 max={field.max}
                 step={field.step}
@@ -307,6 +307,8 @@ const SupportAuditForm = () => {
           </div>
 
           <textarea
+            id="pain_point_details"
+            aria-label="Pain point details"
             rows={4}
             value={formData.pain_point_details}
             onChange={(e) => handleChange("pain_point_details", e.target.value)}

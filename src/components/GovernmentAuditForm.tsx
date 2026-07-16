@@ -175,11 +175,10 @@ const GovernmentAuditForm = () => {
 
               return (
                 <div key={field.id}>
-                  <label className="block text-sm font-bold mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                   </label>
-                  <input
-                    type={field.type}
+                  <input id={field.id} type={field.type}
                     placeholder={field.placeholder}
                     value={formData[field.id]}
                     onChange={(e) => handleChange(field.id, e.target.value)}
@@ -192,12 +191,10 @@ const GovernmentAuditForm = () => {
 
           {getField("department") && (
             <div>
-              <label className="block text-sm font-bold mb-2">
-                {getField("department").label}
-              </label>
-              <input
-                type="text"
-                placeholder={getField("department").placeholder}
+              <label htmlFor="department" className="block text-sm font-bold mb-2">
+{getField("department").label}
+</label>
+              <input id="department" type="text" placeholder={getField("department").placeholder}
                 value={formData["department"]}
                 onChange={(e) => handleChange("department", e.target.value)}
                 className="w-full p-3 rounded-xl border border-slate-300 focus:border-blue-600 outline-none"
@@ -212,13 +209,12 @@ const GovernmentAuditForm = () => {
 
               return (
                 <div key={field.id}>
-                  <label className="block text-sm font-bold mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold mb-2">
+{field.label}
                   </label>
 
                   {field.type === "select" ? (
-                    <select
-                      value={formData[field.id]}
+                    <select id={field.id} value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
                       className="w-full p-3 rounded-xl border border-slate-300 focus:border-blue-600 outline-none"
                     >
@@ -230,8 +226,7 @@ const GovernmentAuditForm = () => {
                       ))}
                     </select>
                   ) : (
-                    <input
-                      type={field.type}
+                    <input id={field.id} type={field.type}
                       placeholder={field.placeholder}
                       value={formData[field.id]}
                       onChange={(e) => handleChange(field.id, e.target.value)}
@@ -246,12 +241,10 @@ const GovernmentAuditForm = () => {
           <div className="grid md:grid-cols-2 gap-6">
             {getField("official_email") && (
               <div>
-                <label className="block text-sm font-bold mb-2">
-                  {getField("official_email").label}
-                </label>
-                <input
-                  type="email"
-                  placeholder={getField("official_email").placeholder}
+                <label htmlFor="official_email" className="block text-sm font-bold mb-2">
+{getField("official_email").label}
+</label>
+                <input id="official_email" type="email" placeholder={getField("official_email").placeholder}
                   value={formData["official_email"]}
                   onChange={(e) =>
                     handleChange("official_email", e.target.value)

@@ -211,15 +211,14 @@ const CitizenAIInterfaceForm = () => {
                   key={field.id}
                   className={isFullWidth ? "md:col-span-2" : ""}
                 >
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
-                    {field.label}
+                  <label htmlFor={field.id} className="block text-sm font-bold text-slate-700 mb-2">
+{field.label}
                   </label>
 
                   {field.type === "select" ? (
                     <div className="relative">
                       {getIcon(field.id)}
-                      <select
-                        value={formData[field.id]}
+                      <select id={field.id} value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
                         className="w-full p-3 pl-10 rounded-lg border border-slate-300 bg-white focus:border-blue-600 outline-none"
                       >
@@ -234,8 +233,7 @@ const CitizenAIInterfaceForm = () => {
                   ) : (
                     <div className="relative">
                       {getIcon(field.id)}
-                      <input
-                        type={field.type}
+                      <input id={field.id} type={field.type}
                         placeholder={field.placeholder}
                         value={formData[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
