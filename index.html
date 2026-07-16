@@ -1,9 +1,60 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- Meta Pixel Code -->
-    <script>
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Performance: preconnect to third-party origins -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=60&w=2000&auto=format&fit=crop&fm=webp"
+    fetchpriority="high" />
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Default title — overridden per route by react-helmet-async -->
+  <title>Nexby AI — AI-Powered Automation for Indian SMEs</title>
+  <meta name="description"
+    content="Nexby AI provides AI-powered automation solutions to help Indian SMEs scale efficiently." />
+
+  <!-- Organization Schema for AI & SEO Bots -->
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Nexby AI Solutions Private Limited",
+        "url": "https://nexby.ai",
+        "logo": "https://nexby.ai/images/logo.png",
+        "description": "Nexby AI is a service-based AI automation company for Indian SMEs. It builds and manages done-for-you omnichannel lead follow-up systems across AI telecalling, WhatsApp, and email. Pricing starts at ₹6 per connected call, billed only when a call connects.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "15, Khatau Building, 44 Bank Street",
+          "addressLocality": "Mumbai",
+          "postalCode": "400001",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://linkedin.com/company/nexby-ai/",
+          "https://www.instagram.com/nexby.ai/",
+          "https://www.youtube.com/@NexbyAISolutions"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-9892048816",
+          "email": "hello@nexby.ai",
+          "contactType": "sales",
+          "areaServed": "IN",
+          "availableLanguage": ["English", "Hindi"]
+        }
+      }
+    </script>
+
+  <!-- Meta Pixel Code (deferred — does not block first render) -->
+  <script>
+    if (!navigator.userAgent.includes("PrerenderBot")) {
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -25,54 +76,45 @@
         window,
         document,
         "script",
-        "https://connect.facebook.net/en_US/fbevents.js",
+        "https://connect.facebook.net/en_US/fbevents.js"
       );
       fbq("init", "894238736294510");
       fbq("track", "PageView");
-    </script>
-    <!-- Meta Pixel Code -->
+    }
+  </script>
+  <!-- End Meta Pixel Code -->
 
-    <!-- Google Tag Manager -->
-    <script>
+  <!-- Google Tag Manager (async — does not block first render) -->
+  <script>
+    if (!navigator.userAgent.includes("PrerenderBot")) {
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
         var f = d.getElementsByTagName(s)[0],
           j = d.createElement(s),
           dl = l != "dataLayer" ? "&l=" + l : "";
+        j = d.createElement(s);
         j.async = true;
         j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-WZSXHBGR");
-    </script>
-    <!-- End Google Tag Manager -->
+    }
+  </script>
+  <!-- End Google Tag Manager -->
+</head>
 
-    <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app</title>
-  </head>
-  <body>
-    <!-- Meta Pixel Code -->
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=894238736294510&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+<body>
+  <!-- Meta Pixel noscript fallback -->
+  <noscript><img height="1" width="1" style="display: none"
+      src="https://www.facebook.com/tr?id=894238736294510&ev=PageView&noscript=1" /></noscript>
 
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-WZSXHBGR"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZSXHBGR" height="0" width="0"
+      style="display: none; visibility: hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

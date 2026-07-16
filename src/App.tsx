@@ -5,10 +5,15 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageLoader from "./components/PageLoader";
 import ThankYouPage from "./components/ThankYouPage";
+import JsonLD from "./components/JsonLD";
+import SEOHead from "./components/SEOHead";
+import { organizationSchema, webSiteSchema } from "./seo/schemas";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
+// HomePage is eagerly imported (NOT lazy) so it renders immediately on first load
+// without triggering the Suspense/PageLoader, eliminating the CLS-causing layout swap.
+import HomePage from "./pages/HomePage";
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const SalesSolutionsPage = lazy(() => import("./pages/SalesSolutionsPage"));
 const HRSolutionsPage = lazy(() => import("./pages/HRSolutionsPage"));
@@ -79,17 +84,31 @@ const PharmaThankYouPage = lazy(() => import("./pages/PharmaThankYouPage"));
 
 const ThankYou = lazy(() => import("./components/ThankYou"));
 const Chatbot = lazy(() => import("./components/Chatbot"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function App() {
   return (
     <HelmetProvider>
-      <Helmet>
+      {/* Sitewide defaults — overridden per page by <SEOHead /> */}
+      <Helmet
+        defaultTitle="Nexby AI — AI-Powered Automation for Indian SMEs"
+        titleTemplate="%s"
+      >
+        <html lang="en" />
+        <meta
+          name="description"
+          content="Nexby AI builds done-for-you omnichannel AI automation for Indian SMEs. AI telecalling, WhatsApp follow-up, and email — billed only on connected calls, starting ₹6."
+        />
         <meta
           name="google-site-verification"
           content={import.meta.env.VITE_GOOGLE_SITE_VERIFICATION}
         />
       </Helmet>
+
+      {/* Sitewide JSON-LD — Organization + WebSite */}
+      <JsonLD schema={[organizationSchema, webSiteSchema]} />
       <BrowserRouter>
+        <SEOHead />
         <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
           <Navbar />
           <ToastContainer
@@ -97,11 +116,15 @@ function App() {
             autoClose={4000}
             theme="colored"
           />
-          {/* Page Loader */}
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/contact-us" element={<ContactPage />} />
+          {/* HomePage renders eagerly — no Suspense/fallback needed for the root route */}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+
+            {/* All other pages lazy-load with a page loader */}
+            <Route path="*" element={
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/contact-us" element={<ContactPage />} />
               <Route path="/thank-you" element={<ThankYou />} />
 
               {/* Solutions */}
@@ -222,12 +245,14 @@ function App() {
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/partnerships" element={<PartnershipsPage />} />
-              <Route
-                path="/partnerships/thank-you"
-                element={<ThankYouPage />}
-              />
-            </Routes>
-          </Suspense>
+              <Route path="/partnerships/thank-you" element={<ThankYouPage />} />
+
+                  {/* 404 — catch-all */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
+            } />
+          </Routes>
 
           <Footer />
 

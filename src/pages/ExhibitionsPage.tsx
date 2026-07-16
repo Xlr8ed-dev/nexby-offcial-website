@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import {
   Sparkles,
   Brain,
@@ -66,64 +66,9 @@ const ExhibitionsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          AI for Exhibitions - Offline-First Lead Capture | Nexby Solutions
-        </title>
-        <meta
-          name="description"
-          content="Turn handshake chaos into organized revenue. Nexby’s offline-first AI captures, digitizes, and engages booth visitors instantly."
-        />
-        <meta
-          name="keywords"
-          content="AI for exhibitions, trade show lead capture, offline lead retrieval, event lead management, AI OCR business cards, exhibition analytics"
-        />
+      
 
-        {/* Open Graph Tags */}
-        <meta
-          property="og:title"
-          content="AI for Exhibitions - Offline-First Lead Capture | Nexby"
-        />
-        <meta
-          property="og:description"
-          content="Turn handshake chaos into organized revenue. Nexby’s offline-first AI captures, digitizes, and engages booth visitors instantly."
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://nexby.ai/solutions/exhibitions"
-        />
-
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://nexby.ai/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Solutions",
-                item: "https://nexby.ai/solutions",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: "AI for Exhibitions",
-                item: "https://nexby.ai/solutions/exhibitions",
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
-
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -656,7 +601,7 @@ const ExhibitionsPage = () => {
             <ExhibitionAuditForm formId="exhibition_solutions_audit_form" />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };

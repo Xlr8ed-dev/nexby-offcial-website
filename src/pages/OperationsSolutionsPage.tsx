@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+
 import {
   Bot,
   Brain,
@@ -65,36 +65,9 @@ const OperationsSolutionsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>
-          AI for Operations - Autonomous Support Agents | Nexby Solutions
-        </title>
-        <meta
-          name="description"
-          content="Automate 70% of L1 and L2 support requests instantly. Nexby’s Support AI Agent lives inside your ticketing system, learns from your knowledge base, and resolves issues without human intervention."
-        />
-        <meta
-          name="keywords"
-          content="AI support agents, IT automation, helpdesk AI, customer support automation, ITSM AI, operations automation, RAG for support"
-        />
+      
 
-        {/* Open Graph Tags */}
-        <meta
-          property="og:title"
-          content="AI for Operations - Autonomous Support Agents | Nexby"
-        />
-        <meta
-          property="og:description"
-          content="Automate 70% of L1 and L2 support requests instantly. Nexby’s Support AI Agent lives inside your ticketing system."
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://nexby.ai/solutions/operations"
-        />
-      </Helmet>
-
-      <div className="min-h-screen bg-white pt-20">
+      <main className="min-h-screen bg-white pt-20">
         {/* Breadcrumb Navigation */}
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -586,7 +559,7 @@ const OperationsSolutionsPage = () => {
             <OperationsAuditForm formId="operations_solutions_audit_form" />
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };
