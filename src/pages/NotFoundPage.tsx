@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const NotFoundPage = () => {
   return (
     <>
-      
+      <Helmet>
+        <title>Page Not Found | Nexby AI</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
 
       <main className="min-h-screen flex flex-col items-center justify-center bg-white px-4 text-center">
         <motion.div

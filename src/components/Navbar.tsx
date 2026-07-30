@@ -273,6 +273,7 @@ const Navbar = () => {
             <button
               className="md:hidden"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open mobile menu"
             >
               <Menu size={26} />
             </button>
@@ -293,7 +294,7 @@ const Navbar = () => {
             {/* HEADER */}
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <img src={HeaderLogo} alt="logo" className="h-8 w-auto" width={200} height={50} loading="eager" />
-              <button onClick={() => setMobileMenuOpen(false)}>
+              <button onClick={() => setMobileMenuOpen(false)} aria-label="Close mobile menu">
                 <X size={26} />
               </button>
             </div>
