@@ -497,12 +497,12 @@ export function getSEO(pathname: string): SEOMeta {
       title: "Nexby AI — AI-Powered Automation for Indian SMEs",
       description:
         "Nexby AI builds done-for-you omnichannel AI automation for Indian SMEs — AI telecalling, WhatsApp, and email follow-up. Starting ₹6 per connected call.",
-      canonical: `https://nexby.ai${pathname}`,
+      canonical: `https://nexby.ai${normalized}`,
       og: {
         title: "Nexby AI — AI-Powered Automation for Indian SMEs",
         description:
           "Done-for-you AI telecalling, WhatsApp, and email automation. Starting ₹6 per connected call.",
-        url: `https://nexby.ai${pathname}`,
+        url: `https://nexby.ai${normalized}`,
         image: "https://nexby.ai/images/og-default.png",
         type: "website",
       },

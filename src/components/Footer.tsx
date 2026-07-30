@@ -124,6 +124,8 @@ const Footer = () => {
                 alt={`logo`}
                 className="h-10 w-auto object-contain"
                 loading="lazy"
+                width={160}
+                height={40}
               />
               <div>
                 <p className="text-white font-semibold text-sm">
