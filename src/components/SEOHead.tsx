@@ -40,6 +40,11 @@ const SEOHead = ({ pathname }: SEOHeadProps) => {
       <meta name="twitter:image" content={seo.twitter.image} />
       <meta name="twitter:site" content="@nexbyai" />
 
+      {/* Noindex for thank-you pages */}
+      {path.endsWith("/thank-you") && (
+        <meta name="robots" content="noindex" />
+      )}
+
       {/* JSON-LD Schema (if defined for this route) */}
       {seo.schema && (
         <script type="application/ld+json">
